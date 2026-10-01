@@ -1,0 +1,222 @@
+<h1 id="ch7"><span class="num">7</span>அறை சேவை — உதாரணம் C<span class="sub">Room service for villa G1, charged to the guest folio</span></h1>
+<p>விருந்தினர் வில்லாவிலிருந்து தொலைபேசியில் உணவு கேட்கும்போது, காசாளர் அல்லது பணியாளர் POS-இல் <b>Room service</b> check ஒன்றைத் திறக்கிறார். அந்த check தங்கியுள்ள விருந்தினருடன் இணைக்கப்படுவதால், பின்னர் அதை நேரடியாக வில்லாக் கணக்கில் (folio) சேர்க்கலாம்.</p>
+<ol class="steps">
+<li>POS Terminal-இல் outlet = <b>In-villa dining</b> தேர்வு செய்து <span class="ui">Room service</span> அழுத்துங்கள்.</li>
+<li>தங்கியுள்ள விருந்தினர் பட்டியல் தோன்றும் (வில்லா · பெயர் · முன்பதிவு எண்). <b>G1 · Nuwan Perera</b> தேர்வு செய்யுங்கள்.</li>
+<li>மெனுவிலிருந்து உணவுகளைச் சேர்க்கவும்: Seafood linguine (5,600) + Crab soup (2,900) = உணவு மொத்தம் <b>LKR 8,500</b>. கட்டாய விருப்பத் தேர்வுகள் (உ-ம்: காரத்தின் அளவு) உள்ள உணவுகளுக்கு அவற்றைத் தேர்வு செய்யாமல் சேர்க்க முடியாது.</li>
+<li><span class="ui">Send</span> அழுத்துங்கள் — KOT சமையலறைக்குச் செல்லும்.</li>
+<li>சமையலறை தயாரித்து அனுப்பியதும் <span class="ui">Pay</span> → <span class="ui">Charge to villa</span> → <span class="ui">Complete payment</span>.</li>
+</ol>
+[[FIG:27_room_service_select|Room service: தங்கியுள்ள விருந்தினர்/வில்லாவைத் தேர்வு செய்தல்.]]
+[[FIG:28_room_service_check|G1-க்கான அறை சேவை check — சமையலறைக்கு அனுப்பும் முன்.]]
+
+<h2 id="ch7-1"><span class="num">7.1</span>சமையலறைத் திரை (KOT / KDS)</h2>
+<p>சமையலறைப் பணியாளர் உள்நுழைந்ததும் <span class="ui">Kitchen display</span> திறக்கும். ஒவ்வொரு அட்டையும் ஒரு KOT (Kitchen Order Ticket): மேசை/வில்லா, KOT எண், outlet, ஆர்டர் எடுத்தவர், நிலையம் (kitchen / bar), உணவுகள், விருப்பத் தேர்வுகள், அனுப்பி எத்தனை நிமிடம் ஆனது. திரை ஒவ்வொரு 5 விநாடிக்கும் தானாகப் புதுப்பிக்கப்படும்; புதிய ticket வந்தால் ஒலி எழும்.</p>
+<div class="flow"><span>New</span><i>→ Start →</i><span class="s-cleaning">Preparing</span><i>→ Ready →</i><span class="s-ready">Ready</span><i>→ Served →</i><span>Served</span></div>
+<p>ஒவ்வொரு பொத்தான் அழுத்தலும் ஒரு படி முன்னேற்றும். New நிலையிலிருந்து நேரடியாக Served-க்குச் செல்ல முடியாது (சோதிக்கப்பட்டது). <span class="ui">Kitchen</span> / <span class="ui">Bar</span> / <span class="ui">All stations</span> தாவல்கள் மூலம் நிலையத்தைத் தேர்வு செய்யலாம்.</p>
+[[FIG:07_kitchen_kot|சமையலறைத் திரை — வில்லா G1-க்கான புதிய KOT (கீழ் வலது) மற்றும் பிற tickets.|1]]
+<div class="callout warn"><span class="t">பழைய tickets</span>
+<p>"Served" என்று குறிக்கும் வரை ticket திரையில் இருக்கும். படத்தில் முந்தைய நாளின் டெமோ tickets 2,000+ நிமிடங்களாகத் தெரிகின்றன. ஒவ்வொரு உணவும் பரிமாறப்பட்டதும் <span class="ui">Served</span> அழுத்தும் பழக்கத்தைக் கடைப்பிடியுங்கள்.</p></div>
+
+<h2 id="ch7-2"><span class="num">7.2</span>வில்லாக் கணக்கில் சேர்த்தல்</h2>
+[[FIG:08_room_service|Take payment → "Charge to villa": G1 (Nuwan Perera) கணக்கில் சேர்த்தல்.]]
+<div class="callout example"><span class="t">உதாரணம் C — கணினி கணக்கிட்ட தொகை (ORD-26-000097)</span>
+<table class="grid" style="margin:1mm 0 0">
+<tr><th>விவரம்</th><th class="num">LKR</th></tr>
+<tr><td>Seafood linguine 5,600 + Crab soup 2,900</td><td class="num">8,500.00</td></tr>
+<tr><td>சேவைக் கட்டணம் 10%</td><td class="num">850.00</td></tr>
+<tr><td>வரி 8% (உணவு + சேவைக் கட்டணம்)</td><td class="num">748.00</td></tr>
+<tr class="total"><td>G1 folio-வில் சேர்ந்த தொகை</td><td class="num">10,098.00</td></tr>
+</table>
+<p class="small" style="margin-top:2mm">கவனிக்க: "LKR 8,500" என்பது மெனு விலை மட்டும். POS தானாக 10% சேவைக் கட்டணமும் 8% வரியும் சேர்ப்பதால் folio-வில் 10,098.00 பதிவாகிறது.</p></div>
+
+<h1 id="ch8"><span class="num">8</span>விருந்தினர் கணக்கு (Folio)<span class="sub">Guest folio, extra charges and payments</span></h1>
+<p>ஒவ்வொரு தங்கலுக்கும் ஒரு folio உண்டு. அதில் அறை இரவுகள் (இரவுத் தணிக்கையின்போது), அறை சேவை, உணவகக் கட்டணங்கள், சலவை, ஸ்பா, போக்குவரத்து போன்ற கட்டணங்களும், முற்பணம்/கொடுப்பனவுகளும் பதிவாகும். முன்பதிவுப் பக்கத்தில் (<span class="ui">Bookings</span> → முன்பதிவு எண்) folio உள்ளது.</p>
+
+<h2 id="ch8-1"><span class="num">8.1</span>கூடுதல் கட்டணம் சேர்த்தல் — சலவை</h2>
+<ol class="steps">
+<li>Folio-வின் கீழே <span class="ui">Post charge</span> அழுத்துங்கள்.</li>
+<li><span class="ui">Service</span> பட்டியலில் "Laundry — pressing (per item) — LKR 400" தேர்வு செய்யுங்கள். விலை, விளக்கம், துறை தானாக நிரம்பும்.</li>
+<li><span class="ui">Quantity</span> = 5 (5 உடைகள் × 400 = LKR 2,000). சேவைக் கட்டணம் தேவையெனில் "Add service charge" டிக் செய்யுங்கள் (இங்கு இல்லை).</li>
+<li><span class="ui">Post charge</span>. வரி தானாகச் சேரும் (taxable சேவைகளுக்கு 8%).</li>
+</ol>
+[[FIG:29_laundry_charge|Folio-வில் சலவைக் கட்டணம்: pressing 5 × LKR 400 = LKR 2,000.]]
+[[FIG:09_guest_folio|விருந்தினர் folio: அறை சேவை 10,098.00, சலவை 2,160.00 (2,000 + வரி 160), முற்பணம் −20,000.00.|2]]
+<div class="callout rule"><span class="t">Folio விதிகள்</span>
+<ul><li>பதிவான கட்டணத்தை நீக்க முடியாது; அனுமதியுள்ளவர் (<code>folio.adjust</code>) மட்டுமே எதிர்ப் பதிவு (reverse) செய்ய முடியும் — இரண்டுமே பதிவில் இருக்கும்.</li>
+<li>தொகை 0.01-க்குக் குறைவாக இருக்க முடியாது; செலுத்த வேண்டியதைவிட அதிகமாக வாங்க முடியாது.</li>
+<li>திருப்பிச் செலுத்துதல் (Refund) அனுமதி உள்ளவருக்கு மட்டும்.</li>
+<li><span class="ui">Print folio</span> மூலம் அச்சிடலாம்; <span class="ui">Take payment</span> மூலம் இடையில் பணம் பெறலாம்.</li></ul></div>
+
+<h1 id="ch9"><span class="num">9</span>வெளியேறுதல் (Checkout) — உதாரணம் D<span class="sub">Checkout with an open restaurant check, settlement and final invoice</span></h1>
+<p>இந்த அத்தியாயம் G1-இல் இருந்த Oliver Jensen-இன் உண்மையான checkout-ஐக் காட்டுகிறது (27 → 29 செப், 2 இரவுகள்). அவருக்கு ஒரு அறை சேவை check (ORD-26-000096, LKR 3,207.60) இன்னும் திறந்திருந்தது.</p>
+
+<h2 id="ch9-1"><span class="num">9.1</span>திறந்த உணவகக் கணக்கு checkout-ஐத் தடுக்கிறது</h2>
+<ol class="steps">
+<li><span class="ui">Front desk → Departures</span> அல்லது முன்பதிவுப் பக்கத்தில் <span class="ui">Check out</span>.</li>
+<li>திறந்த உணவக check இருந்தால் சிவப்புப் பெட்டியில் எச்சரிக்கை வரும்; <span class="ui">Complete checkout</span> பொத்தான் முடக்கப்படும்.</li>
+<li><span class="ui">Request restaurant settlement</span> அழுத்தினால் காசாளர்களுக்கு அறிவிப்பு செல்லும்.</li>
+</ol>
+[[FIG:16_checkout_blocked|Checkout தடுக்கப்பட்டது: "1 restaurant check(s) still open for this stay" — Complete checkout முடக்கப்பட்டுள்ளது.|1]]
+[[FIG:17_settlement_requested|உணவகத் தீர்வுக்கான கோரிக்கை அனுப்பப்பட்டது.|1]]
+[[FIG:18_cashier_notification|காசாளரின் அறிவிப்புப் பட்டியலில் கோரிக்கை.|1]]
+<p>காசாளர் அந்த check-ஐத் திறந்து <span class="ui">Pay</span> → <span class="ui">Charge to villa</span> மூலம் G1 folio-வில் சேர்க்கிறார் (அல்லது விருந்தினர் நேரடியாகப் பணம் கொடுக்கலாம்).</p>
+[[FIG:19_pos_charge_to_villa|காசாளர்: Oliver Jensen-இன் check-ஐ G1 folio-வில் சேர்த்தல்.]]
+
+<h2 id="ch9-2"><span class="num">9.2</span>நிலுவையைச் செலுத்தி checkout முடித்தல்</h2>
+<ol class="steps">
+<li>Checkout பக்கத்தை மீண்டும் திறந்தால் எச்சரிக்கை மறைந்து, உணவகக் கட்டணம் folio-வில் சேர்ந்திருக்கும்.</li>
+<li>வலப்பக்கம் <b>Settle &amp; check out</b>: செலுத்தும் முறை (Card / Cash / Bank transfer …) மற்றும் தொகை (நிலுவை தானாக நிரம்பும்).</li>
+<li>புறப்படும் தேதிக்கு முன்பே வெளியேறினால் "Confirm early departure" டிக் செய்ய வேண்டும்.</li>
+<li><span class="ui">Complete checkout</span>. கணினி: இறுதி விலைப்பட்டியல் வழங்கும், folio-வை மூடும், சாவி அட்டைகளை ரத்து செய்யும், வில்லாவை <b>Vacant + Dirty</b> ஆக்கி வீட்டுப் பராமரிப்புப் பணியை உருவாக்கும்.</li>
+</ol>
+[[FIG:10_checkout|Checkout: அறை மற்றும் உணவகக் கட்டணங்கள் ஒரே folio-வில்; நிலுவை அட்டையால்; Complete checkout இயக்கத்தில்.|1]]
+[[FIG:20_checkout_complete|Checkout முடிந்தது — G1 Dirty; departure clean பணி உருவானது.|1]]
+[[FIG:21_final_invoice|இறுதி விலைப்பட்டியல் INV-26-000019 — மொத்தம் LKR 84,371.76, முழுமையாகச் செலுத்தப்பட்டது.|1]]
+<div class="callout rule"><span class="t">Checkout விதிகள் (சோதிக்கப்பட்டவை)</span>
+<ul><li>நிலுவை இருந்தால் checkout நடக்காது ("Take payment before checkout") — எதுவும் பாதியாக மாறாது.</li>
+<li>திறந்த உணவக check இருந்தால் checkout நடக்காது.</li>
+<li>Tour operator முன்பதிவுகளில் அறைக் கட்டணம் operator-இன் city ledger-க்கு மாற்றப்படும்.</li></ul></div>
+
+<div class="callout example"><span class="t">உதாரணம் D — Oliver Jensen-இன் உண்மையான விலைப்பட்டியல் (INV-26-000019)</span>
+<table class="grid" style="margin:1mm 0 0">
+<tr><th>விவரம்</th><th class="num">நிகர</th><th class="num">சேவை + வரி</th><th class="num">மொத்தம்</th></tr>
+<tr><td>G1 இரவு 27 செப்</td><td class="num">34,160.00</td><td class="num">6,422.08</td><td class="num">40,582.08</td></tr>
+<tr><td>G1 இரவு 28 செப்</td><td class="num">34,160.00</td><td class="num">6,422.08</td><td class="num">40,582.08</td></tr>
+<tr><td>அறை சேவை ORD-26-000096</td><td class="num">2,700.00</td><td class="num">507.60</td><td class="num">3,207.60</td></tr>
+<tr class="total"><td>மொத்தம் (நிகர 71,020 + சேவை 7,102 + வரி 6,249.76)</td><td></td><td></td><td class="num">84,371.76</td></tr>
+<tr><td>முற்பணம் (வங்கிப் பரிமாற்றம்) + checkout-இல் அட்டை</td><td></td><td></td><td class="num">84,371.76</td></tr>
+<tr class="total"><td>நிலுவை</td><td></td><td></td><td class="num">0.00</td></tr>
+</table></div>
+
+<div class="callout example"><span class="t">உதாரணம் D — பயிற்சிக் கணக்கு: அறை 60,000 + உணவகம் 8,500 + சலவை 2,000</span>
+<p>இவை நிகரத் தொகைகள் (வரி சேர்க்கும் முன்) என்று எடுத்துக்கொண்டால், கணினியின் விதிகளின்படி:</p>
+<table class="grid" style="margin:1mm 0 0">
+<tr><th>கட்டணம்</th><th class="num">நிகர</th><th class="num">சேவை 10%</th><th class="num">வரி 8%</th><th class="num">மொத்தம்</th></tr>
+<tr><td>அறை</td><td class="num">60,000.00</td><td class="num">6,000.00</td><td class="num">5,280.00</td><td class="num">71,280.00</td></tr>
+<tr><td>உணவகம் / அறை சேவை</td><td class="num">8,500.00</td><td class="num">850.00</td><td class="num">748.00</td><td class="num">10,098.00</td></tr>
+<tr><td>சலவை (சேவைக் கட்டணம் இல்லை)</td><td class="num">2,000.00</td><td class="num">0.00</td><td class="num">160.00</td><td class="num">2,160.00</td></tr>
+<tr class="total"><td>மொத்தம்</td><td class="num">70,500.00</td><td class="num">6,850.00</td><td class="num">6,188.00</td><td class="num">83,538.00</td></tr>
+<tr><td>முற்பணம்</td><td></td><td></td><td></td><td class="num">− 20,000.00</td></tr>
+<tr class="total"><td>Checkout-இல் செலுத்த வேண்டியது</td><td></td><td></td><td></td><td class="num">63,538.00</td></tr>
+</table>
+<p class="small" style="margin-top:2mm">இது கணினியின் வரி விதிகளைக் கொண்டு கைமுறையாகக் கணக்கிட்ட பயிற்சி உதாரணம்; மேலே உள்ள Oliver Jensen விலைப்பட்டியல்தான் கணினி உண்மையாக உருவாக்கியது. Nuwan Perera 3 அக்டோபரில் வெளியேறும்போது: அறை 144,936.00 + அறை சேவை 10,098.00 + சலவை 2,160.00 = 157,194.00 − முற்பணம் 20,000 = <b>137,194.00</b> (வேறு கட்டணங்கள் இல்லையெனில் — இது எதிர்பார்ப்புக் கணக்கு).</p></div>
+
+<h1 id="ch10"><span class="num">10</span>வீட்டுப் பராமரிப்பு — உதாரணம் E<span class="sub">Housekeeping: departure clean of villa G1</span></h1>
+<div class="flow"><span class="s-dirty">Dirty</span><i>→ Accept + Start →</i><span class="s-cleaning">Cleaning</span><i>→ Checklist + Submit →</i><span class="s-insp">Inspection</span><i>→ Approve →</i><span class="s-ready">Ready</span></div>
+<p>Checkout நடந்தவுடன் வில்லா <b>Dirty</b> ஆகிறது; "Departure clean" பணி உருவாகிறது; வீட்டுப் பராமரிப்புக் குழுவுக்கு உடனடி அறிவிப்பு செல்கிறது. அன்றே புதிய விருந்தினர் வருவதாக இருந்தால் பணி தானாக <b>Urgent</b> ஆகும்.</p>
+
+<h2 id="ch10-1"><span class="num">10.1</span>அறைப் பணியாளர் (Room attendant)</h2>
+<ol class="steps">
+<li><span class="ui">My cleaning tasks</span> திறக்கவும். "Ready for cleaning" பகுதியில் G1 தெரியும் — <span class="ui">Accept</span>.</li>
+<li><span class="ui">Start</span> அழுத்தினால் வில்லா <b>Cleaning</b> ஆகும். தேவையெனில் காரணத்துடன் <span class="ui">Pause</span>.</li>
+<li><span class="ui">Checklist</span>-இல் ஒவ்வொரு வேலையையும் டிக் செய்யுங்கள் (G1-க்கு 11 உருப்படிகள்). Start செய்யாமல் டிக் செய்ய முடியாது.</li>
+<li>எல்லாம் முடிந்ததும் linen எண்ணிக்கையுடன் <span class="ui">Submit for inspection</span>. ஏதேனும் விடுபட்டால் "Complete the checklist first — N item(s) still open" என்று தடுக்கும்.</li>
+<li>பழுது கண்டால் <span class="ui">Report maintenance</span>; விருந்தினர் விட்டுச்சென்ற பொருளை <span class="ui">Lost &amp; found</span>-இல் பதியலாம்.</li>
+</ol>
+[[FIG:22_my_cleaning_tasks|அறைப் பணியாளரின் "My cleaning tasks": G1 சுத்தம் செய்யத் தயார்.|1]]
+[[FIG:23_cleaning_checklist|சுத்தம் நடைபெறுகிறது — சரிபார்ப்புப் பட்டியல் பாதி டிக் செய்யப்பட்டது.|2]]
+[[FIG:70_mobile_my_tasks|அதே பக்கம் கைபேசியில் (390 px) — அறைப் பணியாளர்கள் கைபேசியிலேயே பயன்படுத்தலாம்.|1]]
+
+<h2 id="ch10-2"><span class="num">10.2</span>மேற்பார்வையாளர் (HK Supervisor)</h2>
+<ol class="steps">
+<li><span class="ui">Housekeeping</span> board-இல் எல்லா வில்லாக்களின் நிலையும், பணிகளும், யாருக்கு ஒதுக்கப்பட்டது என்பதும் தெரியும். பணியை ஒருவருக்கு ஒதுக்கலாம்.</li>
+<li>"Awaiting inspection" பணியைத் திறந்து சரிபார்க்கவும்.</li>
+<li>சரியெனில் <span class="ui">Approve</span> → வில்லா <b>Ready</b> (பழுது "Out of order" இருந்தால் Clean நிலையிலேயே இருக்கும்). குறையிருந்தால் காரணத்துடன் <span class="ui">Reject</span> → மீண்டும் Cleaning.</li>
+</ol>
+[[FIG:11_housekeeping|வீட்டுப் பராமரிப்பு board: G1 ஆய்வுக்காகக் காத்திருக்கிறது.|2]]
+[[FIG:24_inspection|மேற்பார்வையாளர் ஆய்வு: Approve / Reject.|1]]
+[[FIG:25_villa_ready|அங்கீகரிக்கப்பட்டது — G1 இப்போது Ready; அடுத்த விருந்தினருக்கு விற்கலாம்.|1]]
+<div class="callout issue"><span class="t">தெரிந்த குறைபாடு — பழைய stay-over பணி</span>
+<p>Oliver தங்கியிருந்தபோது தொடங்கிய "Stay-over service" பணி checkout-க்குப் பின்னும் "Cleaning" நிலையில் திறந்தே இருந்தது. Checkout அத்தகைய பணிகளைத் தானாக மூடுவதில்லை. மேற்பார்வையாளர் board-இல் அவற்றைக் கைமுறையாக மூட வேண்டும்.</p></div>
+
+<h1 id="ch11"><span class="num">11</span>உணவக POS — உதாரணம் B<span class="sub">Dine-in table T6, 4 guests — order, kitchen, bill, cash and change</span></h1>
+<h2 id="ch11-1"><span class="num">11.1</span>மேசை வரைபடம் (Floor plan)</h2>
+<p>POS Terminal-இல் outlet (Vaasal Kitchen / Pool Bar / In-villa dining) தேர்வு செய்யுங்கள். ஒவ்வொரு மேசையும் ஒரு அட்டை: காலி மேசையில் இருக்கைகளும் இடமும்; பயன்பாட்டில் உள்ளதில் தொகை, விருந்தினர் எண்ணிக்கை, பணியாளர், திறந்த நேரம்; முன்பதிவு செய்யப்பட்ட மேசையில் "Reserved" குறி. கீழே திறந்த Takeaway/Room-service checks.</p>
+[[FIG:30_pos_floor_plan|பணியாளரின் மேசை வரைபடம் (Vaasal Kitchen).]]
+
+<h2 id="ch11-2"><span class="num">11.2</span>ஆர்டர் எடுத்தல் (Waiter)</h2>
+<ol class="steps">
+<li>காலி மேசை <b>T6</b>-ஐ அழுத்தி விருந்தினர் எண்ணிக்கை (covers) = 4.</li>
+<li>வகைகள் (Breakfast, Starters, Mains, Desserts, Drinks …) மூலம் அல்லது தேடல் மூலம் உணவுகளைச் சேர்க்கவும். கட்டாய விருப்பத் தேர்வுகள் இல்லாமல் சேர்க்க முடியாது ("Choose at least 1 option(s) for Spice level").</li>
+<li>குறிப்புகள் தேவையெனில் <span class="ui">Notes</span>.</li>
+<li><span class="ui">Send</span> — ஒவ்வொரு நிலையத்துக்கும் தனி KOT (சமையலறை, bar) உருவாகும்.</li>
+</ol>
+[[FIG:05_pos_table|மேசை T6, 4 விருந்தினர்கள்: சமையலறைக்கு அனுப்பும் முன் ஆர்டர்.]]
+[[FIG:31_kitchen_kot_t6|T6-க்கான சமையலறை மற்றும் bar tickets.|1]]
+<div class="callout rule"><span class="t">பிற மேசைச் செயல்கள் (சோதிக்கப்பட்டவை)</span>
+<ul><li><span class="ui">Move</span> — check-ஐ வேறு மேசைக்கு மாற்றுதல் (T1 → T2).</li>
+<li><span class="ui">Merge</span> — இரண்டு மேசைகளின் checks-ஐ ஒன்றாக்குதல்.</li>
+<li><span class="ui">Split</span> — சில உணவுகளைப் புதிய check-க்கு மாற்றுதல்.</li>
+<li><span class="ui">Discount</span>, <span class="ui">Void</span> — அனுமதியுள்ளவர் மட்டும், காரணத்துடன்; பதிவில் இருக்கும்.</li>
+<li>மேசை முன்பதிவு நேரத்துக்கு முன்பின் மற்றொரு முன்பதிவு மோதினால் நிராகரிக்கப்படும் ("Table T1 is already reserved…").</li></ul></div>
+
+<h2 id="ch11-3"><span class="num">11.3</span>பில் மற்றும் பணம் செலுத்துதல் (Cashier)</h2>
+<ol class="steps">
+<li>check-ஐத் திறந்து <span class="ui">Bill</span> — 80 mm பில் அச்சிடப்படும்; நிலை "Bill printed".</li>
+<li><span class="ui">Pay</span> அழுத்தினால் "Take payment" சாளரம் திறக்கும்; நிலுவைத் தொகையுடன் ஒரு Cash வரி தானாக வரும்.</li>
+<li><span class="ui">Tendered</span>-இல் விருந்தினர் கொடுத்த தொகையை (30000) உள்ளிடுங்கள் அல்லது 1,000 / 5,000 / 10,000 / 20,000 / Exact பொத்தான்களைப் பயன்படுத்துங்கள். மீதி (Change) தானாகக் கணக்கிடப்படும்.</li>
+<li>பல முறைகளில் பிரித்துச் செலுத்த Card / Bank transfer / Digital-QR / Online / Charge to villa வரிகளைச் சேர்க்கலாம்.</li>
+<li><span class="ui">Complete payment</span> — பற்றுச்சீட்டு, மேசை மீண்டும் காலி.</li>
+</ol>
+[[FIG:34_pos_bill|விருந்தினர் பில் (80 mm).|1]]
+[[FIG:06_pos_payment|பணமாகச் செலுத்துதல்: நிலுவை LKR 27,086.40, கொடுத்தது 30,000, மீதி 2,913.60. (இரண்டாவது வெற்று "Cash" வரி படம் எடுத்த ஸ்கிரிப்ட் கூடுதலாக அழுத்தியதால் வந்தது — தேவையில்லை; தொகை 0 என்பதால் பாதிப்பில்லை.)]]
+<div class="callout example"><span class="t">உதாரணம் B — கணினி கணக்கிட்ட தொகை (ORD-26-000098, மேசை T6, 4 பேர்)</span>
+<table class="grid" style="margin:1mm 0 0">
+<tr><th>உணவு</th><th class="num">அளவு</th><th class="num">LKR</th></tr>
+<tr><td>Grilled catch of the day</td><td class="num">1</td><td class="num">6,500.00</td></tr>
+<tr><td>Seafood linguine</td><td class="num">1</td><td class="num">5,600.00</td></tr>
+<tr><td>Crab soup</td><td class="num">1</td><td class="num">2,900.00</td></tr>
+<tr><td>Mango &amp; cashew salad</td><td class="num">1</td><td class="num">2,600.00</td></tr>
+<tr><td>Buffalo curd &amp; kithul treacle</td><td class="num">1</td><td class="num">1,600.00</td></tr>
+<tr><td>Fresh lime soda</td><td class="num">4</td><td class="num">3,600.00</td></tr>
+<tr class="total"><td>உணவு மொத்தம்</td><td></td><td class="num">22,800.00</td></tr>
+<tr><td>சேவைக் கட்டணம் 10%</td><td></td><td class="num">2,280.00</td></tr>
+<tr><td>வரி 8% (22,800 + 2,280 மீது)</td><td></td><td class="num">2,006.40</td></tr>
+<tr class="total"><td>பில் மொத்தம்</td><td></td><td class="num">27,086.40</td></tr>
+<tr><td>விருந்தினர் கொடுத்த பணம்</td><td></td><td class="num">30,000.00</td></tr>
+<tr class="total"><td>மீதி (Change) = 30,000 − 27,086.40</td><td></td><td class="num">2,913.60</td></tr>
+</table></div>
+[[FIG:35_pos_receipt|பற்றுச்சீட்டு (Receipt).|1]]
+[[FIG:36_table_released|பணம் செலுத்திய பின் T6 மீண்டும் காலி.]]
+<div class="callout rule"><span class="t">பணம் செலுத்தும் விதிகள் (சோதிக்கப்பட்டவை)</span>
+<ul><li>வெற்று check-க்கு பணம் வாங்க முடியாது ("This check is empty…") — இந்த QA-இல் சரிசெய்யப்பட்டது.</li>
+<li>நிலுவையைவிட அதிகமான கொடுப்பனவுகள் நிராகரிக்கப்படும் (பணத்தில் மட்டும் "Tendered" மூலம் மீதி தரலாம்).</li>
+<li>பகுதிப் பணம் செலுத்தினால் மேசை "occupied" ஆகவே இருக்கும்.</li>
+<li>மூடிய check-க்கு மீண்டும் பணம் வாங்க முடியாது.</li>
+<li>Cash, Card, Bank transfer, Digital முறைகளுக்கு அந்த outlet-இல் உங்கள் ஷிப்ட் திறந்திருக்க வேண்டும் (அத்தியாயம் 12). "Charge to villa"-க்கு ஷிப்ட் தேவையில்லை.</li></ul></div>
+
+<h1 id="ch12"><span class="num">12</span>காசாளர் ஷிப்ட் மற்றும் நாள் முடிவு<span class="sub">Cashier shift, drawer and day-end closing</span></h1>
+<p>ஒவ்வொரு காசாளரும் ஒவ்வொரு outlet-க்கும் தனி ஷிப்ட் திறக்க வேண்டும். ஷிப்ட் திறக்கும்போது drawer-இல் உள்ள float தொகையைப் பதிய வேண்டும்; நாள் முடிவில் பணத்தை எண்ணி ஷிப்டை மூட வேண்டும்.</p>
+<div class="callout issue"><span class="t">தெரிந்த குறைபாடு — இரண்டாவது outlet ஷிப்ட்</span>
+<p>கணினி ஒவ்வொரு outlet-க்கும் தனி ஷிப்டை அனுமதிக்கிறது; ஆனால் <span class="ui">Shifts &amp; drawer</span> பக்கம் உங்களுக்கு ஏதாவது ஒரு ஷிப்ட் திறந்திருந்தால் "Open a shift" படிவத்தைக் காட்டாது. இந்தச் சோதனையில் காசாளருக்கு முந்தைய நாளின் In-villa dining ஷிப்ட் திறந்திருந்ததால், Vaasal Kitchen-இல் பணம் வாங்க முதலில் அதை Day-end மூலம் மூட வேண்டியிருந்தது ("Open a cashier shift before taking card payments").</p></div>
+
+<h2 id="ch12-1"><span class="num">12.1</span>நாள் முடிவு (Day-end closing)</h2>
+<ol class="steps">
+<li><span class="ui">Shifts &amp; drawer</span> → <span class="ui">Day-end closing</span>.</li>
+<li>கணினி எதிர்பார்க்கும் தொகைகள்: float + பண விற்பனை + cash in − cash out − refund = <b>Expected cash</b>; அட்டை, வங்கி, digital, அறைக் கணக்கு மொத்தங்கள்.</li>
+<li>நோட்டுகள்/நாணயங்களை வகைவாரியாக எண்ணலாம் (5,000 … 1) அல்லது <span class="ui">Counted cash</span>-இல் நேரடியாக உள்ளிடலாம். வேறுபாடு (Variance) தானாகத் தெரியும்.</li>
+<li>வேறுபாட்டுக்கான விளக்கத்தை மேலாளருக்குக் குறிப்பாக எழுதுங்கள்.</li>
+<li>உறுதிப்படுத்தல் பெட்டியை டிக் செய்து <span class="ui">Close shift</span>. ஷிப்ட் பூட்டப்படும்; A4 அல்லது thermal அறிக்கை அச்சிடலாம்; உணவக மேலாளர் அதை அங்கீகரிப்பார் அல்லது flag செய்வார்.</li>
+</ol>
+[[FIG:81_day_end_count|நாள் முடிவு: In-villa dining ஷிப்ட் — எதிர்பார்த்த பணம் 0.00, எண்ணியது 0.00, வேறுபாடு 0.00; அறைக் கணக்குகள் LKR 13,305.60 (3,207.60 + 10,098.00).|2]]
+[[FIG:82_shift_closed|ஷிப்ட் மூடப்பட்டு பூட்டப்பட்டது; மேலாளர் மீளாய்வுக்குக் காத்திருக்கிறது.|1]]
+
+<h2 id="ch12-2"><span class="num">12.2</span>புதிய ஷிப்ட் திறத்தல்</h2>
+<ol class="steps"><li><span class="ui">Shifts &amp; drawer</span> → <b>Open a shift</b>: Outlet = Vaasal Kitchen, Opening float = 10,000.</li><li><span class="ui">Open shift</span>. மேல் பட்டியில் "Shift open · Vaasal Kitchen · since HH:MM" என்ற பச்சைக் குறி தெரியும்.</li><li>ஷிப்டின்போது பணம் வெளியே/உள்ளே சென்றால் (ice வாங்குதல், safe drop) <span class="ui">Record movement</span> மூலம் காரணத்துடன் பதியுங்கள்.</li></ol>
+[[FIG:32_open_shift|Vaasal Kitchen-இல் LKR 10,000 float உடன் ஷிப்ட் திறத்தல்.|1]]
+[[FIG:33_shift_open|ஷிப்ட் திறந்துள்ளது.|1]]
+[[FIG:37_cashier_today|காசாளரின் "Today" சுருக்கம்.|1]]
+[[FIG:40_cashier_shifts|உணவக மேலாளர் பார்வை: எல்லா ஷிப்டுகளும் மீளாய்வுக்காக.|1]]
+[[FIG:41_day_end|மேலாளரின் Day-end பக்கம்.|1]]
+
+<h1 id="ch13"><span class="num">13</span>உணவக மேலாளர் பகுதி<span class="sub">Restaurant back office: dashboard, reservations, menu, sales, inventory</span></h1>
+<p>உணவக மேலாளர் (Restaurant Manager) உள்நுழைந்ததும் <span class="ui">POS dashboard</span> திறக்கும். இதில் இன்றைய விற்பனை, திறந்த checks, மேசைப் பயன்பாடு, அதிகம் விற்ற உணவுகள், ஷிப்ட் நிலை போன்றவை தரவுத்தளத்திலிருந்து நேரடியாகக் கணக்கிடப்படுகின்றன.</p>
+[[FIG:38_pos_dashboard|POS dashboard (உணவக மேலாளர்).|2]]
+[[FIG:71_mobile_pos_dashboard|அதே dashboard கைபேசியில்.|1]]
+[[FIG:39_table_reservations|மேசை முன்பதிவுகள் — இரட்டை முன்பதிவு தடுக்கப்படும்; வந்ததும் "Seat" மூலம் check திறக்கும்.|1]]
+[[FIG:43_food_menu|உணவு மெனு: வகைகள், விலை, நிலையம் (kitchen/bar), படம், விருப்பத் தேர்வுகள், கிடைக்கும் நிலை.|1]]
+[[FIG:42_pos_sales|உணவக விற்பனை அறிக்கை.|1]]
+[[FIG:44_orders_history|ஆர்டர் வரலாறு.|1]]
+[[FIG:45_pos_inventory|கையிருப்பு (Inventory): பொருட்கள், குறைந்த கையிருப்பு; விற்பனையின்போது recipe மூலம் தானாகக் கழிக்கப்படும் (regression test-இல் சோதிக்கப்பட்டது).|1]]
+[[FIG:46_pos_outlets|Outlets: வரி 8%, சேவைக் கட்டணம் 10%, பற்றுச்சீட்டுத் தலைப்பு.|1]]

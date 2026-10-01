@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<title>VAASAL VILLA — பயிற்சி வீடியோ ஸ்கிரிப்ட் / Training video script</title>
+<style>
+[[INCLUDE:styles.css]]
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div class="band top"></div>
+  <div class="inner">
+    <div class="logo"><img src="../../../public/assets/brand/L1.png" alt="Vaasal Villa"></div>
+    <div class="brand">VAASAL VILLA</div>
+    <div class="sys">HOTEL + RESTAURANT MANAGEMENT SYSTEM</div>
+    <div class="ta">தமிழ்ப் பயிற்சி வீடியோ — காட்சிப் பலகை மற்றும் ஸ்கிரிப்ட்</div>
+    <div class="qa">TRAINING VIDEO STORYBOARD &amp; SCRIPT</div>
+    <div class="chips"><span>16 காட்சிகள்</span><span>56 தமிழ் subtitles (.srt)</span><span>43 slide frames 1920×1080</span><span>சுமார் 7½ நிமிடம்</span><span>FFmpeg வழிமுறைகள்</span></div>
+  </div>
+  <div class="meta">
+    <div><b>மொழி:</b> தமிழ் விவரிப்பு + தமிழ் subtitles</div>
+    <div><b>திரைகள்:</b> உண்மையான கணினியின் 82 திரைப்படங்களிலிருந்து</div>
+    <div><b>MP4:</b> இந்தச் சூழலில் உருவாக்கப்படவில்லை (ffmpeg இல்லை)</div>
+    <div><b>பதிப்பு:</b> 1.0 — 30 செப்டம்பர் 2026</div>
+  </div>
+  <div class="band bottom"></div>
+</section>
+
+<div class="toc-title">உள்ளடக்கம்</div>
+[[TOC]]
+
+<h1 id="v1"><span class="num">1</span>நோக்கம்<span class="sub">Purpose, audience and what is delivered</span></h1>
+<p class="lead">புதிய பணியாளர்கள் (வரவேற்பு, காசாளர், பணியாளர், சமையலறை, வீட்டுப் பராமரிப்பு, மேலாளர்கள்) ஒரு விருந்தினரின் முழுப் பயணத்தையும் சுமார் ஏழரை நிமிடங்களில் பார்த்துப் புரிந்துகொள்ள இந்த வீடியோ உதவும். ஒவ்வொரு காட்சியும் தமிழ்ப் பயன்பாட்டு வழிகாட்டியின் ஒரு அத்தியாயத்துடன் பொருந்துகிறது.</p>
+<div class="callout warn"><span class="t">முக்கியம் — வீடியோ கோப்பு உருவாக்கப்படவில்லை</span>
+<p>இந்தச் சோதனைச் சூழலில் ffmpeg அல்லது திரைப் பதிவுக் கருவி இல்லை. அதனால் MP4 கோப்பு உருவாக்கப்படவில்லை; போலியான வீடியோ கோப்பும் தரப்படவில்லை. உருவாக்கத் தேவையான அனைத்தும் தயாராக உள்ளன: காட்சிப் பலகை, முழு விவரிப்பு, நேரமிட்ட <code>VAASAL_VILLA_TRAINING.srt</code>, 43 slide frames (<code>video_frames/</code>), FFmpeg பட்டியல் (<code>video_frames/slides.txt</code>) மற்றும் கீழே உள்ள கட்டளைகள்.</p></div>
+<table class="grid">
+<tr><th>கோப்பு</th><th>உள்ளடக்கம்</th></tr>
+<tr><td><code>VAASAL_VILLA_TRAINING.srt</code></td><td>56 தமிழ் subtitles, UTF-8, காட்சி நேரங்களுடன் பொருந்தியவை</td></tr>
+<tr><td><code>video_frames/NN_*.png</code></td><td>43 படங்கள், 1920×1080 — உண்மையான திரைப்படங்களின் மேல் 16:9 பகுதி</td></tr>
+<tr><td><code>video_frames/slides.txt</code></td><td>FFmpeg concat பட்டியல்: ஒவ்வொரு படமும் எத்தனை விநாடிகள் என்பதுடன்</td></tr>
+<tr><td><code>screenshots/</code></td><td>82 முழு அளவுத் திரைப்படங்கள் (நேரடிப் பதிவுக்கு வழிகாட்டியாக)</td></tr>
+</table>
+
+<h1 id="v2"><span class="num">2</span>வீடியோ விவரக்குறிப்பு<span class="sub">Video specification</span></h1>
+<table class="grid">
+<tr><th style="width:48mm">அம்சம்</th><th>மதிப்பு</th></tr>
+<tr><td>தெளிவுத்திறன் / வேகம்</td><td>1920×1080 (Full HD), 30 fps, H.264 + AAC, MP4</td></tr>
+<tr><td>நீளம்</td><td>சுமார் 7 நிமிடம் 34 விநாடி (16 காட்சிகள்; தலைப்பு மற்றும் நிறைவு அட்டை உட்பட)</td></tr>
+<tr><td>விவரிப்பு</td><td>தமிழ், அமைதியான தெளிவான குரல்; ஒவ்வொரு subtitle வரிக்கும் ஒரு வாக்கியம்</td></tr>
+<tr><td>Subtitles</td><td>தமிழ் (.srt); எழுத்துரு Nirmala UI அல்லது Latha, அளவு 22–26, கீழ் மையம், அரை-ஒளிபுகும் கருப்புப் பின்னணி</td></tr>
+<tr><td>திரைகள்</td><td>உண்மையான கணினி — டெமோ தரவு மட்டும் (Nuwan Perera, Oliver Jensen கற்பனைப் பெயர்கள்)</td></tr>
+<tr><td>தனியுரிமை</td><td>கடவுச்சொல், API key எதுவும் திரையில் வரக்கூடாது; டெமோ கடவுச்சொல் README-இல் மட்டும்</td></tr>
+<tr><td>இசை</td><td>விருப்பம்: உரிமம் இல்லாத மென்மையான பின்னணி இசை, விவரிப்பைவிட −20 dB</td></tr>
+</table>
+<div class="h3">காட்சிச் சுருக்கம்</div>
+[[INCLUDE:video_summary.html]]
+
+<h1 id="v3"><span class="num">3</span>காட்சிப் பலகை (Storyboard)<span class="sub">Scene by scene — screen, action and narration with timing</span></h1>
+<p class="small muted">நேரங்கள் SRT கோப்புடன் சரியாகப் பொருந்துகின்றன. "திரை" நெடுவரிசை எந்தத் திரைப்படம் காட்டப்பட வேண்டும் என்பதைக் குறிக்கிறது (slideshow முறையில் அதே கோப்பின் frame பயன்படும்).</p>
+[[INCLUDE:video_storyboard.html]]
+
+<h1 id="v4"><span class="num">4</span>முழு விவரிப்பு ஸ்கிரிப்ட்<span class="sub">Full Tamil narration (read aloud)</span></h1>
+<p class="small muted">குரல் பதிவு செய்பவர் இதை நேரடியாக வாசிக்கலாம். ஒவ்வொரு வாக்கியத்துக்கும் பின் சிறிய இடைவெளி விடுங்கள்; எண்களைத் தெளிவாக உச்சரியுங்கள் (உ-ம்: "இருபத்தேழாயிரத்து எண்பத்தாறு ரூபாய் நாற்பது சதம்").</p>
+[[INCLUDE:video_script.html]]
+
+<h1 id="v5"><span class="num">5</span>பதிவு செய்யும் முறை<span class="sub">How to record — two options</span></h1>
+<h2 id="v5-1"><span class="num">5.1</span>முறை A — நேரடித் திரைப் பதிவு (பரிந்துரை)</h2>
+<ol class="steps">
+<li>OBS Studio நிறுவுங்கள் (இலவசம்). Settings → Video: Base/Output 1920×1080, 30 fps. Output: MP4, encoder x264, CRF 20. Audio: 48 kHz, நல்ல USB microphone.</li>
+<li>உலாவியை முழுத் திரையில் (F11) 1920×1080-இல் திறந்து, zoom 125% வைத்தால் எழுத்துக்கள் தெளிவாகத் தெரியும்.</li>
+<li>டெமோ தரவுத்தளத்தைப் பதிவுக்கு முன் மீட்டெடுங்கள் (QA backup), அப்போதுதான் G1, T6 போன்றவை காட்சிப் பலகையில் உள்ளபடி இருக்கும்.</li>
+<li>ஒவ்வொரு காட்சியையும் தனித்தனியாகப் பதிவு செய்யுங்கள் (காட்சி 1 … 16). மவுஸை மெதுவாக நகர்த்துங்கள்; கிளிக் செய்யும் முன் 1 விநாடி நிறுத்துங்கள்.</li>
+<li>கடவுச்சொல்லைத் தட்டச்சு செய்யும் காட்சியைப் பதிவு செய்ய வேண்டாம் — உள்நுழைந்த பின் பதிவைத் தொடங்குங்கள்.</li>
+<li>விவரிப்பைத் தனியாக (Audacity-இல்) பதிவு செய்து, noise reduction மற்றும் normalize (−1 dB) செய்யுங்கள்.</li>
+<li>Shotcut / DaVinci Resolve / Clipchamp-இல் காட்சிகளையும் குரலையும் இணைத்து, <code>VAASAL_VILLA_TRAINING.srt</code>-ஐ இறக்குமதி செய்து நேரத்தைச் சரிபாருங்கள்.</li>
+</ol>
+<h2 id="v5-2"><span class="num">5.2</span>முறை B — படக்காட்சி (slideshow) + விவரிப்பு</h2>
+<p>திரைப் பதிவு செய்ய முடியாவிட்டால், தயாராக உள்ள 43 frames-ஐ FFmpeg மூலம் SRT நேரத்துக்கேற்ப இணைக்கலாம். விவரிப்பை ஒரே கோப்பாக (<code>narration_ta.m4a</code>) SRT நேரத்துக்கு ஏற்பப் பதிவு செய்யுங்கள் (SRT-ஐத் திரையில் ஓடவிட்டு வாசிக்கலாம்).</p>
+
+<h1 id="v6"><span class="num">6</span>FFmpeg கட்டளைகள்<span class="sub">Build the MP4 (run in docs/qa-training)</span></h1>
+<p>FFmpeg-ஐ <code>https://ffmpeg.org</code>-இலிருந்து பதிவிறக்கி PATH-இல் சேர்க்கவும். பின்னர் <code>docs/qa-training</code> கோப்புறையில்:</p>
+<div class="h3">1. படக்காட்சி வீடியோ (ஒலி இல்லாமல்)</div>
+<pre class="cmd">cd video_frames
+ffmpeg -f concat -safe 0 -i slides.txt -vf "fps=30,format=yuv420p" -c:v libx264 -crf 20 -preset slow ../vv_slides.mp4
+cd ..</pre>
+<div class="h3">2. தமிழ் விவரிப்பைச் சேர்த்தல்</div>
+<pre class="cmd">ffmpeg -i vv_slides.mp4 -i narration_ta.m4a -map 0:v -map 1:a -c:v copy -c:a aac -b:a 160k -shortest vv_voice.mp4</pre>
+<div class="h3">3a. Subtitles-ஐ வீடியோவில் பதித்தல் (burn-in)</div>
+<pre class="cmd">ffmpeg -i vv_voice.mp4 -vf "subtitles=VAASAL_VILLA_TRAINING.srt:charenc=UTF-8:force_style='FontName=Nirmala UI,FontSize=22,PrimaryColour=&amp;H00FFFFFF,BackColour=&amp;H80000000,BorderStyle=4,Outline=0,MarginV=36'" -c:a copy VAASAL_VILLA_TRAINING.mp4</pre>
+<div class="h3">3b. அல்லது — தேர்வு செய்யக்கூடிய subtitle track (soft subs)</div>
+<pre class="cmd">ffmpeg -i vv_voice.mp4 -i VAASAL_VILLA_TRAINING.srt -map 0 -map 1 -c copy -c:s mov_text -metadata:s:s:0 language=tam VAASAL_VILLA_TRAINING.mp4</pre>
+<div class="h3">4. சரிபார்த்தல்</div>
+<pre class="cmd">ffprobe -v error -show_entries format=duration -of csv=p=0 VAASAL_VILLA_TRAINING.mp4</pre>
+<div class="callout tip"><span class="t">குறிப்புகள்</span>
+<ul><li>Burn-in-இல் தமிழ் எழுத்து உடைந்தால், FFmpeg libass-க்கு font கிடைக்கிறதா பாருங்கள்: <code>:fontsdir=C\:/Windows/Fonts</code> சேர்க்கவும்.</li>
+<li><code>slides.txt</code>-இல் உள்ள நேரங்கள் SRT-உடன் பொருந்துகின்றன; விவரிப்பு நீண்டால் அந்த வரியின் <code>duration</code>-ஐ அதிகரித்து, SRT-ஐ Subtitle Edit மூலம் நகர்த்துங்கள்.</li>
+<li>இறுதி வீடியோவை YouTube-இல் "Unlisted" ஆகப் பதிவேற்றலாம்; அப்போது .srt-ஐத் தனியாகவும் சேர்க்கலாம்.</li></ul></div>
+
+<h1 id="v7"><span class="num">7</span>வெளியிடும் முன் சரிபார்ப்பு<span class="sub">Pre-publish checklist</span></h1>
+<ul>
+<li>☐ எந்தக் காட்சியிலும் கடவுச்சொல், API key, <code>.env</code> உள்ளடக்கம் இல்லை.</li>
+<li>☐ சாவி அட்டைக் காட்சியில் "SIMULATION" என்ற குறிப்பு தெரிகிறது; உண்மையான பூட்டு இணைப்பு என்று கூறப்படவில்லை.</li>
+<li>☐ தொகைகள் வழிகாட்டியுடன் பொருந்துகின்றன: 144,936.00 · 10,098.00 · 2,160.00 · 84,371.76 · 27,086.40 / 2,913.60 · 36,234.00.</li>
+<li>☐ Subtitles வாசிக்கக்கூடியவை (ஒரு வரிக்கு 46 எழுத்துகளுக்குள், இரண்டு வரிகளுக்கு மேல் இல்லை).</li>
+<li>☐ ஒலி அளவு சீரானது; பின்னணி இசை விவரிப்பை மறைக்கவில்லை.</li>
+<li>☐ இறுதியில் தொடர்பு விவரங்கள்: 0764413420 · aflalal2004@gmail.com.</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<h1 id="ch1"><span class="num">1</span>அறிமுகம்<span class="sub">Introduction — இந்த வழிகாட்டியை எப்படிப் பயன்படுத்துவது</span></h1>
+
+<p class="lead">Vaasal Villa மேலாண்மை அமைப்பு இரண்டு <b>தனித்தனி</b> அமைப்புகளைக் கொண்டது: வில்லாக்களை நிர்வகிக்கும் <b>ஹோட்டல் PMS</b> (Property Management System) மற்றும் உணவகத்தை நடத்தும் <b>உணவக POS</b> (Point of Sale). இரண்டும் ஒரே உள்நுழைவுப் பக்கத்தைப் பயன்படுத்தினாலும், ஒவ்வொரு பணியாளரும் தமது பாத்திரத்துக்கு (role) அனுமதிக்கப்பட்ட பகுதியை மட்டுமே காண முடியும்.</p>
+
+<div class="sys-diagram">
+  <div class="sys pms"><b>ஹோட்டல் PMS</b>
+    <ul><li>முன்பதிவுகள், வில்லா காலண்டர்</li><li>வருகைப் பதிவு / வெளியேறுதல்</li><li>விருந்தினர் கணக்கு (Folio), விலைப்பட்டியல்</li><li>வீட்டுப் பராமரிப்பு, பராமரிப்புப் பணிகள்</li><li>சாவி அட்டைகள், இரவுத் தணிக்கை, அறிக்கைகள்</li></ul></div>
+  <div class="mid">
+    <div>POS "Charge to villa" → விருந்தினர் Folio</div>
+    <div>திறந்த உணவகக் கணக்கு → Checkout தடை</div>
+    <div>Checkout → வீட்டுப் பராமரிப்புப் பணி</div>
+  </div>
+  <div class="sys pos"><b>உணவக POS</b>
+    <ul><li>மேசைகள், ஆர்டர்கள், டேக்அவே</li><li>அறை சேவை (Room service)</li><li>சமையலறைத் திரை (KOT / KDS)</li><li>பில், பணம், மீதி, பற்றுச்சீட்டு</li><li>காசாளர் ஷிப்ட், நாள் முடிவு, விற்பனை</li></ul></div>
+</div>
+
+<p>இரு அமைப்புகளும் மூன்று இடங்களில் மட்டுமே இணைகின்றன (மேலே நடுவில்). மற்ற எல்லாவற்றிலும் அவை தனித்தனியாக இயங்குகின்றன — உதாரணமாக வரவேற்பாளர் (Reception) POS-ஐத் திறக்க முடியாது; காசாளர் (Cashier) ஹோட்டல் முன்பதிவுகளைப் பார்க்க முடியாது.</p>
+
+<h2 id="ch1-2"><span class="num">1.1</span>இந்த ஆவணத்தில் உள்ள திரைப்படங்கள்</h2>
+<p>இதிலுள்ள 82 திரைப்படங்களும் (screenshots) 29 செப்டம்பர் 2026 அன்று உள்ளூர் XAMPP கணினியில், உண்மையான தரவுத்தளத்தில், உண்மையான பயனர் இடைமுகத்தின் மூலம் எடுக்கப்பட்டவை. எந்தப் படமும் வரையப்படவோ திருத்தப்படவோ இல்லை. முழு அளவுப் படங்கள் <code>screenshots/</code> கோப்புறையில் உள்ளன; இந்த PDF-இல் நீளமான பக்கங்கள் பல பகுதிகளாகப் பிரிக்கப்பட்டுள்ளன.</p>
+<p>சில பயனர்கள் வெளிர் நிறத் தோற்றத்தையும் (light theme), சிலர் இருண்ட தோற்றத்தையும் (dark theme) தேர்ந்தெடுத்திருப்பதால் படங்களின் நிறம் வேறுபடலாம். மேல் வலது மூலையில் உள்ள <span class="ui">◐</span> பொத்தான் மூலம் இதை மாற்றலாம்.</p>
+
+<h2 id="ch1-3"><span class="num">1.2</span>நிலைக் குறியீடுகள்</h2>
+<p>ஒவ்வொரு வசதியும் பின்வரும் நிலைகளில் ஒன்றாகக் குறிக்கப்பட்டுள்ளது:</p>
+<table class="grid">
+<tr><th style="width:34mm">குறியீடு</th><th>பொருள்</th></tr>
+<tr><td><span class="badge b-impl">Implemented</span></td><td>கணினியில் உள்ளது, பயன்படுத்தலாம்.</td></tr>
+<tr><td><span class="badge b-tested">Tested</span></td><td>இந்த QA-இல் உண்மையாகச் சோதிக்கப்பட்டு சரியாக வேலை செய்தது.</td></tr>
+<tr><td><span class="badge b-partial">Partially</span></td><td>ஒரு பகுதி மட்டும் உள்ளது அல்லது வெளிச் சேவை இல்லாமல் முழுமையாகச் சோதிக்க முடியவில்லை.</td></tr>
+<tr><td><span class="badge b-sim">Simulated</span></td><td>உண்மையான கருவி/சேவைக்குப் பதிலாக சிமுலேட்டர் பயன்படுகிறது (உ-ம்: RFID கதவுப் பூட்டுகள், sandbox பணக் கொடுப்பனவு).</td></tr>
+<tr><td><span class="badge b-missing">Missing</span></td><td>கணினியில் இல்லை (உ-ம்: SMS அனுப்புதல்).</td></tr>
+</table>
+
+<h2 id="ch1-4"><span class="num">1.3</span>இந்த வழிகாட்டியில் வரும் உதாரணங்கள்</h2>
+<table class="grid">
+<tr><th style="width:14mm">உதா.</th><th>நிகழ்வு</th><th style="width:36mm">அத்தியாயம்</th></tr>
+<tr><td><b>A</b></td><td>Walk-in விருந்தினர் <b>Nuwan Perera</b>, வில்லா <b>G1</b>, 29 செப் → 3 அக் 2026, 2 பெரியவர்கள், இரவுக்கு LKR 30,500, முற்பணம் LKR 20,000</td><td>5, 6</td></tr>
+<tr><td><b>B</b></td><td>உணவகத்தில் மேசை <b>T6</b>, 4 விருந்தினர்கள், பணமாகச் செலுத்துதல் (LKR 30,000 → மீதி)</td><td>11, 12</td></tr>
+<tr><td><b>C</b></td><td>Nuwan-க்கு (G1) அறை சேவை — உணவு LKR 8,500, வில்லாக் கணக்கில் சேர்த்தல்</td><td>7, 8</td></tr>
+<tr><td><b>D</b></td><td>Checkout — அறை + உணவகம் + சலவைக் கட்டணங்கள் ஒரே பில்லில்</td><td>9</td></tr>
+<tr><td><b>E</b></td><td>G1 வில்லாவைச் சுத்தம் செய்து "Ready" ஆக்குதல்</td><td>10</td></tr>
+</table>
+<div class="callout rule"><span class="t">உண்மை நிகழ்வு வரிசை</span>
+<p>G1-இல் ஏற்கனவே தங்கியிருந்த விருந்தினர் <b>Oliver Jensen</b> முதலில் வெளியேறினார் (உதா. D), பின்னர் G1 சுத்தம் செய்யப்பட்டது (உதா. E), அதன் பிறகே Nuwan Perera G1-இல் தங்க வந்தார் (உதா. A). அதனால் படங்களும் அதே வரிசையில் எடுக்கப்பட்டன.</p></div>
+
+<h1 id="ch2"><span class="num">2</span>உள்நுழைவு மற்றும் பாதுகாப்பு<span class="sub">Sign in, sign out, session and password rules</span></h1>
+
+<h2 id="ch2-1"><span class="num">2.1</span>உள்நுழைவது எப்படி</h2>
+<ol class="steps">
+<li>உலாவியில் கணினியின் முகவரியைத் திறந்து <span class="ui">Staff sign in</span> பக்கத்துக்குச் செல்லுங்கள்.</li>
+<li><span class="ui">Username or email</span> பெட்டியில் உங்கள் பயனர் பெயரை (உ-ம்: <code>reception</code>) அல்லது மின்னஞ்சலை உள்ளிடுங்கள்.</li>
+<li><span class="ui">Password</span> பெட்டியில் கடவுச்சொல்லை உள்ளிட்டு <span class="ui">Sign in</span> அழுத்துங்கள். கண் குறியை அழுத்தினால் தட்டச்சு செய்ததைப் பார்க்கலாம்.</li>
+<li>உங்கள் பாத்திரத்துக்கான முகப்புப் பக்கம் தானாகத் திறக்கும் (உ-ம்: காசாளர் → POS Terminal, சமையலறை → Kitchen display).</li>
+</ol>
+[[FIG:14_login_page|உள்நுழைவுப் பக்கம். கீழே உள்ள "Quick role sign-in" அட்டைகள் உள்ளூர் (APP_ENV=local) சோதனைக்கு மட்டுமே; production-இல் தானாக மறைந்துவிடும்.]]
+
+<div class="callout warn"><span class="t">டெமோ கடவுச்சொற்கள்</span>
+<p>டெமோ கணக்குகளின் கடவுச்சொல் இந்த ஆவணத்தில் அச்சிடப்படவில்லை. அது திட்டத்தின் <code>README.md</code> கோப்பில் மட்டுமே உள்ளது. உண்மையான பயன்பாட்டுக்கு முன் ஒவ்வொரு கணக்கின் கடவுச்சொல்லையும் மாற்றுங்கள் (<span class="ui">My profile</span> → Change password; குறைந்தது 10 எழுத்துகள்).</p></div>
+
+<h2 id="ch2-2"><span class="num">2.2</span>தவறான கடவுச்சொல் மற்றும் கணக்குப் பூட்டு</h2>
+<ul>
+<li>பயனர் பெயர் அல்லது கடவுச்சொல் தவறானால் ஒரே பொதுவான செய்தி வரும்: <i>"The username/email or password is incorrect."</i> — எது தவறு என்று கணினி சொல்லாது (பாதுகாப்புக்காக).</li>
+<li><b>5 முறை</b> தவறாக முயன்றால் கணக்கு <b>15 நிமிடங்கள்</b> பூட்டப்படும். திரையில் "Try again after HH:MM" என்று நேரம் காட்டும். நிர்வாகி <span class="ui">Users</span> பக்கத்தில் பூட்டை நீக்கலாம்.</li>
+<li>ஒரே IP முகவரியிலிருந்து அதிக முயற்சிகள் வந்தாலும் தற்காலிகமாகத் தடுக்கப்படும்.</li>
+</ul>
+[[FIG:77_invalid_login|தவறான கடவுச்சொல்: பொதுவான பிழைச் செய்தி. கடவுச்சொல் பெட்டி தானாகக் காலியாகிறது.]]
+
+<h2 id="ch2-3"><span class="num">2.3</span>அமர்வு முடிவு (Session ended)</h2>
+<p>30 நிமிடங்கள் எதுவும் செய்யாமல் இருந்தால், அல்லது அதே உலாவியில் வேறொரு கணக்கில் உள்நுழைந்தால், அல்லது வேறொரு tab-இல் வெளியேறினால் உங்கள் அமர்வு (session) முடிந்துவிடும். முன்பு POS திரையில் இது வெறும் "Unauthenticated" என்று காட்டியது. இந்த QA-இல் அது சரிசெய்யப்பட்டது: இப்போது தெளிவான செய்தி தோன்றி, 2.5 விநாடிகளில் உள்நுழைவுப் பக்கத்துக்குச் செல்லும்; மீண்டும் உள்நுழைந்ததும் நீங்கள் இருந்த அதே பக்கத்துக்குத் திரும்புவீர்கள்.</p>
+[[FIG:75_session_ended|POS திரையில் அமர்வு முடிந்தது: "Your session has ended … Taking you to sign-in…" செய்தி.]]
+[[FIG:76_session_return|உள்நுழைவுப் பக்கம் — உள்நுழைந்ததும் முன்பு இருந்த POS பக்கத்துக்கே திரும்பும்.|1]]
+<div class="callout tip"><span class="t">நல்ல பழக்கங்கள்</span>
+<ul><li>ஒரே உலாவியில் இரண்டு வெவ்வேறு கணக்குகளில் ஒரே நேரத்தில் வேலை செய்ய வேண்டாம்.</li>
+<li>மேசையை விட்டுச் செல்லும்போது இடது கீழே உள்ள <span class="ui">Log out</span> அழுத்துங்கள்.</li>
+<li>பகிர்ந்து பயன்படுத்தும் கணினியில் "Remember me" தேர்வு செய்ய வேண்டாம்.</li></ul></div>
+
+<h1 id="ch3"><span class="num">3</span>பாத்திரங்கள் மற்றும் அனுமதிகள்<span class="sub">Roles &amp; permission matrix — tested by direct URL access</span></h1>
+<p>ஒவ்வொரு பயனருக்கும் ஒரு பாத்திரம் (role) உண்டு. பக்கப்பட்டியில் (sidebar) அனுமதியுள்ள பக்கங்கள் மட்டுமே தெரியும். மறைக்கப்பட்ட பக்கத்தின் முகவரியை நேரடியாகத் தட்டச்சு செய்தாலும் சேவையகம் <b>403 Forbidden</b> பதிலைத் தரும் — இது 15 பாத்திரங்களுக்கும், ஒவ்வொன்றுக்கும் 90 பக்கங்கள் வீதம் சோதிக்கப்பட்டது (ஒரு பிழையும் இல்லை).</p>
+<table class="grid">
+<tr><th>பாத்திரம்</th><th>டெமோ பயனர்</th><th>முகப்புப் பக்கம்</th><th>முக்கியப் பணிகள்</th></tr>
+<tr><td>Administrator</td><td><code>admin</code></td><td>Dashboard</td><td>எல்லாவற்றுக்கும் அனுமதி, பயனர்கள், அமைப்புகள்</td></tr>
+<tr><td>Owner</td><td><code>owner</code></td><td>Dashboard</td><td>பார்வை அனுமதி மட்டும்: டாஷ்போர்டு, அறிக்கைகள் (உணவக விற்பனை உட்பட), கொடுப்பனவுகள், வில்லாக்கள், audit log</td></tr>
+<tr><td>Hotel Manager</td><td><code>manager</code></td><td>Dashboard</td><td>முன்பதிவு, விலை மாற்றம், பில், இரவுத் தணிக்கை</td></tr>
+<tr><td>Receptionist</td><td><code>reception</code></td><td>Front desk</td><td>முன்பதிவு, check-in/out, Folio, சாவி அட்டை</td></tr>
+<tr><td>Accountant</td><td><code>accounts</code></td><td>Payments</td><td>கொடுப்பனவுகள், விலைப்பட்டியல், அறிக்கைகள்</td></tr>
+<tr><td>Restaurant Manager</td><td><code>posmanager</code></td><td>POS dashboard</td><td>மெனு, மேசைகள், ஷிப்ட் மீளாய்வு, விற்பனை, கையிருப்பு</td></tr>
+<tr><td>Cashier</td><td><code>cashier</code></td><td>POS Terminal</td><td>பில், பணம், அறைக் கணக்கில் சேர்த்தல், சொந்த ஷிப்ட்</td></tr>
+<tr><td>Waiter</td><td><code>waiter</code></td><td>POS Terminal</td><td>மேசை ஆர்டர், சமையலறைக்கு அனுப்புதல் (பணம் வாங்க முடியாது)</td></tr>
+<tr><td>Kitchen Staff</td><td><code>kitchen</code></td><td>Kitchen display</td><td>KOT நிலை மாற்றுதல்</td></tr>
+<tr><td>Inventory Staff</td><td><code>stores</code></td><td>Inventory</td><td>கையிருப்பு, கொள்முதல், விநியோகஸ்தர்கள்</td></tr>
+<tr><td>HK Supervisor</td><td><code>hksupervisor</code></td><td>Housekeeping board</td><td>பணி ஒதுக்கீடு, ஆய்வு, அங்கீகாரம்</td></tr>
+<tr><td>Housekeeping</td><td><code>housekeeping</code></td><td>My cleaning tasks</td><td>சுத்தம் செய்யும் பணிகள், சரிபார்ப்புப் பட்டியல்</td></tr>
+<tr><td>Maintenance</td><td><code>maintenance</code></td><td>Maintenance</td><td>பழுது பார்க்கும் பணிகள்</td></tr>
+<tr><td>General Staff</td><td><code>staff</code></td><td>My time card</td><td>சொந்த வருகைப் பதிவு, விடுப்பு</td></tr>
+<tr><td>Tour Operator</td><td><code>operator</code></td><td>Partner portal</td><td>தமது முன்பதிவுகள் மட்டும் (பணியாளர் பக்கங்கள் இல்லை)</td></tr>
+</table>
+<div class="h3">அனுமதி அட்டவணை (நேரடி URL சோதனை முடிவு)</div>
+[[ROLEMATRIX]]
+<p class="small muted">✓ = பக்கம் திறந்தது (HTTP 200) · — = மறுக்கப்பட்டது (403, அல்லது partner portal-க்குத் திருப்பப்பட்டது 302). ஹோட்டல் பணியாளர்கள் POS-ஐயும், உணவகப் பணியாளர்கள் ஹோட்டல் பக்கங்களையும் திறக்க முடியாது என்பதை அட்டவணை உறுதிப்படுத்துகிறது.</p>
+
+<h1 id="ch4"><span class="num">4</span>டாஷ்போர்டு மற்றும் முன் மேசை<span class="sub">Admin dashboard &amp; Front desk</span></h1>
+<p>நிர்வாகி மற்றும் மேலாளர் உள்நுழைந்ததும் <span class="ui">Dashboard</span> திறக்கும். இதில் இன்றைய வருகைகள், தங்கியுள்ளோர், வெளியேற வேண்டியோர், நிரம்பல் சதவீதம், வருமானம், வீட்டுப் பராமரிப்பு நிலை, திறந்த உணவகக் கணக்குகள் போன்றவை ஒரே பார்வையில் தெரியும். மேலே உள்ள மணிக் குறி (🔔 எண்) புதிய அறிவிப்புகளைக் காட்டும்.</p>
+[[FIG:01_admin_dashboard|நிர்வாகி டாஷ்போர்டு (Administrator).|2]]
+<p>வரவேற்பாளரின் முதன்மைப் பக்கம் <span class="ui">Front desk</span>. மேலே நான்கு எண்ணிக்கைகள்: <i>Arrivals pending</i>, <i>In-house</i>, <i>Departures pending</i>, <i>Villas ready</i>. கீழே தாவல்கள் (tabs): Arrivals, In-house, Departures, Next 3 days, Villa status. <span class="ui">Walk-in</span> மற்றும் <span class="ui">Run night audit</span> பொத்தான்கள் மேல் வலதில் உள்ளன.</p>
+[[FIG:15_front_desk|முன் மேசை (Front desk) — வரவேற்பாளர் பார்வை.|2]]
+
+<h1 id="ch5"><span class="num">5</span>முன்பதிவுகள் — உதாரணம் A<span class="sub">Bookings &amp; walk-in: Nuwan Perera, villa G1</span></h1>
+
+<h2 id="ch5-1"><span class="num">5.1</span>முன்பதிவு மூலங்கள் (Booking sources)</h2>
+<table class="grid">
+<tr><th>மூலம்</th><th>யார் உருவாக்குவது</th><th>நிலை</th></tr>
+<tr><td>Phone / Email / Admin</td><td>வரவேற்பாளர் அல்லது மேலாளர் — <span class="ui">Bookings → New booking</span></td><td><span class="badge b-tested">Tested</span></td></tr>
+<tr><td>Walk-in</td><td>முன் மேசை — <span class="ui">Walk-in</span> பொத்தான்</td><td><span class="badge b-tested">Tested</span></td></tr>
+<tr><td>Tour operator</td><td>பணியாளர் (ஒப்பந்த விலை) அல்லது operator தனது partner portal-இல்</td><td><span class="badge b-tested">Tested</span></td></tr>
+<tr><td>Website</td><td>விருந்தினர் இணையதளத்தில்; கட்டணம் செலுத்தும் வரை "hold"</td><td><span class="badge b-sim">Simulated</span> sandbox கட்டணம்</td></tr>
+<tr><td>OTA (Booking.com போன்றவை)</td><td>Channel manager webhook</td><td><span class="badge b-sim">Simulated</span> — நேரடி இணைப்பு இல்லை (CHANNEL_DRIVER=null)</td></tr>
+</table>
+
+<h2 id="ch5-2"><span class="num">5.2</span>கணினி சரிபார்க்கும் விதிகள்</h2>
+<div class="callout rule"><span class="t">முன்பதிவு விதிகள் (சோதிக்கப்பட்டவை)</span>
+<ul>
+<li>வருகைத் தேதி கடந்த தேதியாக இருக்க முடியாது; புறப்படும் தேதி வருகைக்குப் பின் இருக்க வேண்டும்.</li>
+<li>தங்கும் ஒவ்வொரு இரவிலும் வில்லா காலியாக இருக்க வேண்டும் — ஒரு இரவு கூட முன்பதிவாகியிருந்தால் அந்த வில்லா பட்டியலில் வராது. ஒரே வில்லாவுக்கு இரட்டை முன்பதிவு சாத்தியமில்லை.</li>
+<li>பழுதில் உள்ள (Out of order) வில்லா பட்டியலில் வராது, சேமிக்கவும் முடியாது.</li>
+<li>சில தேதிகளுக்கு/சலுகைகளுக்கு குறைந்தபட்ச இரவுகள் உண்டு (உ-ம்: "A minimum stay of 3 nights applies"; STAY4 சலுகைக்கு 4 இரவுகள்).</li>
+<li>தவறான promo code நிராகரிக்கப்படும்.</li>
+<li>இன்றே வருகை என்றால் வில்லா <b>Ready</b> நிலையில் இருக்க வேண்டும் (அத்தியாயம் 10).</li>
+<li>இரவு விலையை மாற்ற (override) <b>Hotel Manager</b> அனுமதி தேவை, காரணமும் கட்டாயம்; இது History-இல் பதிவாகும்.</li>
+</ul></div>
+
+<h2 id="ch5-3"><span class="num">5.3</span>உதாரணம் A — Walk-in முன்பதிவு</h2>
+<p>விருந்தினர் Nuwan Perera முன்பதிவின்றி நேரடியாக வந்து, 29 செப்டம்பர் முதல் 3 அக்டோபர் 2026 வரை (4 இரவுகள்) இருவருக்குத் தங்க விரும்புகிறார். மேலாளர் இரவுக்கு LKR 30,500 விலைக்கு ஒப்புக்கொண்டார்; விருந்தினர் LKR 20,000 முற்பணத்தை அட்டையால் செலுத்தினார்.</p>
+<ol class="steps">
+<li><span class="ui">Front desk</span> → <span class="ui">Walk-in</span> அழுத்துங்கள். இன்றைய தேதியுடன் முன்பதிவுப் படிவம் திறக்கும் (Booking source = Walk-in).</li>
+<li><b>1 · Stay</b>: Arrival = 29/09/2026, Departure = 03/10/2026. Rate plan தேர்வு செய்யுங்கள்.</li>
+<li><b>2 · Villas available</b>: அந்த 4 இரவுகளிலும் காலியாக உள்ள வில்லாக்கள் மட்டும் தெரியும் (இங்கு G1, P3, F1). <b>G1</b>-ஐ டிக் செய்து Adults = 2, Children = 0.</li>
+<li><b>3 · Guest</b>: பெயர், நாடு, மின்னஞ்சல், தொலைபேசி, எதிர்பார்க்கும் வருகை நேரம். (மின்னஞ்சல் மூலம் பழைய விருந்தினர் தானாகப் பொருத்தப்படுவார்.)</li>
+<li>வலப்பக்க <b>Summary</b>-இல் <span class="ui">Override nightly rate</span> திறந்து 30500 மற்றும் காரணம் "Walk-in rate agreed by manager".</li>
+<li><span class="ui">Deposit taken now</span> = 20000, Method = Card. <span class="ui">Continue to check-in</span> டிக் செய்திருக்கட்டும்.</li>
+<li><span class="ui">Create booking</span> அழுத்துங்கள். முன்பதிவு எண் உருவாகி நேரடியாக check-in பக்கம் திறக்கும்.</li>
+</ol>
+[[FIG:02_walkin_booking|Walk-in முன்பதிவுப் படிவம் — Nuwan Perera, G1, 29 செப் → 3 அக், 2 பெரியவர்கள், இரவுக்கு LKR 30,500, முற்பணம் LKR 20,000.|2]]
+[[FIG:03_room_selection|வில்லா தேர்வு: அனைத்து இரவுகளிலும் காலியாக உள்ள வில்லாக்கள், வீட்டுப் பராமரிப்பு நிலையுடன். G1 டிக் செய்யப்பட்டுள்ளது.]]
+
+<div class="callout issue"><span class="t">தெரிந்த குறைபாடு — Summary மொத்தம்</span>
+<p>விலையை override செய்தாலும் படிவத்தின் வலப்பக்க "Total" பழைய (சாதாரண) விலையிலேயே LKR 162,756.00 என்று காட்டுகிறது ([[REF:03_room_selection]]). ஆனால் சேமித்த முன்பதிவு சரியான override விலையில் கணக்கிடப்படுகிறது (கீழே). சேமித்த பின் check-in பக்கத்திலுள்ள "Booking total"-ஐயே நம்புங்கள்.</p></div>
+
+<div class="callout example"><span class="t">உதாரணம் A — கணினி கணக்கிட்ட தொகை (VV-26-000033)</span>
+<table class="grid" style="margin:1mm 0 0">
+<tr><th>விவரம்</th><th class="num">LKR</th></tr>
+<tr><td>அறை: 4 இரவுகள் × 30,500</td><td class="num">122,000.00</td></tr>
+<tr><td>சேவைக் கட்டணம் 10%</td><td class="num">12,200.00</td></tr>
+<tr><td>வரி 8% (அறை + சேவைக் கட்டணம் மீது)</td><td class="num">10,736.00</td></tr>
+<tr class="total"><td>முன்பதிவு மொத்தம் (Booking total)</td><td class="num">144,936.00</td></tr>
+<tr><td>முற்பணம் (அட்டை, PAY-26-000044)</td><td class="num">− 20,000.00</td></tr>
+<tr class="total"><td>முன்பதிவுக்கு எதிரான நிலுவை</td><td class="num">124,936.00</td></tr>
+</table>
+<p class="small" style="margin-top:2mm">கொள்கைப்படி பரிந்துரைக்கப்படும் முற்பணம் 30% = LKR 43,480.80; குறைவாகப் பெற்றாலும் கணினி ஏற்கிறது, "Deposit due" என்று காட்டுகிறது.</p></div>
+
+<h2 id="ch5-4"><span class="num">5.4</span>முன்பதிவுப் பட்டியல் மற்றும் வில்லா காலண்டர்</h2>
+<p><span class="ui">Bookings</span> பக்கத்தில் எல்லா முன்பதிவுகளையும் நிலை, மூலம், தேதி மூலம் தேடலாம். <span class="ui">Villa calendar</span> ஒவ்வொரு வில்லாவின் ஒவ்வொரு இரவையும் வண்ணத்தில் காட்டும்.</p>
+[[FIG:51_bookings|முன்பதிவுப் பட்டியல்.|2]]
+[[FIG:52_villa_calendar|வில்லா காலண்டர்.|1]]
+
+<h1 id="ch6"><span class="num">6</span>வருகைப் பதிவு (Check-in)<span class="sub">Identity, villa assignment and key card</span></h1>
+<p>Walk-in முன்பதிவைச் சேமித்ததும் check-in பக்கம் தானாகத் திறக்கும். முன்கூட்டிய முன்பதிவுகளுக்கு <span class="ui">Front desk → Arrivals</span> → விருந்தினர் பெயர் → <span class="ui">Check in</span>.</p>
+<ol class="steps">
+<li><b>1 · Verify identity</b>: ஆவண வகை (Passport / National ID / Driving licence), ஆவண எண் (கட்டாயம்), காலாவதி, தேசியம், தொலைபேசி. ஆவணப் படத்தை scan செய்து இணைக்கலாம் — அது தனிப்பட்ட முறையில் சேமிக்கப்படும்; பின்னர் எண் மறைக்கப்பட்டு (••••2211) காட்டப்படும்.</li>
+<li><b>2 · Villa &amp; key cards</b>: வில்லாவின் வீட்டுப் பராமரிப்பு நிலை <b>Ready</b> ஆக இருக்க வேண்டும். வேறு வில்லா ஒதுக்க வேண்டுமெனில் "Assign a different villa". "Free cards" பட்டியலில் இருந்து ஒரு அட்டையை அழுத்தினால் அதன் UID "Key card UID" பெட்டியில் நிரம்பும் (அல்லது encoder reader-இல் அட்டையைத் தட்டுங்கள்).</li>
+<li>உடன் வந்தவர்களைப் பதிய <span class="ui">Register accompanying guests</span>.</li>
+<li><b>3 · Payment</b>: தேவையெனில் மேலும் முற்பணம் பெறலாம்.</li>
+<li><span class="ui">Complete check-in</span> அழுத்துங்கள். பதிவு அட்டையை அச்சிட <span class="ui">Print registration card</span>.</li>
+</ol>
+[[FIG:04_checkin|Check-in: அடையாள ஆவணம் மற்றும் G1-க்கான சாவி அட்டை (04EE00000001).]]
+<div class="callout rule"><span class="t">Check-in விதிகள்</span>
+<ul><li>வில்லா Ready இல்லையெனில் check-in தடுக்கப்படும் ("Villa P3 is not ready (housekeeping: Dirty)"). மேலாளர்/மேற்பார்வையாளர் மட்டும் "Check in anyway" தேர்வை உறுதிப்படுத்திப் பயன்படுத்தலாம்.</li>
+<li>புதிய சாவி அட்டை வழங்கினால் அதே வில்லாவுக்கான பழைய அட்டை தானாகச் செல்லாததாகும்.</li>
+<li>அட்டை வெளியேறும் நாள் 12:00 வரை செல்லுபடியாகும் (இங்கு 03 அக் 2026, 12:00).</li></ul></div>
+<p>Check-in முடிந்ததும் முன்பதிவுப் பக்கம் <b>Checked in</b> நிலையைக் காட்டும்; வில்லா <b>Occupied</b> ஆகும்; விருந்தினர் கணக்கு (Folio) உணவக மற்றும் சேவைக் கட்டணங்களுக்குத் திறக்கப்படும்.</p>
+[[FIG:26_checked_in|Check-in முடிந்தது: VV-26-000033 — Checked in, G1, சாவி அட்டை Active.|2]]
+<div class="callout sim"><span class="t">சாவி அட்டை — சிமுலேஷன்</span>
+<p>இந்தக் கணினியில் <code>LOCK_DRIVER=simulator</code>. அட்டை "encode" செய்வது Lock Bridge வழியாக உண்மையான கதவுப் பூட்டுக்குச் செல்வதில்லை; உண்மையான RFID/பூட்டு வன்பொருள் இணைக்கப்படவில்லை. விவரம்: அத்தியாயம் 14.</p></div>

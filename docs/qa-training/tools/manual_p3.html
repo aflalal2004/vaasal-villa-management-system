@@ -1,0 +1,238 @@
+<h1 id="ch14"><span class="num">14</span>சாவி அட்டைகள் மற்றும் அணுகல் கட்டுப்பாடு<span class="sub">Key cards &amp; RFID access — SIMULATION ONLY in this installation</span></h1>
+<div class="callout sim"><span class="t">முக்கியம்: இது சிமுலேஷன்</span>
+<p>இந்தக் கணினியில் <code>LOCK_DRIVER=simulator</code> மற்றும் <code>RFID_SIMULATOR=true</code>. எந்த உண்மையான கதவுப் பூட்டோ, RFID reader-ஓ, card encoder-ஓ இணைக்கப்படவில்லை; <code>lock-bridge/</code> கோப்புறையில் உள்ள vendor adapter ஒரு மாதிரி (stub) மட்டுமே. கீழே காட்டப்படும் "Access Granted / Denied" முடிவுகள் அனைத்தும் கணினியின் அனுமதி விதிகளைச் சோதிக்கும் சிமுலேஷன் முடிவுகள்; உண்மையான கதவுகள் திறக்கப்படவில்லை.</p></div>
+<p><span class="ui">Key cards</span> பக்கத்தில் விருந்தினர் அட்டைகள், பணியாளர் அட்டைகள் (badges), தொலைந்த அட்டைகள், ஒதுக்குதல்/ரத்து செய்தல், அணுகல் பதிவுகள், RFID சாதனங்கள், simulator, Lock bridge ஆகிய தாவல்கள் உள்ளன.</p>
+[[FIG:12_key_cards|சாவி அட்டைகள் — எல்லா அட்டைகளும் நிலையுடன் (LOCK_DRIVER=simulator).|2]]
+<div class="callout rule"><span class="t">அட்டை விதிகள் (சிமுலேஷனில் சோதிக்கப்பட்டவை)</span>
+<ul><li>விருந்தினர் அட்டை: தமது வில்லா + பொது இடங்கள் (Main gate, Lobby, Pool, Restaurant, Gym) மட்டும். வேறு வில்லா → மறுப்பு ("Not valid for villa G1").</li>
+<li>ஒரே UID-ஐ இரண்டு முறை பதிய முடியாது.</li>
+<li>Checkout அல்லது "Revoke" → அட்டை செல்லாது ("Card revoked"). "Lost" எனக் குறித்தால் உடனடியாக மறுக்கப்படும்; புதிய அட்டை வழங்கலாம்.</li>
+<li>செல்லுபடிக் காலம் முடிந்த அட்டை மறுக்கப்படும் ("Card expired"); தெரியாத அட்டை → "Unknown card".</li>
+<li>பணியாளர் badge அவர்களின் துறைக்குரிய பகுதிகளைத் திறக்கும்; time-clock சாதனத்தில் தட்டினால் வருகையும் பதிவாகும்.</li></ul></div>
+[[FIG:47_rfid_simulator|SIMULATION: Nuwan Perera-வின் அட்டை (04EE00000001) G1 கதவில் — "Access Granted, Guest of villa G1".|1]]
+[[FIG:48_access_logs|அணுகல் பதிவுகள் (Access logs) — ஒவ்வொரு ஸ்கேனும், முடிவும், காரணமும்.|1]]
+
+<h1 id="ch15"><span class="num">15</span>இரவுத் தணிக்கை (Night audit)<span class="sub">What it does, who runs it, and what to check</span></h1>
+<p>இரவுத் தணிக்கை அன்றைய வணிக நாளை (business date) முடிக்கிறது. இதை <b>Hotel Manager</b> அல்லது <b>Administrator</b> மட்டுமே இயக்க முடியும் (வரவேற்பாளருக்கு 403).</p>
+<div class="h3">இரவுத் தணிக்கை செய்யும் வேலைகள் (code மூலம் உறுதிப்படுத்தப்பட்டது)</div>
+<table class="grid">
+<tr><th style="width:8mm">#</th><th>செயல்</th><th>விவரம்</th></tr>
+<tr><td>1</td><td>அறை இரவுக் கட்டணங்கள்</td><td>தங்கியுள்ள ஒவ்வொரு விருந்தினருக்கும் வணிக நாள் வரையிலான (அது உட்பட) இரவுகளை 10% சேவை + 8% வரியுடன் folio-வில் பதிகிறது. ஏற்கனவே பதிந்த இரவை மீண்டும் பதியாது — இரண்டு முறை இயக்கினாலும் இரட்டைக் கட்டணம் இல்லை (சோதிக்கப்பட்டது).</td></tr>
+<tr><td>2</td><td>No-show</td><td>வருகைத் தேதி கடந்தும் check-in செய்யாத "confirmed" முன்பதிவுகளை No-show ஆக்குகிறது.</td></tr>
+<tr><td>3</td><td>Website holds</td><td>கட்டண நேரம் முடிந்த இணையதள holds-ஐ விடுவிக்கிறது.</td></tr>
+<tr><td>4</td><td>சாவி அட்டைகள்</td><td>செல்லுபடிக் காலம் முடிந்த அட்டைகளை expire செய்கிறது.</td></tr>
+<tr><td>5</td><td>Stay-over பணிகள்</td><td>அடுத்த நாளுக்கான தங்கியுள்ள வில்லாச் சுத்தப் பணிகளை உருவாக்குகிறது.</td></tr>
+<tr><td>6</td><td>பணியாளர் வருகை</td><td>முந்தைய நாளுக்கு வராதவர்களை "absent" எனக் குறிக்கிறது.</td></tr>
+</table>
+<ol class="steps">
+<li><span class="ui">Front desk</span> → <span class="ui">Run night audit</span>.</li>
+<li>"Run night audit now?" உறுதிப்படுத்தல் சாளரத்தில் <span class="ui">Confirm</span>.</li>
+<li>முடிவுச் செய்தி: எத்தனை இரவுகள் பதிந்தன, no-shows, expire ஆன holds/cards, stay-over பணிகள். மேலே "Last night audit: …" என்று நேரமும் தெரியும்.</li>
+<li>சில folios-ஐத் திறந்து அறைக் கட்டணம் சரியாகப் பதிந்ததா எனச் சரிபாருங்கள்.</li>
+</ol>
+[[FIG:49_night_audit_confirm|"Run night audit now?" உறுதிப்படுத்தல்.]]
+[[FIG:13_night_audit|இரவுத் தணிக்கை முடிவு (29.09.2026 23:49): 5 room nights posted, 3 no-shows, 0 holds, 1 card expired, 2 stay-over tasks.]]
+[[FIG:50_folio_after_audit|தணிக்கைக்குப் பின் Nuwan-இன் folio: 29 செப் இரவு 30,500 + சேவை 3,050 + வரி 2,684 = 36,234.00 சேர்ந்தது.|1]]
+<div class="callout warn"><span class="t">கவனிக்க வேண்டியவை</span>
+<ul><li><b>தானியங்கி இயக்கம்:</b> கணினி தினமும் 02:00-க்கு இரவுத் தணிக்கையை இயக்கும்படி அமைக்கப்பட்டுள்ளது. ஆனால் அதற்கு Windows Task Scheduler-இல் ஒவ்வொரு நிமிடமும் <code>php artisan schedule:run</code> இயங்க வேண்டும். இந்தக் கணினியில் அப்படி ஒரு task இல்லை — அதனால் இப்போது கைமுறையாக மட்டுமே இயங்கும் (holds, அட்டை expiry-யும் அப்படியே).</li>
+<li>02:00-க்கு இயங்கும்போது வணிக நாள் = அந்த நாளின் தேதி. அதனால் அந்த இரவின் கட்டணம் விருந்தினர் தங்குவதற்கு முன்பே பதியும். நள்ளிரவுக்கு முன் கைமுறையாக இயக்குவது பாதுகாப்பானது (இந்த QA-இல் 23:49-க்கு இயக்கப்பட்டது).</li>
+<li>கடைசி இயக்கத்தின் சுருக்கம் மட்டுமே சேமிக்கப்படுகிறது; ஒவ்வொரு இயக்கத்துக்கும் audit log பதிவு இல்லை; வணிக நாள் பூட்டப்படுவதில்லை.</li></ul></div>
+
+<h1 id="ch16"><span class="num">16</span>அறிக்கைகள்<span class="sub">Reports — 15 report types, date range, CSV export</span></h1>
+<p><span class="ui">Reports</span> பக்கத்தில் அறிக்கையைத் தேர்வு செய்து, தேதி வரம்பைக் கொடுத்து பார்க்கலாம்; <span class="ui">Export CSV</span> மூலம் Excel-க்கு எடுக்கலாம். ஒவ்வொரு அறிக்கையும் அனுமதிக்கு உட்பட்டது.</p>
+<table class="grid">
+<tr><th>அறிக்கை</th><th>உள்ளடக்கம்</th><th>அனுமதி</th></tr>
+<tr><td>Bookings</td><td>காலப்பகுதியின் முன்பதிவுகள்</td><td>Operational</td></tr>
+<tr><td>Occupancy, ADR &amp; RevPAR</td><td>நிரம்பல் %, சராசரி அறை விலை, கிடைக்கும் அறைக்கு வருமானம்</td><td>Operational</td></tr>
+<tr><td>Revenue by department</td><td>அறை, அறை சேவை, உணவகம், சலவை … வாரியாக வருமானம்</td><td>Financial</td></tr>
+<tr><td>Payments received / Outstanding balances</td><td>பெற்ற கொடுப்பனவுகள் / நிலுவைகள்</td><td>Financial</td></tr>
+<tr><td>Guest statistics</td><td>நாடு, திரும்பி வரும் விருந்தினர்</td><td>Operational</td></tr>
+<tr><td>OTA &amp; channel production / Tour operators &amp; commission</td><td>மூலம் வாரியான வருமானம், commission</td><td>Financial</td></tr>
+<tr><td>POS sales / POS item sales mix</td><td>உணவக விற்பனை, அதிகம் விற்ற உணவுகள்</td><td>Financial அல்லது POS reports</td></tr>
+<tr><td>Inventory valuation &amp; wastage</td><td>கையிருப்பு மதிப்பு, வீணானவை</td><td>Operational / Inventory</td></tr>
+<tr><td>Housekeeping performance / Maintenance / Key card activity / Staff attendance</td><td>செயல்பாட்டு அறிக்கைகள்</td><td>Operational</td></tr>
+</table>
+[[FIG:60_reports|அறிக்கைகள் முகப்பு.|1]]
+[[FIG:61_report_occupancy|Occupancy, ADR &amp; RevPAR அறிக்கை.|1]]
+<div class="callout rule"><span class="t">பிரிப்பு</span><p>உணவக ஊழியர்கள் ஹோட்டல் அறிக்கைகளைத் திறக்க முடியாது; அவர்களுக்கு POS-இன் <span class="ui">Restaurant sales</span> பக்கம் மட்டும் (இந்த QA-இல் கண்டுபிடிக்கப்பட்டு சரிசெய்யப்பட்ட கசிவு).</p></div>
+
+<h1 id="ch17"><span class="num">17</span>பிற ஹோட்டல் பக்கங்கள்<span class="sub">Villas, guests, website requests, tour operators, maintenance, invoices, payments</span></h1>
+<table class="grid">
+<tr><th>பக்கம்</th><th>பயன்</th></tr>
+<tr><td><span class="ui">Villas / Rooms</span></td><td>8 வில்லாக்கள்: வகை, கொள்ளளவு, பூட்டு எண், வீட்டுப் பராமரிப்பு மற்றும் பழுது நிலை.</td></tr>
+<tr><td><span class="ui">Guests</span></td><td>விருந்தினர் விவரங்கள், தங்கல் வரலாறு; அடையாள எண் மறைக்கப்பட்டு காட்டப்படும்.</td></tr>
+<tr><td><span class="ui">Website requests</span></td><td>இணையதள விசாரணைகள் (enquiries) — பார்த்து, நிலையை மாற்றலாம் (உ-ம்: பதில் அளிக்கப்பட்டது). முன்பதிவாக்க வேண்டுமெனில் <span class="ui">New booking</span> மூலம் தனியாக உருவாக்க வேண்டும் (தானியங்கி மாற்றம் இல்லை).</td></tr>
+<tr><td><span class="ui">Tour operators</span></td><td>Tour operator நிறுவனங்கள், ஒப்பந்த விலைகள், credit limit, கட்டணக் காலம் (30 நாள்); partner portal கணக்குகள்; operator முன்பதிவுகளின் அறைக் கட்டணம் city ledger-க்குச் செல்லும்.</td></tr>
+<tr><td><span class="ui">Maintenance</span></td><td>பழுதுப் பணிகள்; "Out of order" ஆன வில்லா விற்பனையிலிருந்து நீக்கப்படும்.</td></tr>
+<tr><td><span class="ui">Invoices / Payments</span></td><td>விலைப்பட்டியல்கள், கொடுப்பனவுகள், பற்றுச்சீட்டுகள்.</td></tr>
+</table>
+[[FIG:53_villas|வில்லாக்கள்.|1]]
+[[FIG:54_guests|விருந்தினர்கள்.|1]]
+[[FIG:55_website_requests|இணையதளக் கோரிக்கைகள்.|1]]
+[[FIG:56_tour_operators|Tour operators.|1]]
+[[FIG:57_maintenance|பழுதுப் பணிகள்.|1]]
+[[FIG:58_invoices|விலைப்பட்டியல்கள்.|1]]
+[[FIG:59_payments|கொடுப்பனவுகள்.|1]]
+
+<h1 id="ch18"><span class="num">18</span>நிர்வாக அமைப்புகள்<span class="sub">Administrator: users, roles, settings, social media, website, audit, staff</span></h1>
+<ul>
+<li><span class="ui">Users</span> — பயனர்களைச் சேர்த்தல், பாத்திரம் ஒதுக்குதல், செயலிழக்கச் செய்தல், பூட்டை நீக்குதல். நிர்வாகி அல்லாதவர் Administrator பாத்திரத்தை வழங்க முடியாது (சோதிக்கப்பட்டது).</li>
+<li><span class="ui">Roles</span> — ஒவ்வொரு பாத்திரத்துக்குமான அனுமதிகள் (62 அனுமதிகள்).</li>
+<li><span class="ui">Settings</span> — பெயர், தொடர்பு, வரி 8%, சேவைக் கட்டணம் 10%, check-in 14:00, check-out 11:00, இணையதளத்தில் காட்டும் நாணய மாற்று விகிதங்கள். API keys, கடவுச்சொற்கள் <code>.env</code> கோப்பில் மட்டுமே — திரையில் இல்லை.</li>
+<li><span class="ui">Social media</span> — Facebook, Instagram, WhatsApp, YouTube, TikTok இணைப்புகள் (இணையதள footer).</li>
+<li><span class="ui">Website</span> — இணையதள உள்ளடக்கம், படங்கள் (media library).</li>
+<li><span class="ui">Audit log</span> — யார், எப்போது, என்ன மாற்றினார்கள்; உள்நுழைவுப் பதிவுகள்.</li>
+<li><span class="ui">Staff</span> — பணியாளர்கள், roster, வருகை, விடுப்பு.</li>
+</ul>
+[[FIG:62_users|பயனர்கள்.|1]]
+[[FIG:63_roles|பாத்திரங்கள்.|1]]
+[[FIG:64_settings|சொத்து அமைப்புகள் — ரகசியத் தகவல் எதுவும் திரையில் இல்லை.|1]]
+[[FIG:65_social_media|சமூக ஊடக இணைப்புகள்.|1]]
+[[FIG:66_website_content|இணையதள உள்ளடக்கம்.|1]]
+[[FIG:67_audit_log|Audit log.|1]]
+[[FIG:68_staff_attendance|பணியாளர் வருகை.|1]]
+[[FIG:69_staff_roster|Roster / shifts.|1]]
+<div class="callout warn"><span class="t">Settings — சிறு குறை</span><p>"Integrations" பகுதியில் Channel manager வரிக்கு மதிப்பு எதுவும் காட்டப்படவில்லை (வெற்று). உண்மையில் அது இணைக்கப்படவில்லை (CHANNEL_DRIVER=null).</p></div>
+
+<h1 id="ch19"><span class="num">19</span>கைபேசி மற்றும் டேப்லெட்<span class="sub">Responsive use on phones and tablets</span></h1>
+<p>எல்லாப் பக்கங்களும் கைபேசி (390 px) மற்றும் டேப்லெட் (768 px) அகலத்தில் சோதிக்கப்பட்டன. பக்கப்பட்டி ☰ பொத்தானின் கீழ் மறைகிறது. அறைப் பணியாளர்கள் கைபேசியில் பணிகளை ஏற்று, சரிபார்ப்புப் பட்டியலை டிக் செய்யலாம் (அத்தியாயம் 10); மேலாளர்கள் dashboard-ஐப் பார்க்கலாம் (அத்தியாயம் 13).</p>
+[[FIG:72_tablet_frontdesk|முன் மேசை டேப்லெட்டில் (768 px).|1]]
+
+<h1 id="ch20"><span class="num">20</span>பிழைச் செய்திகள் மற்றும் தீர்வுகள்<span class="sub">Troubleshooting</span></h1>
+<table class="grid">
+<tr><th style="width:62mm">செய்தி / நிலை</th><th>காரணம்</th><th>என்ன செய்வது</th></tr>
+<tr><td>403 — Forbidden</td><td>உங்கள் பாத்திரத்துக்கு அந்தப் பக்கத்துக்கு அனுமதி இல்லை</td><td>சரியான கணக்கில் உள்நுழையுங்கள் அல்லது நிர்வாகியிடம் கேளுங்கள்</td></tr>
+<tr><td>404 — Not found</td><td>பதிவு இல்லை/நீக்கப்பட்டது, தவறான முகவரி</td><td>பட்டியலிலிருந்து மீண்டும் திறக்கவும்</td></tr>
+<tr><td>Your session has ended …</td><td>30 நிமிடச் செயலின்மை, வேறு கணக்கு உள்நுழைவு, வேறு tab-இல் logout</td><td>மீண்டும் உள்நுழையுங்கள் — அதே பக்கத்துக்குத் திரும்புவீர்கள்</td></tr>
+<tr><td>419 — Page expired</td><td>படிவம் நீண்ட நேரம் திறந்திருந்தது (CSRF token காலாவதி)</td><td>பக்கத்தைப் புதுப்பித்து மீண்டும் சமர்ப்பிக்கவும்</td></tr>
+<tr><td>The username/email or password is incorrect.</td><td>தவறான பெயர்/கடவுச்சொல்</td><td>கவனமாக மீண்டும்; 5 தவறுகளுக்குப் பின் 15 நிமிடப் பூட்டு</td></tr>
+<tr><td>This account is temporarily locked …</td><td>5 தவறான முயற்சிகள்</td><td>காட்டிய நேரம் வரை காத்திருங்கள் அல்லது நிர்வாகி பூட்டை நீக்கலாம்</td></tr>
+<tr><td>Villa … is not ready (housekeeping: Dirty)</td><td>வில்லா சுத்தம் செய்யப்படவில்லை</td><td>வீட்டுப் பராமரிப்பை அழைக்கவும் (அத்தியாயம் 10)</td></tr>
+<tr><td>1 restaurant check(s) are still open …</td><td>திறந்த உணவக check</td><td>Request restaurant settlement (அத்தியாயம் 9)</td></tr>
+<tr><td>Folio … has an outstanding balance …</td><td>நிலுவை உள்ளது</td><td>Checkout-இல் பணம் பெறவும்</td></tr>
+<tr><td>Open a cashier shift before taking … payments</td><td>அந்த outlet-இல் ஷிப்ட் இல்லை</td><td>ஷிப்ட் திறக்கவும் (அத்தியாயம் 12)</td></tr>
+<tr><td>This check is empty …</td><td>உணவு இல்லாத check</td><td>உணவு சேர்க்கவும் அல்லது check-ஐ void செய்யவும்</td></tr>
+<tr><td>Payments exceed the balance due</td><td>நிலுவையைவிட அதிகம்</td><td>தொகையைச் சரிசெய்யவும்; பணமெனில் "Tendered" பயன்படுத்தவும்</td></tr>
+<tr><td>Choose at least 1 option(s) for …</td><td>கட்டாய விருப்பத் தேர்வு</td><td>விருப்பத்தைத் தேர்வு செய்யவும்</td></tr>
+<tr><td>Complete the checklist first …</td><td>சரிபார்ப்புப் பட்டியல் முடியவில்லை</td><td>எல்லா உருப்படிகளையும் டிக் செய்யவும்</td></tr>
+<tr><td>A minimum stay of N nights applies</td><td>பருவ/சலுகை விதி</td><td>இரவுகளை அதிகரிக்கவும் அல்லது வேறு rate plan</td></tr>
+<tr><td>Arrival cannot be in the past</td><td>கடந்த தேதி</td><td>இன்றைய அல்லது எதிர்காலத் தேதி</td></tr>
+<tr><td>இணையதளத்தில் வானிலை தெரியவில்லை</td><td>Open-Meteo சேவை தாமதம்; தோல்வி 20 நிமிடம் cache ஆகிறது</td><td>20 நிமிடம் கழித்துப் பாருங்கள் (QA குறைபாடு பட்டியலில் உள்ளது)</td></tr>
+<tr><td>திடீர் "500 Server Error" (XAMPP)</td><td>Windows Apache-இல் ஒரே நேரக் கோரிக்கைகளில் .env படிப்பதில் சிக்கல்</td><td>நிர்வாகி <code>php artisan config:cache</code> இயக்க வேண்டும் (QA அறிக்கை பார்க்கவும்)</td></tr>
+</table>
+[[FIG:73_forbidden_403|வரவேற்பாளர் POS-ஐத் திறக்க முயன்றார்: 403 Forbidden.|1]]
+[[FIG:74_not_found_404|இல்லாத முன்பதிவு: 404.|1]]
+
+<h1 id="ch21"><span class="num">21</span>பொது இணையதளம்<span class="sub">Public website, online booking, currency and weather</span></h1>
+<p>விருந்தினர்கள் இணையதளத்தில் வில்லாக்கள், சேவைகள், சலுகைகள், படங்களைப் பார்த்து, தேதிகளைக் கொடுத்து முன்பதிவு செய்யலாம். விலைகள் LKR-இல் சேமிக்கப்படுகின்றன; நாணயத் தேர்வு (USD, EUR, GBP, INR, AUD, AED) காட்சிக்கு மட்டுமே. யாழ்ப்பாணத்தின் நேரடி வானிலை SVG குறிகளுடன் காட்டப்படுகிறது.</p>
+[[FIG:78_website_home|இணையதள முகப்பு — யாழ்ப்பாண வானிலையுடன்.|2]]
+[[FIG:79_website_booking|இணையதள முன்பதிவுப் பக்கம் (20–23 அக், 2 பெரியவர்கள்).|1]]
+[[FIG:80_website_mobile|இணையதளம் கைபேசியில்.|1]]
+<div class="callout sim"><span class="t">இணையதளக் கட்டணம்</span><p>இணையதள முன்பதிவு கட்டணம் செலுத்தும் வரை "hold" ஆக இருக்கும். கட்டணம் <b>sandbox</b> (சோதனை) gateway மூலம் மட்டுமே சோதிக்கப்பட்டது — உண்மையான அட்டைப் பணம் பெறப்படவில்லை. Stripe போன்ற உண்மையான gateway-க்கு keys தேவை.</p></div>
+
+<h1 id="ch22"><span class="num">22</span>நாள்தோறும் சரிபார்ப்புப் பட்டியல்கள்<span class="sub">Daily checklists by role</span></h1>
+<div class="two">
+<div class="box"><div class="h">வரவேற்பாளர்</div><ul>
+<li>காலை: Front desk → Arrivals; வில்லாக்கள் Ready-ஆ?</li>
+<li>Departures: திறந்த உணவக checks உண்டா?</li>
+<li>Check-in: ID, சாவி அட்டை, முற்பணம்</li>
+<li>Checkout: நிலுவை 0, விலைப்பட்டியல் அனுப்புதல்</li>
+<li>தொலைந்த அட்டை → உடனே "Lost"</li></ul></div>
+<div class="box"><div class="h">Hotel Manager</div><ul>
+<li>Dashboard: நிரம்பல், நிலுவைகள், conflicts</li>
+<li>விலை override காரணங்களை History-இல் சரிபாருங்கள்</li>
+<li>நள்ளிரவுக்கு முன் இரவுத் தணிக்கை</li>
+<li>No-shows, outstanding அறிக்கை</li></ul></div>
+<div class="box"><div class="h">காசாளர்</div><ul>
+<li>ஷிப்ட் திறத்தல் (float எண்ணி)</li>
+<li>Room service → Charge to villa</li>
+<li>Settlement அறிவிப்புகளுக்கு உடனடிப் பதில்</li>
+<li>நாள் முடிவில் பணம் எண்ணி Day-end</li></ul></div>
+<div class="box"><div class="h">பணியாளர் (Waiter) / சமையலறை</div><ul>
+<li>சரியான covers, கட்டாய விருப்பத் தேர்வுகள்</li>
+<li>Send-க்கு முன் ஆர்டரைச் சரிபாருங்கள்</li>
+<li>சமையலறை: Start → Ready → Served — ஒவ்வொன்றையும் குறிக்கவும்</li></ul></div>
+<div class="box"><div class="h">அறைப் பணியாளர்</div><ul>
+<li>My cleaning tasks: Accept → Start</li>
+<li>சரிபார்ப்புப் பட்டியல் முழுதும்; linen எண்ணிக்கை</li>
+<li>பழுது / தொலைந்த பொருள் பதிவு</li></ul></div>
+<div class="box"><div class="h">HK Supervisor / Restaurant Manager</div><ul>
+<li>Inspection காத்திருப்பவை → Approve/Reject</li>
+<li>பழைய stay-over பணிகளை மூடுதல்</li>
+<li>உணவகம்: மூடிய ஷிப்டுகளை மீளாய்வு, variance</li>
+<li>குறைந்த கையிருப்பு, மேசை முன்பதிவுகள்</li></ul></div>
+</div>
+
+<h1 id="ch23"><span class="num">23</span>QA சோதனைச் சுருக்கம்<span class="sub">QA summary in Tamil — full details in VAASAL_VILLA_QA_TEST_REPORT.pdf</span></h1>
+<div class="kpis">
+<div class="kpi k1"><div class="v">257</div><div class="l">மொத்த சோதனை வழக்குகள்</div></div>
+<div class="kpi k2"><div class="v">254</div><div class="l">வெற்றி (PASS)</div></div>
+<div class="kpi k3"><div class="v">3</div><div class="l">தடைப்பட்டவை (BLOCKED — வெளிச் சேவை இல்லை)</div></div>
+<div class="kpi k4"><div class="v">0</div><div class="l">தோல்வி (FAIL) — இறுதி ஓட்டத்தில்</div></div>
+</div>
+<table class="grid">
+<tr><th>சோதனை வகை</th><th class="num">எண்ணிக்கை</th><th>முடிவு</th></tr>
+<tr><td>தானியங்கி QA சோதனைகள் (tests/QA/QaAuditTest.php)</td><td class="num">155</td><td>153 PASS, 2 BLOCKED</td></tr>
+<tr><td>நேரடி HTTP சோதனைகள் (XAMPP)</td><td class="num">20</td><td>19 PASS, 1 BLOCKED</td></tr>
+<tr><td>உலாவி நடைப்பயணம் (82 திரைப்படங்கள்)</td><td class="num">82</td><td>82 PASS</td></tr>
+<tr><td>Regression test suite</td><td class="num">51</td><td>51 PASS (1,668 assertions)</td></tr>
+</table>
+<div class="h3">இந்த QA-இல் கண்டுபிடித்துச் சரிசெய்யப்பட்டவை</div>
+<ul>
+<li><b>நேர மண்டலம்</b> — கணினி UTC-யில் ஓடியது (.env-இல் Asia/Colombo இருந்தும்). இலங்கை நேரம் 00:00–05:30 இடையே "இன்று" தவறாக இருந்தது. சரிசெய்யப்பட்டது.</li>
+<li><b>"Unauthenticated"</b> — POS-இல் அமர்வு முடிந்தால் வெறும் சொல். இப்போது தெளிவான செய்தி + மீண்டும் உள்நுழைந்து அதே பக்கம்.</li>
+<li><b>பிரிப்புக் கசிவு</b> — உணவக ஊழியர்கள் ஹோட்டல் அறிக்கைப் பக்கத்தைத் திறக்க முடிந்தது. மூடப்பட்டது.</li>
+<li><b>வெற்று check-க்குப் பணம்</b> — தடுக்கப்பட்டது.</li>
+<li><b>உணவக விற்பனைப் பக்கம்</b> — சில பாத்திரங்களுக்கு 403; இப்போது அனுமதியுள்ள முதல் அறிக்கை திறக்கும்.</li>
+<li><b>இணையதள வானிலை emoji</b> → SVG குறிகள்.</li>
+<li><b>இரவுத் தணிக்கை stay-over எண்ணிக்கை</b> — ஏற்கனவே உள்ள பணிகளையும் எண்ணியது; சரிசெய்யப்பட்டது.</li>
+</ul>
+<div class="h3">இன்னும் திறந்திருப்பவை (பரிந்துரைகள்)</div>
+<ul>
+<li>Laravel scheduler இந்தக் கணினியில் பதியப்படவில்லை — தானியங்கி இரவுத் தணிக்கை/expiry இயங்காது.</li>
+<li>XAMPP-இல் ஒரே நேரக் கோரிக்கைகளில் இடையிடையே 500 பிழை — <code>config:cache</code> தேவை.</li>
+<li>Walk-in படிவ Summary override விலையைக் காட்டவில்லை; இரண்டாவது outlet ஷிப்ட் படிவம் மறைகிறது; பழைய stay-over பணி மூடப்படுவதில்லை; folio நிலுவை எண் வலது ஓரத்தில் வெட்டப்படுகிறது; வானிலைத் தோல்வி 20 நிமிடம் cache ஆகிறது; இரவுத் தணிக்கைக்கு audit log இல்லை.</li>
+</ul>
+<div class="h3">சோதிக்க முடியாதவை (வெளிச் சேவை/கருவி இல்லை)</div>
+<p>உண்மையான RFID/கதவுப் பூட்டுகள் (simulator மட்டும்), OTA/Channex நேரடி இணைப்பு, உண்மையான கட்டண gateway (sandbox மட்டும்), WhatsApp Cloud API, SMS (கணினியில் இல்லை), நாணய மாற்று API, Unsplash/Pexels keys, இணையதள hero வீடியோ (அமைக்கப்படவில்லை), MP4 பயிற்சி வீடியோ (ffmpeg இல்லை — ஸ்கிரிப்ட் மட்டும்).</p>
+
+<h1 id="ch24"><span class="num">24</span>சொற்களஞ்சியம்<span class="sub">Glossary</span></h1>
+<table class="grid">
+<tr><th style="width:44mm">சொல்</th><th>பொருள்</th></tr>
+<tr><td>PMS</td><td>Property Management System — ஹோட்டல்/வில்லா மேலாண்மை அமைப்பு</td></tr>
+<tr><td>POS</td><td>Point of Sale — உணவக விற்பனை முனையம்</td></tr>
+<tr><td>Walk-in</td><td>முன்பதிவின்றி நேரடியாக வரும் விருந்தினர்</td></tr>
+<tr><td>Check-in / Check-out</td><td>வருகைப் பதிவு / வெளியேறுதல்</td></tr>
+<tr><td>Folio</td><td>விருந்தினரின் தங்கல் கணக்கு — எல்லாக் கட்டணங்களும் கொடுப்பனவுகளும்</td></tr>
+<tr><td>Invoice / Receipt</td><td>விலைப்பட்டியல் / பற்றுச்சீட்டு</td></tr>
+<tr><td>Deposit</td><td>முற்பணம்</td></tr>
+<tr><td>Balance</td><td>நிலுவை (செலுத்த வேண்டிய மீதி)</td></tr>
+<tr><td>Change</td><td>மீதிப் பணம் (கொடுத்தது − பில்)</td></tr>
+<tr><td>Service charge / Tax</td><td>சேவைக் கட்டணம் 10% / வரி 8%</td></tr>
+<tr><td>Rate override</td><td>மேலாளர் அனுமதியுடன் இரவு விலையை மாற்றுதல்</td></tr>
+<tr><td>No-show</td><td>முன்பதிவு செய்தும் வராதவர்</td></tr>
+<tr><td>Hold</td><td>கட்டணம் செலுத்தும் வரை தற்காலிகமாக ஒதுக்கிய இணையதள முன்பதிவு</td></tr>
+<tr><td>OTA</td><td>Online Travel Agency (Booking.com போன்றவை)</td></tr>
+<tr><td>Check (POS)</td><td>ஒரு மேசை/அறை/டேக்அவேக்கான உணவக ஆர்டர் கணக்கு</td></tr>
+<tr><td>Covers</td><td>மேசையில் உள்ள விருந்தினர் எண்ணிக்கை</td></tr>
+<tr><td>KOT / KDS</td><td>Kitchen Order Ticket / Kitchen Display System — சமையலறை ஆர்டர் சீட்டு / திரை</td></tr>
+<tr><td>Modifier</td><td>உணவின் விருப்பத் தேர்வு (காரம், பால் வகை …)</td></tr>
+<tr><td>Charge to villa</td><td>உணவகக் கட்டணத்தை விருந்தினரின் வில்லா folio-வில் சேர்த்தல்</td></tr>
+<tr><td>Shift / Float</td><td>காசாளர் பணி நேரம் / தொடக்கப் பணம்</td></tr>
+<tr><td>Day-end / Variance</td><td>நாள் முடிவு மூடல் / எதிர்பார்த்ததற்கும் எண்ணியதற்கும் உள்ள வேறுபாடு</td></tr>
+<tr><td>Dirty → Cleaning → Inspection → Ready</td><td>வில்லா சுத்த நிலைகள்</td></tr>
+<tr><td>Stay-over / Departure clean</td><td>தங்கியிருக்கும்போது தினசரிச் சுத்தம் / வெளியேறிய பின் முழுச் சுத்தம்</td></tr>
+<tr><td>Out of order</td><td>பழுதினால் விற்க முடியாத வில்லா</td></tr>
+<tr><td>Key card UID</td><td>சாவி அட்டையின் தனித்துவ எண்</td></tr>
+<tr><td>Night audit / Business date</td><td>இரவுத் தணிக்கை / கணக்கு முடிக்கப்படும் வணிக நாள்</td></tr>
+<tr><td>ADR / RevPAR</td><td>சராசரி அறை விலை / கிடைக்கும் அறைக்கு வருமானம்</td></tr>
+<tr><td>Session</td><td>உள்நுழைந்த அமர்வு (30 நிமிடச் செயலின்மையில் முடியும்)</td></tr>
+<tr><td>Simulator / Sandbox</td><td>உண்மையான கருவி/சேவைக்குப் பதிலான சோதனை மாற்று</td></tr>
+</table>
+
+<h1 id="ch25"><span class="num">25</span>உதவி மற்றும் தொடர்பு<span class="sub">Support</span></h1>
+<div class="two">
+<div class="box"><div class="h">Vaasal Villa</div><p>யாழ்ப்பாணம், இலங்கை<br>தொலைபேசி / WhatsApp: 0764413420 (+94 76 441 3420)<br>மின்னஞ்சல்: aflalal2004@gmail.com</p></div>
+<div class="box"><div class="h">தொழில்நுட்ப ஆவணங்கள்</div><p><code>README.md</code> — நிறுவல், டெமோ கணக்குகள்<br><code>docs/SETUP.md</code> — scheduler, integrations<br><code>docs/INTEGRATION.md</code> — PMS ↔ POS இணைப்பு<br><code>VAASAL_VILLA_QA_TEST_REPORT.pdf</code> — முழு QA அறிக்கை</p></div>
+</div>
+<div class="sig"><div>தயாரித்தவர் (QA)</div><div>சரிபார்த்தவர் (Hotel Manager)</div><div>அங்கீகரித்தவர் (Owner)</div></div>

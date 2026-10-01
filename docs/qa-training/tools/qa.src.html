@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>VAASAL VILLA — QA TEST REPORT</title>
+<style>
+[[INCLUDE:styles.css]]
+</style>
+</head>
+<body class="en">
+
+<section class="cover">
+  <div class="band top"></div>
+  <div class="inner">
+    <div class="logo"><img src="../../../public/assets/brand/L1.png" alt="Vaasal Villa"></div>
+    <div class="brand">VAASAL VILLA</div>
+    <div class="sys">HOTEL + RESTAURANT MANAGEMENT SYSTEM</div>
+    <div class="ta" style="font-family:'Segoe UI',sans-serif">End-to-end QA Test Report</div>
+    <div class="qa">தர உறுதி சோதனை அறிக்கை</div>
+    <div class="chips"><span>257 test cases</span><span>254 PASS · 3 BLOCKED · 0 FAIL</span><span>Regression 51/51</span><span>8 defects fixed</span><span>82 real screenshots</span></div>
+  </div>
+  <div class="meta">
+    <div><b>System:</b> Laravel 12 · PHP 8.2 · MariaDB 10.4.32 · XAMPP (Windows 11)</div>
+    <div><b>Test date:</b> 29–30 September 2026 (Asia/Colombo)</div>
+    <div><b>Build under test:</b> local working copy (not a git repository)</div>
+    <div><b>Report version:</b> 1.0</div>
+    <div><b>Credentials:</b> none printed — see README</div>
+    <div><b>Evidence:</b> TEST_CASES.csv / .xlsx, screenshots/, data/</div>
+  </div>
+  <div class="band bottom"></div>
+</section>
+
+<div class="toc-title">Contents</div>
+[[TOC]]
+
+<h1 id="q1"><span class="num">1</span>Executive summary</h1>
+<div class="kpis">
+<div class="kpi k1"><div class="v">257</div><div class="l">test cases executed</div></div>
+<div class="kpi k2"><div class="v">254</div><div class="l">passed</div></div>
+<div class="kpi k3"><div class="v">3</div><div class="l">blocked (external dependency)</div></div>
+<div class="kpi k4"><div class="v">0</div><div class="l">failed in the final run</div></div>
+<div class="kpi k5"><div class="v">51/51</div><div class="l">regression tests (1,668 assertions)</div></div>
+<div class="kpi k6"><div class="v">7 + 1</div><div class="l">code defects fixed + 1 environment mitigation documented</div></div>
+<div class="kpi k3"><div class="v">15</div><div class="l">roles tested by direct URL (90 routes each)</div></div>
+<div class="kpi k1"><div class="v">82</div><div class="l">screenshots from real workflows</div></div>
+</div>
+<p><b>Verdict.</b> The Hotel PMS and Restaurant POS work end to end on the local XAMPP installation. They behave as two separate systems joined only at the three designed integration points: POS charge to villa → folio, open restaurant checks block checkout, and checkout → housekeeping. All permission boundaries held under direct-URL and direct-API testing. Every money calculation checked in this audit matched the system's tax rules to the cent (examples in §7).</p>
+<p><b>Before live use</b>, two environment actions are required: (1) register the Laravel scheduler in Windows Task Scheduler — without it the automatic night audit, website-hold expiry and key-card expiry never run; (2) cache the configuration on the Windows/XAMPP server (<code>php artisan config:cache</code>) to stop intermittent HTTP 500 errors under concurrent requests. Three medium-severity product issues remain (§9): night-audit timing and audit trail, the booking-form summary ignoring a rate override, and the second-outlet shift form being hidden.</p>
+<p><b>Not verifiable here.</b> Real RFID locks and encoders, live OTA connections, a real payment gateway, WhatsApp Cloud API and SMS are not connected or not implemented. The key-card and payment results in this report come from the built-in simulator and sandbox and are labelled as such.</p>
+<div class="callout rule"><span class="t">சுருக்கம் (தமிழ்)</span>
+<p>257 சோதனைகளில் 254 வெற்றி, 3 வெளிச் சேவை இல்லாததால் தடைப்பட்டன, இறுதி ஓட்டத்தில் தோல்வி இல்லை. 7 குறைபாடுகள் code-இல் சரிசெய்யப்பட்டன (நேர மண்டலம், "Unauthenticated", அனுமதிக் கசிவு உட்பட). நேரடிப் பயன்பாட்டுக்கு முன் Windows Task Scheduler-இல் Laravel scheduler பதிவு செய்ய வேண்டும், <code>config:cache</code> இயக்க வேண்டும். சாவி அட்டைகள் மற்றும் பணக் கொடுப்பனவுகள் simulator/sandbox மூலம் மட்டுமே சோதிக்கப்பட்டன.</p></div>
+
+<h1 id="q2"><span class="num">2</span>Scope, environment and method</h1>
+<h2 id="q2-1"><span class="num">2.1</span>Environment under test</h2>
+<table class="grid">
+<tr><th style="width:52mm">Item</th><th>Value (read from the running system)</th></tr>
+<tr><td>Application</td><td>Laravel 12 modular monolith (<code>app/Modules/*</code>): 207 PHP classes, 65 controllers, 84 models, 35 services, 178 Blade views, 382 routes (12 public API), 94 tables, 15 roles, 62 permissions, 17 users</td></tr>
+<tr><td>Runtime</td><td>XAMPP on Windows 11 Pro · Apache (thread-safe mod_php) · PHP 8.2 · MariaDB 10.4.32</td></tr>
+<tr><td>URL</td><td><code>http://localhost/vaasal_villa_hospitality_management_system28/public</code></td></tr>
+<tr><td>Configuration</td><td>APP_ENV=local, APP_DEBUG=true, SESSION_DRIVER=database, SESSION_LIFETIME=30, CACHE=database, QUEUE=sync, MAIL=log</td></tr>
+<tr><td>Integrations</td><td>PAYMENT_DRIVER=sandbox · CHANNEL_DRIVER=null · LOCK_DRIVER=simulator · RFID_SIMULATOR=true · no Stripe, WhatsApp Cloud, exchange-rate, Unsplash or Pexels keys</td></tr>
+<tr><td>Timezone</td><td>APP_TIMEZONE=Asia/Colombo (only effective after fix D-01)</td></tr>
+<tr><td>Test databases</td><td><code>vaasal_villa_hms28_test</code> for automated tests (RefreshDatabase); the live dev database <code>vaasal_villa_hms28</code> for live checks and the browser walkthrough, restored from a pre-QA dump first</td></tr>
+<tr><td>Tools</td><td><code>php artisan test</code> (PHPUnit), curl, headless Google Chrome driven over the DevTools protocol from PowerShell, MariaDB client, mysqldump</td></tr>
+</table>
+<h2 id="q2-2"><span class="num">2.2</span>Test layers</h2>
+<table class="grid">
+<tr><th>Layer</th><th>What it does</th><th class="num">Cases</th><th>Result</th></tr>
+<tr><td>Regression suite (<code>tests/Feature</code>, <code>tests/Unit</code>)</td><td>The project's existing tests, re-run after every fix</td><td class="num">51</td><td>51 PASS, 1,668 assertions</td></tr>
+<tr><td>QA harness (<code>tests/QA/QaAuditTest.php</code>, new)</td><td>12 scenario methods: roles and direct URLs, PMS end to end, walk-in edge cases, booking sources, POS end to end, integration, housekeeping, key cards, billing, night audit, reports, errors and security</td><td class="num">155</td><td>153 PASS, 2 BLOCKED</td></tr>
+<tr><td>Live HTTP checks (XAMPP)</td><td>Environment, assets, public API, CSRF and session behaviour against Apache</td><td class="num">20</td><td>19 PASS, 1 BLOCKED</td></tr>
+<tr><td>Browser walkthrough</td><td>Real UI in headless Chrome at 1440×900, 768×1024 and 390×844; examples A–E performed through the screens; full-page screenshots</td><td class="num">82</td><td>82 PASS (5 captured on a corrected re-run)</td></tr>
+<tr><td>Code review</td><td>Night audit, room-charge posting, shift rules, weather cache, scheduler, configuration</td><td class="num">—</td><td>Findings in §9 and §13</td></tr>
+</table>
+<p class="small muted">The QA harness is not part of the default <code>php artisan test</code> run. Run it with <code>php artisan test tests/QA/QaAuditTest.php</code>; it writes <code>storage/app/qa/test_cases.csv</code> and <code>role_matrix.json</code>.</p>
+
+<h1 id="q3"><span class="num">3</span>Feature status</h1>
+<table class="grid small">
+<tr><th>Module / feature</th><th style="width:23mm">Status</th><th>Evidence / notes</th></tr>
+<tr><td>Staff sign-in, lockout (5 attempts / 15 min), IP throttle, session timeout</td><td><span class="badge b-tested">Tested</span></td><td>ERR-01..03, SEC-GUEST-*, SES-01..05; screenshots 14, 75–77</td></tr>
+<tr><td>Local-only demo role cards</td><td><span class="badge b-tested">Tested</span></td><td>Hidden outside APP_ENV=local (SEC-06); password never shown</td></tr>
+<tr><td>Password reset e-mail</td><td><span class="badge b-partial">Partially</span></td><td>Implemented; MAIL=log, so the e-mail round trip was not tested</td></tr>
+<tr><td>Roles and permissions (15 roles, 62 permissions)</td><td><span class="badge b-tested">Tested</span></td><td>90 GET routes per role; 0 server errors; PMS/POS separation (§5)</td></tr>
+<tr><td>Bookings: phone, e-mail, admin, walk-in, tour operator, partner portal</td><td><span class="badge b-tested">Tested</span></td><td>SRC-01..05, WALK-01..10, example A</td></tr>
+<tr><td>Website booking with hold and payment</td><td><span class="badge b-sim">Simulated</span></td><td>Sandbox gateway only (SRC-06..08); no real card processing</td></tr>
+<tr><td>OTA / channel manager</td><td><span class="badge b-sim">Simulated</span></td><td>Signed webhook ingest tested (SRC-09, regression); live Channex connection BLOCKED (SRC-10)</td></tr>
+<tr><td>Availability ledger, overbooking and conflict queue, min stay, promos, out-of-order</td><td><span class="badge b-tested">Tested</span></td><td>PMS-02/03, WALK-*, regression</td></tr>
+<tr><td>Check-in (ID, ready villa, key card), checkout (balance, open checks, early departure)</td><td><span class="badge b-tested">Tested</span></td><td>PMS-*, INT-*, screenshots 04, 10, 16–21, 26</td></tr>
+<tr><td>Folio, charges, reversals, payments, refunds, invoices, city ledger</td><td><span class="badge b-tested">Tested</span></td><td>BILL-*, PAY-*, INT-04, regression</td></tr>
+<tr><td>Restaurant POS: tables, modifiers, KOT/KDS, bill, split/merge/move, discount, void, tenders, change</td><td><span class="badge b-tested">Tested</span></td><td>POS-01..24, KDS, tables; example B</td></tr>
+<tr><td>POS room charge to folio; room service</td><td><span class="badge b-tested">Tested</span></td><td>INT-02, PMS-12, example C</td></tr>
+<tr><td>Cashier shifts, drawer movements, day-end, variance, manager review, reopen</td><td><span class="badge b-tested">Tested</span></td><td>POS-01/24, regression day-end test, screenshots 32, 33, 81, 82</td></tr>
+<tr><td>Table reservations</td><td><span class="badge b-tested">Tested</span></td><td>ERR-06, regression</td></tr>
+<tr><td>Inventory, recipes and stock depletion, suppliers, purchases</td><td><span class="badge b-tested">Tested</span></td><td>Regression (stock depletion on sale); pages open; reports</td></tr>
+<tr><td>Housekeeping: tasks, accept, pause, checklist, inspection, reject/approve, linen</td><td><span class="badge b-tested">Tested</span></td><td>HK-01..12, example E</td></tr>
+<tr><td>Maintenance, lost &amp; found</td><td><span class="badge b-tested">Tested</span></td><td>HK-08, HK-09</td></tr>
+<tr><td>Key cards and RFID access control, lock bridge</td><td><span class="badge b-sim">Simulated</span></td><td>KEY-01..07 on the simulator; physical hardware BLOCKED (KEY-08)</td></tr>
+<tr><td>Staff attendance by RFID badge, roster, late and overtime</td><td><span class="badge b-tested">Tested</span></td><td>Regression tests; device API (simulated)</td></tr>
+<tr><td>Night audit</td><td><span class="badge b-tested">Tested</span></td><td>NA-01..04, screenshot 13; design findings O-03/O-04</td></tr>
+<tr><td>Reports (15 types, CSV export)</td><td><span class="badge b-tested">Tested</span></td><td>RPT-* (17 cases)</td></tr>
+<tr><td>In-app notifications</td><td><span class="badge b-tested">Tested</span></td><td>Settlement request, housekeeping alerts</td></tr>
+<tr><td>WhatsApp messaging</td><td><span class="badge b-partial">Partially</span></td><td>Click-to-chat links only; no WhatsApp Cloud API credentials</td></tr>
+<tr><td>SMS</td><td><span class="badge b-missing">Missing</span></td><td>No SMS gateway integration in the code</td></tr>
+<tr><td>E-mail sending</td><td><span class="badge b-sim">Simulated</span></td><td>MAIL=log (written to storage/logs)</td></tr>
+<tr><td>Currency selector</td><td><span class="badge b-partial">Partially</span></td><td>Display-only conversion tested; live exchange-rate API not configured (static fallback)</td></tr>
+<tr><td>Public website, API, weather</td><td><span class="badge b-tested">Tested</span></td><td>API-01..06, screenshots 78–80; weather cache issue O-07</td></tr>
+<tr><td>Stock photos (Unsplash / Pexels)</td><td><span class="badge b-partial">Partially</span></td><td>Own gallery works; no API keys</td></tr>
+<tr><td>Hero video</td><td><span class="badge b-blocked">Not configured</span></td><td>ENV-08: no video set</td></tr>
+</table>
+
+<h1 id="q4"><span class="num">4</span>Results by module</h1>
+<table class="grid">
+<tr><th>Module (QA harness)</th><th class="num">Pass</th><th class="num">Blocked</th><th class="num">Fail</th></tr>
+<tr><td>Roles &amp; login / Roles &amp; permissions</td><td class="num">30</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td>Security</td><td class="num">13</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td>Hotel PMS / Front desk / Walk-in</td><td class="num">18</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td>Booking sources / Payments</td><td class="num">14</td><td class="num">1</td><td class="num">0</td></tr>
+<tr><td>Billing / Integration</td><td class="num">12</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td>POS / KOT / Kitchen / Tables / Reservations</td><td class="num">20</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td>Housekeeping</td><td class="num">12</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td>Key cards</td><td class="num">8</td><td class="num">1</td><td class="num">0</td></tr>
+<tr><td>Night audit</td><td class="num">4</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td>Reports</td><td class="num">17</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td>Login errors / Error pages</td><td class="num">5</td><td class="num">0</td><td class="num">0</td></tr>
+<tr class="total"><td>QA harness total</td><td class="num">153</td><td class="num">2</td><td class="num">0</td></tr>
+<tr><td>Live HTTP checks (environment, API, CSRF, session)</td><td class="num">19</td><td class="num">1</td><td class="num">0</td></tr>
+<tr><td>Browser walkthrough screenshots</td><td class="num">82</td><td class="num">0</td><td class="num">0</td></tr>
+<tr class="total"><td>All layers (excluding the 51 regression tests)</td><td class="num">254</td><td class="num">3</td><td class="num">0</td></tr>
+</table>
+<div class="callout warn"><span class="t">History of failures during the audit</span>
+<p>The first harness run reported 43 failures. 38 were harness mistakes (for example, the form posts <code>villas[&lt;id&gt;][selected]=1</code>, and the harness had omitted <code>selected</code>) and were corrected in the harness. The rest were real defects, fixed and listed in §8. In the first browser pass, 6 steps failed because of script errors (selector quoting, a root-relative API URL) or unknown data state (two leftover demo checks on T6, and a cashier shift open at another outlet — which led to finding O-06). The corrected re-run captured every screenshot.</p></div>
+
+<h1 id="q5"><span class="num">5</span>Roles and permission matrix</h1>
+<p>Each role was signed in and every parameterless GET route (90) was requested directly, together with the restricted JSON APIs. Allowed routes returned 200/302, forbidden routes 403, and no request returned a 5xx. The matrix below shows the key areas.</p>
+[[ROLEMATRIX]]
+<ul>
+<li><b>Separation held:</b> Reception and Hotel Manager get 403 on the POS and its API (SEC-API-01/02); the Restaurant Manager gets 403 on hotel folio endpoints (SEC-API-03) and hotel reports (after fix D-02).</li>
+<li><b>Night audit:</b> Hotel Manager and Administrator only; Reception gets 403 (NA-01).</li>
+<li><b>Tour operator:</b> redirected to the partner portal; another operator's booking returns 404 (SEC-07).</li>
+<li><b>Owner:</b> view-only permissions. Restaurant reports are available through hotel Reports, not the POS (by design: no <code>pos.access</code>).</li>
+</ul>
+
+<h1 id="q6"><span class="num">6</span>Integration points (PMS ↔ POS)</h1>
+<table class="grid">
+<tr><th>Integration</th><th>Verified behaviour</th><th>Evidence</th></tr>
+<tr><td>POS "Charge to villa" → guest folio</td><td>The order total, including 10% service and 8% tax, is posted as one folio line in the outlet's department; the order becomes "Charged to villa"; no cashier shift is needed</td><td>INT-02, example C, screenshots 08/09</td></tr>
+<tr><td>Open restaurant check blocks checkout</td><td>A warning lists the open checks and "Complete checkout" is disabled; "Request restaurant settlement" notifies cashiers</td><td>PMS-12, screenshots 16–19</td></tr>
+<tr><td>Checkout → housekeeping</td><td>Villa set to Vacant + Dirty, departure task created (Urgent if an arrival is due today), housekeeping notified, key cards revoked</td><td>HK-01, screenshots 20, 22</td></tr>
+<tr><td>Combined invoice</td><td>A single invoice with Room, Room Service, Restaurant and Laundry sections</td><td>INT-04, screenshot 21</td></tr>
+</table>
+
+<h1 id="q7"><span class="num">7</span>Worked examples with real amounts</h1>
+<table class="grid">
+<tr><th style="width:12mm">Ex.</th><th>Scenario</th><th>System result (observed)</th><th>Check</th></tr>
+<tr><td>A</td><td>Walk-in Nuwan Perera, G1, 29 Sep → 3 Oct 2026, 2 adults, override LKR 30,500/night, deposit 20,000 by card</td><td>VV-26-000033: 4 × 30,500 = 122,000 + service 12,200 + tax 10,736 = <b>144,936.00</b>; paid 20,000; balance vs booking 124,936.00</td><td><span class="badge b-pass">PASS</span></td></tr>
+<tr><td>B</td><td>Table T6, 4 covers; menu subtotal 22,800; cash 30,000</td><td>ORD-26-000098: 22,800 + 2,280 + 2,006.40 = <b>27,086.40</b>; change <b>2,913.60</b>; T6 released</td><td><span class="badge b-pass">PASS</span></td></tr>
+<tr><td>C</td><td>Room service for G1: Seafood linguine 5,600 + Crab soup 2,900</td><td>ORD-26-000097: 8,500 + 850 + 748 = <b>10,098.00</b> posted to FOL-26-000038</td><td><span class="badge b-pass">PASS</span></td></tr>
+<tr><td>C′</td><td>Laundry pressing 5 × 400 posted at reception</td><td>2,000 + tax 160 (no service) = <b>2,160.00</b></td><td><span class="badge b-pass">PASS</span></td></tr>
+<tr><td>D</td><td>Checkout of Oliver Jensen (G1, 2 nights) with an open room-service check of 3,207.60</td><td>INV-26-000019: net 71,020 + service 7,102 + tax 6,249.76 = <b>84,371.76</b>; paid in full</td><td><span class="badge b-pass">PASS</span></td></tr>
+<tr><td>D′</td><td>Training example: room 60,000 + restaurant 8,500 + laundry 2,000 (net)</td><td>71,280 + 10,098 + 2,160 = <b>83,538.00</b>; less deposit 20,000 = 63,538.00 (calculated by hand with the system's rules)</td><td class="small">Calculation</td></tr>
+<tr><td>E</td><td>Departure clean of G1: accept, start, 11-item checklist, submit, inspect, approve</td><td>Dirty → Cleaning → Inspection → Ready; "Villa G1 is ready" notification</td><td><span class="badge b-pass">PASS</span></td></tr>
+<tr><td>NA</td><td>Night audit, business date 29 Sep, run at 23:49</td><td>5 room nights, 3 no-shows, 1 card expired, 2 stay-over tasks; Nuwan's night 30,500 + 3,050 + 2,684 = <b>36,234.00</b>; a second run posts 0 (idempotent)</td><td><span class="badge b-pass">PASS</span></td></tr>
+<tr><td>INT-04</td><td>Harness: room 20,000 + restaurant 4,500 (0% outlet) + laundry 1,000</td><td>23,760 + 4,500 + 1,080 = <b>29,340.00</b></td><td><span class="badge b-pass">PASS</span></td></tr>
+<tr><td>POS-15</td><td>Harness: bill 22,096.80, cash 30,000</td><td>Change <b>7,903.20</b></td><td><span class="badge b-pass">PASS</span></td></tr>
+</table>
+<p class="small muted">Tax rules confirmed from settings and observed postings: service charge 10% of net; tax 8% of (net + service); laundry and extras are taxable, with service charge only when ticked.</p>
+
+<h1 id="q8"><span class="num">8</span>Defects found and fixed during the audit</h1>
+<table class="grid small">
+<tr><th style="width:11mm">ID</th><th style="width:14mm">Sev.</th><th>Symptom</th><th>Root cause</th><th>Fix (files)</th><th style="width:16mm">Verified</th></tr>
+<tr><td>D-01</td><td><span class="badge b-high">High</span></td><td>The app ran in UTC even though <code>.env</code> said Asia/Colombo. PHP time was 5 h 30 behind MariaDB, and "today", the business date, arrivals/departures and log times were wrong between 00:00 and 05:30 local time.</td><td><code>config/app.php</code> hard-coded <code>'timezone' =&gt; 'UTC'</code> and ignored APP_TIMEZONE</td><td><code>'timezone' =&gt; env('APP_TIMEZONE', 'Asia/Colombo')</code> — config/app.php</td><td>PHP = DB clock; 51/51 + harness</td></tr>
+<tr><td>D-02</td><td><span class="badge b-high">High</span></td><td>Restaurant staff could open the hotel Reports page (separation leak)</td><td>The reports routes also accepted a POS permission</td><td>Routes require <code>reports.operational|reports.financial</code> — routes/admin.php</td><td>Role matrix</td></tr>
+<tr><td>D-03</td><td><span class="badge b-high">High</span></td><td>The POS showed a bare "Unauthenticated" message and kept failing</td><td>The session ended (30-min idle, sign-out in another tab, or another account signed in); the JSON API correctly returned 401, but the client only displayed the raw message</td><td><code>VV.api</code> handles 401 → clear message, then redirect to sign-in with a <code>?return=</code> path; the login stores a safe same-app intended URL — app.js, head.blade.php, LoginController.php</td><td>SES-03, screenshots 75/76</td></tr>
+<tr><td>D-04</td><td><span class="badge b-med">Medium</span></td><td>A payment could be taken on an empty check (total 0), closing it with a zero invoice</td><td>No guard in <code>PosBillingService::pay</code></td><td>Rejects with "This check is empty…" — PosBillingService.php</td><td>POS-17</td></tr>
+<tr><td>D-05</td><td><span class="badge b-low">Low</span></td><td>Restaurant sales page returned 403 to roles that may only see stock reports</td><td>The default report type ignored permissions</td><td>Opens the first permitted POS report — SalesReportController.php</td><td>Role matrix</td></tr>
+<tr><td>D-06</td><td><span class="badge b-low">Low</span></td><td>The night-audit stay-over count included tasks that already existed</td><td><code>createTask()</code> returns the existing open task, and it was counted</td><td>Counts only <code>wasRecentlyCreated</code> — HousekeepingService.php</td><td>NA-03</td></tr>
+<tr><td>D-07</td><td><span class="badge b-low">Low</span></td><td>The website weather showed emoji instead of SVG icons (brief requirement)</td><td>The service returned emoji</td><td>Icon keys + inline SVG renderer — WeatherService.php, site.js, site.css</td><td>/weather returns icon keys; screenshot 78</td></tr>
+<tr><td>D-08</td><td><span class="badge b-high">High</span> env</td><td>Intermittent HTTP 500 errors ("No application encryption key", SQLite fallback, demo login disappearing) during concurrent requests</td><td>Thread-safe Apache on Windows: <code>.env</code> variables loaded via getenv/putenv are shared across threads, so a parallel request can see a partially loaded environment</td><td><b>Mitigation, no code change:</b> <code>php artisan config:cache</code> on the server (used for the walkthrough, then cleared). See O-02.</td><td>No 500s with cached config</td></tr>
+</table>
+
+<h1 id="q9"><span class="num">9</span>Open issues and recommendations</h1>
+<table class="grid small">
+<tr><th style="width:11mm">ID</th><th style="width:14mm">Sev.</th><th>Issue</th><th>Recommendation</th></tr>
+<tr><td>O-01</td><td><span class="badge b-high">High</span></td><td>No Windows scheduled task runs <code>artisan schedule:run</code> on this machine, so the 02:00 night audit, website-hold expiry (every minute), key-card expiry (15 min) and channel retries never run automatically. docs/SETUP.md marks the scheduler as required.</td><td>Create the Task Scheduler job from docs/SETUP.md §5 (every minute). Until then, run the night audit by hand.</td></tr>
+<tr><td>O-02</td><td><span class="badge b-high">High</span></td><td>XAMPP/Windows <code>.env</code> thread race (D-08)</td><td>Run <code>php artisan config:cache</code> after each deployment or change to <code>.env</code>. Always run <code>php artisan config:clear</code> before <code>php artisan test</code>, because cached config would point the tests at the live database.</td></tr>
+<tr><td>O-03</td><td><span class="badge b-med">Medium</span></td><td>The scheduled night audit at 02:00 uses the run's calendar date as the business date, so it posts the coming night about 22 hours early and flags no-shows only then</td><td>When run after midnight, use <code>now()-&gt;subDay()</code> as the business date, or schedule the audit at 23:55</td></tr>
+<tr><td>O-04</td><td><span class="badge b-med">Medium</span></td><td>The night audit keeps only the last summary (setting <code>night_audit_last</code>): no audit-log entry per run, no business-date lock, and the steps do not run in a single transaction</td><td>Write an audit_logs row per run; wrap the posting in a transaction; keep a history table of runs</td></tr>
+<tr><td>O-05</td><td><span class="badge b-med">Medium</span></td><td>The booking-form Summary ignores a nightly rate override: it showed LKR 162,756.00 while the saved booking was 144,936.00</td><td>Recalculate the summary from the override (or call the quote endpoint) whenever the override changes</td></tr>
+<tr><td>O-06</td><td><span class="badge b-med">Medium</span></td><td>"Open a shift" is hidden while the user has any open shift, although the service allows one shift per outlet, so a cashier cannot start a second outlet from the UI</td><td>Show the open-shift form for outlets without an open shift</td></tr>
+<tr><td>O-07</td><td><span class="badge b-low">Low</span></td><td>A weather failure is cached for 20 minutes; Open-Meteo took 4.4 s against a 6 s timeout, and the widget disappeared</td><td>Do not cache <code>ok:false</code>, or cache it for 1–2 minutes; raise the timeout slightly</td></tr>
+<tr><td>O-08</td><td><span class="badge b-low">Low</span></td><td>A stay-over task stays "Cleaning" after checkout; the dashboard still shows G1 "Aisha · Cleaning"</td><td>Close or cancel open stay-over tasks at checkout</td></tr>
+<tr><td>O-09</td><td><span class="badge b-low">Low</span></td><td>The folio footer "Balance LKR …" is clipped at the card's right edge (1440 px)</td><td>Allow wrapping or reserve width for the total</td></tr>
+<tr><td>O-10</td><td><span class="badge b-low">Low</span></td><td>KPI values wrap "LKR" and the amount onto two lines on the dashboard</td><td>Use a smaller font or nowrap in <code>.stat</code></td></tr>
+<tr><td>O-11</td><td><span class="badge b-low">Low</span></td><td>Expected business-rule errors (<code>BusinessRuleException</code>) are logged at ERROR level, filling the log</td><td>Add the exception to <code>dontReport</code>, or log at INFO</td></tr>
+<tr><td>O-12</td><td><span class="badge b-low">Low</span></td><td>Print layouts (invoice, bill) have no favicon, so the browser requests <code>/favicon.ico</code> at the server root and gets a 404 console error</td><td>Add the favicon link to the print layouts</td></tr>
+<tr><td>O-13</td><td><span class="badge b-low">Low</span></td><td>KDS tickets stay on screen until served (demo tickets over 2,000 minutes old)</td><td>Add an age filter or manager "clear stale tickets"</td></tr>
+<tr><td>O-14</td><td><span class="badge b-low">Low</span></td><td>Settings → Integrations shows an empty value for Channel manager</td><td>Show "Not configured"</td></tr>
+<tr><td>O-15</td><td><span class="badge b-info">Info</span></td><td>APP_DEBUG=true in <code>.env</code></td><td>Set APP_DEBUG=false (and APP_ENV=production) before going live; this also hides the demo role cards</td></tr>
+<tr><td>O-16</td><td><span class="badge b-info">Info</span></td><td>Records written before fix D-01 store UTC wall-clock times (5 h 30 behind)</td><td>Dev data: ignore. Production data, if any: convert once (+330 minutes) on timestamp columns</td></tr>
+<tr><td>O-17</td><td><span class="badge b-info">Info</span></td><td>The hero video is not configured (ENV-08)</td><td>Upload a video in Website settings if wanted</td></tr>
+</table>
+
+<h1 id="q10"><span class="num">10</span>Blocked and not testable</h1>
+<table class="grid">
+<tr><th>Item</th><th>Reason</th><th>What was tested instead</th></tr>
+<tr><td>Physical RFID readers, encoders, door locks (KEY-08)</td><td>LOCK_DRIVER=simulator; the vendor adapter in <code>lock-bridge/</code> is a stub</td><td>All access rules through the simulator and device API with a bearer token (SIMULATED)</td></tr>
+<tr><td>Live OTA — Booking.com, Agoda, Airbnb, Expedia (SRC-10)</td><td>CHANNEL_DRIVER=null; no Channex credentials</td><td>Signed webhook ingest, duplicate, cancellation and overbooking-to-conflict-queue (simulated payloads)</td></tr>
+<tr><td>Real payment gateway (Stripe)</td><td>PAYMENT_DRIVER=sandbox; no keys</td><td>Sandbox approve/decline/duplicate (SRC-06..08)</td></tr>
+<tr><td>WhatsApp Cloud API</td><td>No credentials</td><td>Click-to-chat links</td></tr>
+<tr><td>SMS gateway</td><td>Not implemented in the code (Missing)</td><td>—</td></tr>
+<tr><td>E-mail delivery</td><td>MAIL=log</td><td>Messages written to the log</td></tr>
+<tr><td>Live exchange rates, Unsplash, Pexels</td><td>No API keys</td><td>Static fallback rates; own media gallery</td></tr>
+<tr><td>Hero background video (ENV-08)</td><td>None configured</td><td>—</td></tr>
+<tr><td>Training video MP4</td><td>No ffmpeg or screen recorder in this environment</td><td>Storyboard, narration, SRT and FFmpeg recipe provided; no video file was produced</td></tr>
+</table>
+
+<h1 id="q11"><span class="num">11</span>Security review</h1>
+<table class="grid small">
+<tr><th>Check</th><th>Result</th><th>Case</th></tr>
+<tr><td>Unauthenticated access to /admin and /pos</td><td>302 → /login; the POS API returns 401 JSON</td><td>SEC-GUEST-01/02</td></tr>
+<tr><td>CSRF on forms and the JSON API</td><td>419 without a token</td><td>SEC-CSRF-01, SES-02</td></tr>
+<tr><td>Server-side role checks</td><td>403 on direct URLs and APIs across 15 roles</td><td>ROLE-*, SEC-API-01..03</td></tr>
+<tr><td>Device APIs (RFID, attendance, lock bridge)</td><td>401 with a wrong bearer token</td><td>SEC-API-04</td></tr>
+<tr><td>Stored XSS in guest name</td><td>Escaped</td><td>SEC-01</td></tr>
+<tr><td>SQL injection in search</td><td>Parameterised queries</td><td>SEC-02</td></tr>
+<tr><td>Malicious upload (PHP renamed to .jpg)</td><td>Rejected ("image could not be read")</td><td>SEC-03</td></tr>
+<tr><td>Password storage</td><td>All 17 users bcrypt; minimum length 10</td><td>SEC-04</td></tr>
+<tr><td>Headers on authenticated pages</td><td>X-Frame-Options SAMEORIGIN, nosniff, Cache-Control no-store, private</td><td>SEC-05</td></tr>
+<tr><td>Demo sign-in panel</td><td>Rendered only when APP_ENV=local; the password is not shown on screen</td><td>SEC-06</td></tr>
+<tr><td>Tour-operator data scoping</td><td>Another operator's booking → 404</td><td>SEC-07</td></tr>
+<tr><td>Brute force</td><td>Account lock after 5 failures (15 min) plus a per-IP limit of 20; same message for unknown user and wrong password</td><td>ERR-01..03</td></tr>
+<tr><td>Open redirect through the new <code>?return=</code></td><td>Accepted only for paths inside the app base path, never <code>//</code> or backslashes</td><td>Code review (D-03)</td></tr>
+<tr><td>Secrets on screen</td><td>Settings shows no keys; secrets only in <code>.env</code>; screenshots checked</td><td>Screenshot 64 review</td></tr>
+<tr><td>Debug mode</td><td>APP_DEBUG=true (local) — must be false in production</td><td>O-15</td></tr>
+</table>
+
+<h1 id="q12"><span class="num">12</span>UI, responsive and browser console</h1>
+<ul>
+<li>Every walkthrough page rendered at 1440 px; the housekeeping tasks and POS dashboard at 390 px (phone); the front desk at 768 px (tablet). No horizontal scrolling was observed in the captured pages.</li>
+<li>Browser console errors in the final walkthrough: <code>/favicon.ico</code> 404 on print pages (O-12); intentional 403, 404 and 401 responses from the error and session tests; and first-pass errors caused by the test script itself (a root-relative URL and an empty order id). No JavaScript exceptions came from the application.</li>
+<li>Visual issues: O-05, O-09, O-10, O-14. With full-page captures, the sidebar stretches to the page height; this comes from the capture method (the viewport grows to the page height), not from the app.</li>
+<li>Theme: users can choose light or dark; both are used in the screenshots.</li>
+</ul>
+
+<h1 id="q13"><span class="num">13</span>Night audit — code review</h1>
+<p><code>NightAuditService::run($date)</code>, called from Front desk → Run night audit (<code>frontdesk.night_audit</code>) or <code>hms:night-audit</code>, which is scheduled daily at 02:00:</p>
+<ol class="steps">
+<li>For every checked-in booking: <code>RoomChargeService::postNights($b, $date + 1 day)</code> posts every unposted night before the day after the business date, with 10% service and 8% tax and a rate factor for discounts. It is idempotent per booking-villa night (NA-03).</li>
+<li>Confirmed bookings with arrival &lt; business date → <code>markNoShow</code>.</li>
+<li>Expire website holds; expire key cards past validity.</li>
+<li><code>generateStayovers($date + 1)</code> for occupied villas not departing that day (count fixed in D-06).</li>
+<li><code>markAbsences($date − 1)</code> for staff attendance.</li>
+<li>Saves the summary to setting <code>night_audit_last</code> only (O-04).</li>
+</ol>
+<p>Timing (O-03): with the 02:00 schedule, the business date is the new calendar day. Running the audit before midnight — as in this test at 23:49 — gives the expected hotel-industry result.</p>
+
+<h1 id="q14"><span class="num">14</span>Test data and reproducibility</h1>
+<ul>
+<li>A dump of the dev database was taken before QA (<code>vaasal_villa_hms28_before_qa.sql</code>) and restored before the final walkthrough; a second dump holds the state after the first partial run. Both are in the QA scratch folder, not in the project.</li>
+<li>Actions performed on the dev database during the walkthrough (so the data now reflects them): Oliver Jensen checked out of G1; G1 cleaned and approved; walk-in VV-26-000033 (Nuwan Perera, G1) created and checked in; room-service ORD-26-000097 charged to villa; laundry posted; night audit run for 29 Sep (3 bookings became no-shows); the cashier's In-villa dining shift of 28 Sep closed through day-end; a new Vaasal Kitchen shift opened with a 10,000 float; two leftover demo checks on T6 (ORD-26-000085, ORD-26-000095) settled by card; T6 order ORD-26-000098 paid in cash.</li>
+<li>The configuration was cached only for the walkthrough and cleared afterwards, so <code>php artisan test</code> keeps using the test database.</li>
+<li>Scripts used: the QA harness in the repository (<code>tests/QA/QaAuditTest.php</code>); the browser-automation and document-build scripts are listed in FINAL_SUMMARY.md.</li>
+</ul>
+
+<h1 id="q15"><span class="num">15</span>Files changed during the audit</h1>
+<table class="grid small">
+<tr><th>File</th><th>Change</th></tr>
+<tr><td><code>config/app.php</code></td><td>Timezone from APP_TIMEZONE (D-01)</td></tr>
+<tr><td><code>routes/admin.php</code></td><td>Hotel reports require hotel report permissions (D-02)</td></tr>
+<tr><td><code>public/assets/js/app.js</code></td><td>401 handling, <code>VV.sessionEnded()</code>, bell poller (D-03)</td></tr>
+<tr><td><code>resources/views/layouts/partials/head.blade.php</code></td><td><code>&lt;meta name="login-url"&gt;</code> (D-03)</td></tr>
+<tr><td><code>app/Modules/Auth/Http/Controllers/LoginController.php</code></td><td>Safe <code>?return=</code> intended URL (D-03)</td></tr>
+<tr><td><code>app/Modules/POS/Services/PosBillingService.php</code></td><td>Reject payment on an empty check (D-04)</td></tr>
+<tr><td><code>app/Modules/POS/Http/Controllers/SalesReportController.php</code></td><td>Default to the first permitted report (D-05)</td></tr>
+<tr><td><code>app/Modules/Housekeeping/Services/HousekeepingService.php</code></td><td>Count only new stay-over tasks (D-06)</td></tr>
+<tr><td><code>app/Modules/Website/Services/WeatherService.php</code>, <code>public/assets/js/site.js</code>, <code>public/assets/css/site.css</code></td><td>SVG weather icons (D-07)</td></tr>
+<tr><td><code>tests/QA/QaAuditTest.php</code> (new)</td><td>QA harness (155 cases)</td></tr>
+<tr><td><code>docs/qa-training/*</code> (new)</td><td>This report, the Tamil manual, the video script, SRT, test cases, screenshots, data</td></tr>
+</table>
+
+<h1 id="q16"><span class="num">16</span>Key evidence</h1>
+<p>A few screenshots that back the main conclusions. All 82 are in <code>screenshots/</code> and in the Tamil manual.</p>
+[[FIG:16_checkout_blocked|Integration: an open restaurant check (ORD-26-000096, LKR 3,207.60) blocks checkout; Complete checkout is disabled.|1]]
+[[FIG:09_guest_folio|Room service ORD-26-000097 (8,500 + 850 + 748 = 10,098.00) and laundry (2,000 + 160) on folio FOL-26-000038.|1]]
+[[FIG:06_pos_payment|Example B: balance 27,086.40, tendered 30,000, change 2,913.60. (The second empty Cash line was added by the test script's extra click; its amount is 0.)]]
+[[FIG:75_session_ended|Fix D-03: after the session ends, the POS shows a clear message and returns to sign-in.]]
+[[FIG:13_night_audit|Night audit for business date 29 Sep 2026: 5 room nights, 3 no-shows, 1 card expired, 2 stay-over tasks.]]
+[[FIG:03_room_selection|Open issue O-05: the Summary still shows LKR 162,756.00 after a LKR 30,500/night override; the saved booking is LKR 144,936.00.]]
+
+<h1 id="qa1"><span class="num">A</span>Appendix A — Automated and live test cases (175)</h1>
+[[CASES]]
+
+<h1 id="qa2"><span class="num">B</span>Appendix B — Screenshot index (82)</h1>
+[[SHOTS]]
+
+<div class="sig"><div>QA engineer</div><div>Hotel Manager</div><div>Owner / approver</div></div>
+</body>
+</html>

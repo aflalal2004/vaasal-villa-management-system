@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dev",
+      "runtimeExecutable": "C:\\xampp\\php\\php.exe",
+      "runtimeArgs": [
+        "artisan",
+        "serve",
+        "--host=127.0.0.1",
+        "--port=8000"
+      ],
+      "port": 8000,
+      "url": "http://127.0.0.1:8000"
+    }
+  ]
+}

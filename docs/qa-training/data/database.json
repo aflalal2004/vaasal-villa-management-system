@@ -1,0 +1,1924 @@
+{
+    "access_logs": {
+        "rows": 50,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "villa_id bigint(20) unsigned null",
+            "lock_ref varchar(60) null",
+            "zone varchar(60) null",
+            "card_uid varchar(60) null",
+            "key_card_id bigint(20) unsigned null",
+            "employee_id bigint(20) unsigned null",
+            "device_id bigint(20) unsigned null",
+            "event varchar(30)",
+            "granted tinyint(1) null",
+            "reason varchar(120) null",
+            "source varchar(20)",
+            "details longtext null",
+            "occurred_at datetime",
+            "created_at timestamp"
+        ],
+        "foreign_keys": [
+            "device_id \u2192 attendance_devices",
+            "employee_id \u2192 employees",
+            "key_card_id \u2192 key_cards",
+            "villa_id \u2192 villas"
+        ]
+    },
+    "app_notifications": {
+        "rows": 107,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "user_id bigint(20) unsigned null",
+            "permission varchar(80) null",
+            "type varchar(60)",
+            "level varchar(10)",
+            "title varchar(255)",
+            "body varchar(1000) null",
+            "url varchar(255) null",
+            "created_at timestamp"
+        ],
+        "foreign_keys": [
+            "user_id \u2192 users"
+        ]
+    },
+    "attendance_devices": {
+        "rows": 5,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "name varchar(80)",
+            "type varchar(20)",
+            "purpose varchar(12)",
+            "location varchar(100) null",
+            "villa_id bigint(20) unsigned null",
+            "zone varchar(60) null",
+            "mode varchar(12)",
+            "api_token_hash varchar(64)",
+            "is_active tinyint(1)",
+            "last_seen_at timestamp null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "villa_id \u2192 villas"
+        ]
+    },
+    "attendance_records": {
+        "rows": 89,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "employee_id bigint(20) unsigned",
+            "work_date date",
+            "shift_id bigint(20) unsigned null",
+            "clock_in datetime null",
+            "clock_out datetime null",
+            "source_in varchar(20) null",
+            "source_out varchar(20) null",
+            "device_id bigint(20) unsigned null",
+            "worked_minutes int(10) unsigned",
+            "late_minutes int(10) unsigned",
+            "early_leave_minutes int(10) unsigned",
+            "overtime_minutes int(10) unsigned",
+            "status varchar(20)",
+            "ip_address varchar(45) null",
+            "corrected_by bigint(20) unsigned null",
+            "correction_reason varchar(300) null",
+            "original_values longtext null",
+            "notes varchar(300) null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "corrected_by \u2192 users",
+            "device_id \u2192 attendance_devices",
+            "employee_id \u2192 employees",
+            "shift_id \u2192 shifts"
+        ]
+    },
+    "audit_logs": {
+        "rows": 766,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "user_id bigint(20) unsigned null",
+            "module varchar(40)",
+            "action varchar(60)",
+            "auditable_type varchar(255) null",
+            "auditable_id bigint(20) unsigned null",
+            "description varchar(500) null",
+            "old_values longtext null",
+            "new_values longtext null",
+            "ip_address varchar(45) null",
+            "user_agent varchar(500) null",
+            "created_at timestamp"
+        ],
+        "foreign_keys": [
+            "user_id \u2192 users"
+        ]
+    },
+    "bookings": {
+        "rows": 32,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "property_id bigint(20) unsigned",
+            "reference varchar(20)",
+            "channel_id bigint(20) unsigned",
+            "source varchar(20)",
+            "external_ref varchar(80) null",
+            "guest_id bigint(20) unsigned",
+            "tour_operator_id bigint(20) unsigned null",
+            "operator_contract_id bigint(20) unsigned null",
+            "group_name varchar(120) null",
+            "status varchar(20)",
+            "arrival date",
+            "departure date",
+            "adults tinyint(3) unsigned",
+            "children tinyint(3) unsigned",
+            "rate_plan_id bigint(20) unsigned null",
+            "offer_id bigint(20) unsigned null",
+            "currency char(3)",
+            "room_total decimal(14,2)",
+            "discount_total decimal(14,2)",
+            "tax_total decimal(14,2)",
+            "service_total decimal(14,2)",
+            "grand_total decimal(14,2)",
+            "deposit_due decimal(14,2)",
+            "commission_pct decimal(5,2)",
+            "commission_amount decimal(14,2)",
+            "special_requests text null",
+            "arrival_time varchar(20) null",
+            "payment_mode varchar(20)",
+            "hold_expires_at timestamp null",
+            "confirmed_at timestamp null",
+            "cancelled_at timestamp null",
+            "cancel_reason varchar(300) null",
+            "cancellation_fee decimal(14,2)",
+            "checked_in_at timestamp null",
+            "checked_out_at timestamp null",
+            "manage_token varchar(64)",
+            "created_by bigint(20) unsigned null",
+            "version int(10) unsigned",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "channel_id \u2192 channels",
+            "created_by \u2192 users",
+            "guest_id \u2192 guests",
+            "offer_id \u2192 offers",
+            "operator_contract_id \u2192 operator_contracts",
+            "property_id \u2192 properties",
+            "rate_plan_id \u2192 rate_plans",
+            "tour_operator_id \u2192 tour_operators"
+        ]
+    },
+    "booking_conflicts": {
+        "rows": 1,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "channel_id bigint(20) unsigned",
+            "external_ref varchar(80)",
+            "guest_name varchar(160)",
+            "guest_email varchar(255) null",
+            "villa_type_id bigint(20) unsigned null",
+            "villa_id bigint(20) unsigned null",
+            "arrival date",
+            "departure date",
+            "amount decimal(14,2)",
+            "reason varchar(300)",
+            "payload longtext",
+            "status varchar(20)",
+            "booking_id bigint(20) unsigned null",
+            "resolved_by bigint(20) unsigned null",
+            "resolved_at timestamp null",
+            "resolution_notes varchar(500) null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "booking_id \u2192 bookings",
+            "channel_id \u2192 channels",
+            "resolved_by \u2192 users",
+            "villa_id \u2192 villas",
+            "villa_type_id \u2192 villa_types"
+        ]
+    },
+    "booking_events": {
+        "rows": 81,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "booking_id bigint(20) unsigned",
+            "event varchar(40)",
+            "description varchar(500) null",
+            "data longtext null",
+            "user_id bigint(20) unsigned null",
+            "created_at timestamp"
+        ],
+        "foreign_keys": [
+            "booking_id \u2192 bookings",
+            "user_id \u2192 users"
+        ]
+    },
+    "booking_villas": {
+        "rows": 34,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "booking_id bigint(20) unsigned",
+            "villa_id bigint(20) unsigned",
+            "villa_type_id bigint(20) unsigned",
+            "arrival date",
+            "departure date",
+            "adults tinyint(3) unsigned",
+            "children tinyint(3) unsigned",
+            "nightly_rates longtext",
+            "total decimal(14,2)",
+            "status varchar(20)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "booking_id \u2192 bookings",
+            "villa_id \u2192 villas",
+            "villa_type_id \u2192 villa_types"
+        ]
+    },
+    "cache": {
+        "rows": 9,
+        "columns": [
+            "key varchar(255) PK",
+            "value mediumtext",
+            "expiration int(11)"
+        ],
+        "foreign_keys": []
+    },
+    "cache_locks": {
+        "rows": 0,
+        "columns": [
+            "key varchar(255) PK",
+            "owner varchar(255)",
+            "expiration int(11)"
+        ],
+        "foreign_keys": []
+    },
+    "cash_movements": {
+        "rows": 59,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "pos_shift_id bigint(20) unsigned",
+            "type varchar(20)",
+            "amount decimal(12,2)",
+            "reason varchar(200) null",
+            "reference varchar(80) null",
+            "notes varchar(500) null",
+            "pos_order_id bigint(20) unsigned null",
+            "user_id bigint(20) unsigned null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "pos_shift_id \u2192 pos_shifts",
+            "user_id \u2192 users"
+        ]
+    },
+    "channels": {
+        "rows": 10,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "code varchar(30)",
+            "name varchar(80)",
+            "type varchar(20)",
+            "commission_pct decimal(5,2)",
+            "is_active tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "channel_mappings": {
+        "rows": 16,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "channel_id bigint(20) unsigned",
+            "villa_type_id bigint(20) unsigned",
+            "rate_plan_id bigint(20) unsigned null",
+            "external_room_code varchar(80)",
+            "external_rate_code varchar(80) null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "channel_id \u2192 channels",
+            "rate_plan_id \u2192 rate_plans",
+            "villa_type_id \u2192 villa_types"
+        ]
+    },
+    "channel_sync_logs": {
+        "rows": 39,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "direction varchar(5)",
+            "type varchar(40)",
+            "status varchar(20)",
+            "date_from date null",
+            "date_to date null",
+            "payload longtext null",
+            "response text null",
+            "attempts tinyint(3) unsigned",
+            "processed_at timestamp null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "charge_items": {
+        "rows": 15,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "code varchar(30)",
+            "name varchar(120)",
+            "department varchar(30)",
+            "price decimal(12,2)",
+            "taxable tinyint(1)",
+            "service_chargeable tinyint(1)",
+            "is_active tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "checklist_templates": {
+        "rows": 4,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "name varchar(100)",
+            "task_type varchar(20)",
+            "items longtext",
+            "is_active tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "commissions": {
+        "rows": 6,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "booking_id bigint(20) unsigned",
+            "tour_operator_id bigint(20) unsigned null",
+            "channel_id bigint(20) unsigned null",
+            "basis_amount decimal(14,2)",
+            "pct decimal(5,2)",
+            "amount decimal(14,2)",
+            "status varchar(20)",
+            "settled_at timestamp null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "booking_id \u2192 bookings",
+            "channel_id \u2192 channels",
+            "tour_operator_id \u2192 tour_operators"
+        ]
+    },
+    "contract_rates": {
+        "rows": 4,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "operator_contract_id bigint(20) unsigned",
+            "villa_type_id bigint(20) unsigned",
+            "net_rate decimal(12,2)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "operator_contract_id \u2192 operator_contracts",
+            "villa_type_id \u2192 villa_types"
+        ]
+    },
+    "departments": {
+        "rows": 7,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "property_id bigint(20) unsigned",
+            "code varchar(20)",
+            "name varchar(80)",
+            "description varchar(255) null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "property_id \u2192 properties"
+        ]
+    },
+    "document_sequences": {
+        "rows": 13,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "type varchar(30)",
+            "prefix varchar(20)",
+            "year smallint(5) unsigned",
+            "next_number int(10) unsigned"
+        ],
+        "foreign_keys": []
+    },
+    "employees": {
+        "rows": 17,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "property_id bigint(20) unsigned",
+            "employee_no varchar(20)",
+            "user_id bigint(20) unsigned null",
+            "department_id bigint(20) unsigned",
+            "job_role_id bigint(20) unsigned null",
+            "first_name varchar(80)",
+            "last_name varchar(80)",
+            "email varchar(255) null",
+            "phone varchar(40) null",
+            "gender varchar(10) null",
+            "date_of_birth date null",
+            "national_id text null",
+            "address varchar(300) null",
+            "emergency_contact_name varchar(100) null",
+            "emergency_contact_phone varchar(40) null",
+            "employment_type varchar(20)",
+            "hire_date date",
+            "termination_date date null",
+            "status varchar(20)",
+            "photo_path varchar(255) null",
+            "attendance_pin varchar(255) null",
+            "rfid_uid varchar(60) null",
+            "qr_token varchar(64) null",
+            "biometric_ref varchar(80) null",
+            "basic_salary decimal(12,2) null",
+            "created_at timestamp null",
+            "updated_at timestamp null",
+            "deleted_at timestamp null"
+        ],
+        "foreign_keys": [
+            "department_id \u2192 departments",
+            "job_role_id \u2192 job_roles",
+            "property_id \u2192 properties",
+            "user_id \u2192 users"
+        ]
+    },
+    "enquiries": {
+        "rows": 2,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "name varchar(120)",
+            "email varchar(255)",
+            "phone varchar(40) null",
+            "subject varchar(150) null",
+            "message text",
+            "arrival date null",
+            "departure date null",
+            "guests tinyint(3) unsigned null",
+            "status varchar(20)",
+            "handled_by bigint(20) unsigned null",
+            "reply_notes text null",
+            "ip_address varchar(45) null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "handled_by \u2192 users"
+        ]
+    },
+    "facilities": {
+        "rows": 14,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "name varchar(80)",
+            "icon varchar(40)",
+            "category varchar(40)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "facility_villa_type": {
+        "rows": 41,
+        "columns": [
+            "villa_type_id bigint(20) unsigned PK",
+            "facility_id bigint(20) unsigned PK"
+        ],
+        "foreign_keys": [
+            "facility_id \u2192 facilities",
+            "villa_type_id \u2192 villa_types"
+        ]
+    },
+    "failed_jobs": {
+        "rows": 0,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "uuid varchar(255)",
+            "connection text",
+            "queue text",
+            "payload longtext",
+            "exception longtext",
+            "failed_at timestamp"
+        ],
+        "foreign_keys": []
+    },
+    "folios": {
+        "rows": 37,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "booking_id bigint(20) unsigned",
+            "folio_no varchar(30)",
+            "payer_type varchar(20)",
+            "guest_id bigint(20) unsigned null",
+            "tour_operator_id bigint(20) unsigned null",
+            "status varchar(10)",
+            "currency char(3)",
+            "closed_at timestamp null",
+            "closed_by bigint(20) unsigned null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "booking_id \u2192 bookings",
+            "closed_by \u2192 users",
+            "guest_id \u2192 guests",
+            "tour_operator_id \u2192 tour_operators"
+        ]
+    },
+    "folio_lines": {
+        "rows": 127,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "folio_id bigint(20) unsigned",
+            "business_date date",
+            "department varchar(30)",
+            "charge_item_id bigint(20) unsigned null",
+            "description varchar(255)",
+            "quantity decimal(10,2)",
+            "unit_price decimal(12,2)",
+            "amount decimal(14,2)",
+            "tax_amount decimal(14,2)",
+            "service_amount decimal(14,2)",
+            "total decimal(14,2)",
+            "source_type varchar(40) null",
+            "source_id bigint(20) unsigned null",
+            "reverses_id bigint(20) unsigned null",
+            "is_reversed tinyint(1)",
+            "posted_by bigint(20) unsigned null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "charge_item_id \u2192 charge_items",
+            "folio_id \u2192 folios",
+            "posted_by \u2192 users",
+            "reverses_id \u2192 folio_lines"
+        ]
+    },
+    "gallery_items": {
+        "rows": 12,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "category varchar(40)",
+            "title varchar(150) null",
+            "type varchar(10)",
+            "path varchar(500)",
+            "thumbnail varchar(500) null",
+            "sort_order smallint(5) unsigned",
+            "is_active tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "guests": {
+        "rows": 21,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "title varchar(10) null",
+            "first_name varchar(80)",
+            "last_name varchar(80)",
+            "email varchar(255) null",
+            "phone varchar(40) null",
+            "country varchar(80) null",
+            "nationality varchar(80) null",
+            "date_of_birth date null",
+            "id_type varchar(20) null",
+            "id_number text null",
+            "id_expiry date null",
+            "id_document_path varchar(255) null",
+            "address varchar(300) null",
+            "is_vip tinyint(1)",
+            "is_blacklisted tinyint(1)",
+            "marketing_consent tinyint(1)",
+            "preferences text null",
+            "notes text null",
+            "created_at timestamp null",
+            "updated_at timestamp null",
+            "deleted_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "hk_tasks": {
+        "rows": 22,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "villa_id bigint(20) unsigned",
+            "booking_id bigint(20) unsigned null",
+            "type varchar(20)",
+            "priority varchar(10)",
+            "status varchar(20)",
+            "assigned_to bigint(20) unsigned null",
+            "accepted_at timestamp null",
+            "scheduled_date date",
+            "started_at timestamp null",
+            "paused_at timestamp null",
+            "paused_minutes int(10) unsigned",
+            "finished_at timestamp null",
+            "inspected_by bigint(20) unsigned null",
+            "inspected_at timestamp null",
+            "inspection_result varchar(10) null",
+            "inspection_notes varchar(500) null",
+            "rejection_count tinyint(3) unsigned",
+            "notes varchar(500) null",
+            "created_by bigint(20) unsigned null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "assigned_to \u2192 employees",
+            "booking_id \u2192 bookings",
+            "created_by \u2192 users",
+            "inspected_by \u2192 users",
+            "villa_id \u2192 villas"
+        ]
+    },
+    "hk_task_items": {
+        "rows": 222,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "hk_task_id bigint(20) unsigned",
+            "label varchar(200)",
+            "is_checked tinyint(1)",
+            "checked_at timestamp null",
+            "sort_order smallint(5) unsigned"
+        ],
+        "foreign_keys": [
+            "hk_task_id \u2192 hk_tasks"
+        ]
+    },
+    "inventory_nights": {
+        "rows": 117,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "villa_id bigint(20) unsigned",
+            "stay_date date",
+            "booking_villa_id bigint(20) unsigned null",
+            "villa_block_id bigint(20) unsigned null",
+            "created_at timestamp"
+        ],
+        "foreign_keys": [
+            "booking_villa_id \u2192 booking_villas",
+            "villa_block_id \u2192 villa_blocks",
+            "villa_id \u2192 villas"
+        ]
+    },
+    "invoices": {
+        "rows": 59,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "number varchar(40)",
+            "type varchar(20)",
+            "folio_id bigint(20) unsigned null",
+            "booking_id bigint(20) unsigned null",
+            "tour_operator_id bigint(20) unsigned null",
+            "bill_to_name varchar(160)",
+            "bill_to_details text null",
+            "subtotal decimal(14,2)",
+            "tax_total decimal(14,2)",
+            "service_total decimal(14,2)",
+            "discount_total decimal(14,2)",
+            "grand_total decimal(14,2)",
+            "paid_total decimal(14,2)",
+            "balance decimal(14,2)",
+            "currency char(3)",
+            "status varchar(20)",
+            "due_date date null",
+            "lines longtext",
+            "notes varchar(500) null",
+            "hash varchar(64) null",
+            "issued_at datetime",
+            "issued_by bigint(20) unsigned null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "booking_id \u2192 bookings",
+            "folio_id \u2192 folios",
+            "issued_by \u2192 users",
+            "tour_operator_id \u2192 tour_operators"
+        ]
+    },
+    "jobs": {
+        "rows": 0,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "queue varchar(255)",
+            "payload longtext",
+            "attempts tinyint(3) unsigned",
+            "reserved_at int(10) unsigned null",
+            "available_at int(10) unsigned",
+            "created_at int(10) unsigned"
+        ],
+        "foreign_keys": []
+    },
+    "job_roles": {
+        "rows": 15,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "department_id bigint(20) unsigned",
+            "title varchar(100)",
+            "default_role_id bigint(20) unsigned null",
+            "description varchar(300) null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "default_role_id \u2192 roles",
+            "department_id \u2192 departments"
+        ]
+    },
+    "key_cards": {
+        "rows": 32,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "property_id bigint(20) unsigned",
+            "uid varchar(60)",
+            "card_number varchar(40) null",
+            "type varchar(20)",
+            "status varchar(20)",
+            "notes varchar(300) null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "property_id \u2192 properties"
+        ]
+    },
+    "key_card_assignments": {
+        "rows": 26,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "key_card_id bigint(20) unsigned",
+            "booking_id bigint(20) unsigned null",
+            "booking_villa_id bigint(20) unsigned null",
+            "villa_id bigint(20) unsigned null",
+            "guest_id bigint(20) unsigned null",
+            "employee_id bigint(20) unsigned null",
+            "access_level varchar(20)",
+            "zone varchar(60) null",
+            "lock_refs longtext null",
+            "valid_from datetime",
+            "valid_to datetime",
+            "issue_type varchar(20)",
+            "status varchar(20)",
+            "encoder varchar(60) null",
+            "issued_by bigint(20) unsigned null",
+            "revoked_by bigint(20) unsigned null",
+            "revoked_at timestamp null",
+            "revoke_reason varchar(200) null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "booking_id \u2192 bookings",
+            "booking_villa_id \u2192 booking_villas",
+            "employee_id \u2192 employees",
+            "guest_id \u2192 guests",
+            "issued_by \u2192 users",
+            "key_card_id \u2192 key_cards",
+            "revoked_by \u2192 users",
+            "villa_id \u2192 villas"
+        ]
+    },
+    "kots": {
+        "rows": 148,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "pos_order_id bigint(20) unsigned",
+            "kot_no varchar(30)",
+            "station varchar(20)",
+            "status varchar(20)",
+            "started_at timestamp null",
+            "ready_at timestamp null",
+            "served_at timestamp null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "pos_order_id \u2192 pos_orders"
+        ]
+    },
+    "leave_requests": {
+        "rows": 2,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "employee_id bigint(20) unsigned",
+            "leave_type_id bigint(20) unsigned",
+            "start_date date",
+            "end_date date",
+            "days decimal(5,1)",
+            "reason varchar(500) null",
+            "status varchar(20)",
+            "approved_by bigint(20) unsigned null",
+            "approved_at timestamp null",
+            "remarks varchar(300) null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "approved_by \u2192 users",
+            "employee_id \u2192 employees",
+            "leave_type_id \u2192 leave_types"
+        ]
+    },
+    "leave_types": {
+        "rows": 4,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "code varchar(10)",
+            "name varchar(60)",
+            "days_per_year smallint(5) unsigned",
+            "is_paid tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "linen_items": {
+        "rows": 8,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "name varchar(80)",
+            "par_per_villa smallint(5) unsigned",
+            "stock_qty int(11)",
+            "in_laundry_qty int(11)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "linen_movements": {
+        "rows": 35,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "hk_task_id bigint(20) unsigned null",
+            "linen_item_id bigint(20) unsigned",
+            "qty_out smallint(5) unsigned",
+            "qty_in smallint(5) unsigned",
+            "user_id bigint(20) unsigned null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "hk_task_id \u2192 hk_tasks",
+            "linen_item_id \u2192 linen_items",
+            "user_id \u2192 users"
+        ]
+    },
+    "lock_bridges": {
+        "rows": 1,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "name varchar(80)",
+            "token_hash varchar(64)",
+            "vendor varchar(30)",
+            "version varchar(20) null",
+            "ip_address varchar(45) null",
+            "last_seen_at timestamp null",
+            "is_active tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "lock_jobs": {
+        "rows": 44,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "uuid char(36)",
+            "key_card_assignment_id bigint(20) unsigned null",
+            "action varchar(30)",
+            "payload longtext",
+            "status varchar(20)",
+            "result longtext null",
+            "error varchar(500) null",
+            "attempts tinyint(3) unsigned",
+            "lock_bridge_id bigint(20) unsigned null",
+            "requested_by bigint(20) unsigned null",
+            "picked_at timestamp null",
+            "completed_at timestamp null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "key_card_assignment_id \u2192 key_card_assignments",
+            "lock_bridge_id \u2192 lock_bridges",
+            "requested_by \u2192 users"
+        ]
+    },
+    "login_logs": {
+        "rows": 14,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "user_id bigint(20) unsigned null",
+            "email varchar(255)",
+            "ip_address varchar(45) null",
+            "user_agent varchar(500) null",
+            "success tinyint(1)",
+            "reason varchar(80) null",
+            "created_at timestamp"
+        ],
+        "foreign_keys": [
+            "user_id \u2192 users"
+        ]
+    },
+    "lost_found_items": {
+        "rows": 1,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "item_no varchar(20)",
+            "villa_id bigint(20) unsigned null",
+            "found_location varchar(120) null",
+            "description varchar(300)",
+            "category varchar(30)",
+            "photo_path varchar(255) null",
+            "found_by bigint(20) unsigned null",
+            "found_at datetime",
+            "storage_location varchar(120) null",
+            "status varchar(20)",
+            "guest_id bigint(20) unsigned null",
+            "returned_to varchar(150) null",
+            "resolved_at timestamp null",
+            "notes varchar(500) null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "found_by \u2192 employees",
+            "guest_id \u2192 guests",
+            "villa_id \u2192 villas"
+        ]
+    },
+    "maintenance_tickets": {
+        "rows": 3,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "ticket_no varchar(20)",
+            "villa_id bigint(20) unsigned null",
+            "location varchar(120) null",
+            "title varchar(150)",
+            "description text null",
+            "category varchar(30)",
+            "severity varchar(20)",
+            "status varchar(20)",
+            "reported_by bigint(20) unsigned null",
+            "assigned_to bigint(20) unsigned null",
+            "photo_path varchar(255) null",
+            "blocks_inventory tinyint(1)",
+            "villa_block_id bigint(20) unsigned null",
+            "started_at timestamp null",
+            "resolved_at timestamp null",
+            "resolution_notes text null",
+            "cost decimal(12,2) null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "assigned_to \u2192 employees",
+            "reported_by \u2192 users",
+            "villa_block_id \u2192 villa_blocks",
+            "villa_id \u2192 villas"
+        ]
+    },
+    "media": {
+        "rows": 12,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "mediable_type varchar(255)",
+            "mediable_id bigint(20) unsigned",
+            "type varchar(10)",
+            "path varchar(500)",
+            "title varchar(150) null",
+            "alt varchar(200) null",
+            "is_cover tinyint(1)",
+            "sort_order smallint(5) unsigned",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "menu_categories": {
+        "rows": 7,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "outlet_id bigint(20) unsigned null",
+            "name varchar(80)",
+            "station varchar(20)",
+            "color varchar(9)",
+            "sort_order smallint(5) unsigned",
+            "is_active tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "outlet_id \u2192 outlets"
+        ]
+    },
+    "menu_items": {
+        "rows": 24,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "menu_category_id bigint(20) unsigned",
+            "code varchar(20) null",
+            "name varchar(120)",
+            "description varchar(500) null",
+            "price decimal(12,2)",
+            "cost decimal(12,2)",
+            "station varchar(20) null",
+            "image_path varchar(500) null",
+            "allergens varchar(200) null",
+            "prep_minutes smallint(5) unsigned",
+            "is_available tinyint(1)",
+            "is_active tinyint(1)",
+            "sort_order smallint(5) unsigned",
+            "created_at timestamp null",
+            "updated_at timestamp null",
+            "deleted_at timestamp null"
+        ],
+        "foreign_keys": [
+            "menu_category_id \u2192 menu_categories"
+        ]
+    },
+    "menu_item_modifier_group": {
+        "rows": 13,
+        "columns": [
+            "menu_item_id bigint(20) unsigned PK",
+            "modifier_group_id bigint(20) unsigned PK"
+        ],
+        "foreign_keys": [
+            "menu_item_id \u2192 menu_items",
+            "modifier_group_id \u2192 modifier_groups"
+        ]
+    },
+    "migrations": {
+        "rows": 15,
+        "columns": [
+            "id int(10) unsigned PK",
+            "migration varchar(255)",
+            "batch int(11)"
+        ],
+        "foreign_keys": []
+    },
+    "modifiers": {
+        "rows": 14,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "modifier_group_id bigint(20) unsigned",
+            "name varchar(80)",
+            "price decimal(12,2)",
+            "is_active tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "modifier_group_id \u2192 modifier_groups"
+        ]
+    },
+    "modifier_groups": {
+        "rows": 4,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "name varchar(80)",
+            "min_select tinyint(3) unsigned",
+            "max_select tinyint(3) unsigned",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "notification_reads": {
+        "rows": 1,
+        "columns": [
+            "app_notification_id bigint(20) unsigned PK",
+            "user_id bigint(20) unsigned PK",
+            "read_at timestamp"
+        ],
+        "foreign_keys": [
+            "app_notification_id \u2192 app_notifications",
+            "user_id \u2192 users"
+        ]
+    },
+    "offers": {
+        "rows": 3,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "property_id bigint(20) unsigned",
+            "title varchar(150)",
+            "slug varchar(170)",
+            "summary varchar(300) null",
+            "description text null",
+            "image varchar(500) null",
+            "discount_type varchar(10)",
+            "discount_value decimal(12,2)",
+            "promo_code varchar(40) null",
+            "min_nights tinyint(3) unsigned",
+            "valid_from date null",
+            "valid_to date null",
+            "max_uses int(10) unsigned null",
+            "used_count int(10) unsigned",
+            "is_active tinyint(1)",
+            "is_featured tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "property_id \u2192 properties"
+        ]
+    },
+    "operator_contracts": {
+        "rows": 2,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "tour_operator_id bigint(20) unsigned",
+            "name varchar(120)",
+            "valid_from date",
+            "valid_to date",
+            "commission_pct decimal(5,2)",
+            "discount_pct decimal(5,2)",
+            "deposit_pct decimal(5,2)",
+            "release_days smallint(5) unsigned",
+            "rooming_cutoff_days smallint(5) unsigned",
+            "is_active tinyint(1)",
+            "notes text null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "tour_operator_id \u2192 tour_operators"
+        ]
+    },
+    "outlets": {
+        "rows": 3,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "property_id bigint(20) unsigned",
+            "code varchar(20)",
+            "name varchar(100)",
+            "type varchar(20)",
+            "folio_department varchar(30)",
+            "tax_pct decimal(5,2)",
+            "service_charge_pct decimal(5,2)",
+            "receipt_header varchar(300) null",
+            "receipt_footer varchar(300) null",
+            "is_active tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "property_id \u2192 properties"
+        ]
+    },
+    "password_reset_tokens": {
+        "rows": 0,
+        "columns": [
+            "email varchar(255) PK",
+            "token varchar(255)",
+            "created_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "payments": {
+        "rows": 42,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "reference varchar(30)",
+            "folio_id bigint(20) unsigned null",
+            "booking_id bigint(20) unsigned null",
+            "tour_operator_id bigint(20) unsigned null",
+            "invoice_id bigint(20) unsigned null",
+            "type varchar(20)",
+            "method varchar(20)",
+            "amount decimal(14,2)",
+            "currency char(3)",
+            "gateway varchar(30) null",
+            "gateway_ref varchar(120) null",
+            "status varchar(20)",
+            "proof_path varchar(255) null",
+            "notes varchar(500) null",
+            "received_by bigint(20) unsigned null",
+            "paid_at datetime",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "booking_id \u2192 bookings",
+            "folio_id \u2192 folios",
+            "invoice_id \u2192 invoices",
+            "received_by \u2192 users",
+            "tour_operator_id \u2192 tour_operators"
+        ]
+    },
+    "payment_intents": {
+        "rows": 3,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "token varchar(64)",
+            "booking_id bigint(20) unsigned null",
+            "amount decimal(14,2)",
+            "currency char(3)",
+            "purpose varchar(20)",
+            "gateway varchar(30)",
+            "gateway_session_id varchar(190) null",
+            "status varchar(20)",
+            "customer_email varchar(255) null",
+            "payload longtext null",
+            "payment_id bigint(20) unsigned null",
+            "expires_at timestamp null",
+            "paid_at timestamp null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "booking_id \u2192 bookings",
+            "payment_id \u2192 payments"
+        ]
+    },
+    "permissions": {
+        "rows": 62,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "slug varchar(80)",
+            "module varchar(40)",
+            "name varchar(120)"
+        ],
+        "foreign_keys": []
+    },
+    "permission_role": {
+        "rows": 222,
+        "columns": [
+            "role_id bigint(20) unsigned PK",
+            "permission_id bigint(20) unsigned PK"
+        ],
+        "foreign_keys": [
+            "permission_id \u2192 permissions",
+            "role_id \u2192 roles"
+        ]
+    },
+    "pos_orders": {
+        "rows": 95,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "outlet_id bigint(20) unsigned",
+            "order_no varchar(30)",
+            "invoice_no varchar(40) null",
+            "pos_table_id bigint(20) unsigned null",
+            "type varchar(20)",
+            "waiter_id bigint(20) unsigned null",
+            "cashier_id bigint(20) unsigned null",
+            "pos_shift_id bigint(20) unsigned null",
+            "covers tinyint(3) unsigned",
+            "status varchar(20)",
+            "booking_id bigint(20) unsigned null",
+            "villa_id bigint(20) unsigned null",
+            "guest_name varchar(120) null",
+            "subtotal decimal(12,2)",
+            "discount_type varchar(10) null",
+            "discount_value decimal(12,2)",
+            "discount_amount decimal(12,2)",
+            "discount_reason varchar(200) null",
+            "service_charge decimal(12,2)",
+            "tax_amount decimal(12,2)",
+            "total decimal(12,2)",
+            "paid_amount decimal(12,2)",
+            "refunded_amount decimal(12,2)",
+            "notes varchar(500) null",
+            "opened_at datetime",
+            "billed_at datetime null",
+            "closed_at datetime null",
+            "voided_by bigint(20) unsigned null",
+            "void_reason varchar(200) null",
+            "merged_into_id bigint(20) unsigned null",
+            "version int(10) unsigned",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "booking_id \u2192 bookings",
+            "cashier_id \u2192 users",
+            "merged_into_id \u2192 pos_orders",
+            "outlet_id \u2192 outlets",
+            "pos_shift_id \u2192 pos_shifts",
+            "pos_table_id \u2192 pos_tables",
+            "villa_id \u2192 villas",
+            "voided_by \u2192 users",
+            "waiter_id \u2192 users"
+        ]
+    },
+    "pos_order_items": {
+        "rows": 242,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "pos_order_id bigint(20) unsigned",
+            "menu_item_id bigint(20) unsigned",
+            "kot_id bigint(20) unsigned null",
+            "name varchar(120)",
+            "quantity decimal(8,2)",
+            "unit_price decimal(12,2)",
+            "modifiers longtext null",
+            "modifiers_total decimal(12,2)",
+            "line_total decimal(12,2)",
+            "notes varchar(200) null",
+            "seat tinyint(3) unsigned null",
+            "station varchar(20)",
+            "status varchar(20)",
+            "void_reason varchar(200) null",
+            "voided_by bigint(20) unsigned null",
+            "fired_at timestamp null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "kot_id \u2192 kots",
+            "menu_item_id \u2192 menu_items",
+            "pos_order_id \u2192 pos_orders",
+            "voided_by \u2192 users"
+        ]
+    },
+    "pos_payments": {
+        "rows": 85,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "pos_order_id bigint(20) unsigned",
+            "pos_shift_id bigint(20) unsigned null",
+            "type varchar(10)",
+            "method varchar(20)",
+            "amount decimal(12,2)",
+            "tendered decimal(12,2) null",
+            "change_due decimal(12,2) null",
+            "reference varchar(120) null",
+            "folio_line_id bigint(20) unsigned null",
+            "reason varchar(200) null",
+            "received_by bigint(20) unsigned null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "folio_line_id \u2192 folio_lines",
+            "pos_order_id \u2192 pos_orders",
+            "pos_shift_id \u2192 pos_shifts",
+            "received_by \u2192 users"
+        ]
+    },
+    "pos_shifts": {
+        "rows": 36,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "outlet_id bigint(20) unsigned",
+            "user_id bigint(20) unsigned",
+            "opened_at datetime",
+            "closed_at datetime null",
+            "opening_float decimal(12,2)",
+            "expected_cash decimal(12,2) null",
+            "counted_cash decimal(12,2) null",
+            "denominations longtext null",
+            "variance decimal(12,2) null",
+            "status varchar(10)",
+            "closed_by bigint(20) unsigned null",
+            "notes varchar(500) null",
+            "closing_report longtext null",
+            "review_status varchar(12)",
+            "reviewed_by bigint(20) unsigned null",
+            "reviewed_at timestamp null",
+            "review_notes varchar(500) null",
+            "reopened_by bigint(20) unsigned null",
+            "reopened_at timestamp null",
+            "reopen_reason varchar(300) null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "closed_by \u2192 users",
+            "outlet_id \u2192 outlets",
+            "reopened_by \u2192 users",
+            "reviewed_by \u2192 users",
+            "user_id \u2192 users"
+        ]
+    },
+    "pos_tables": {
+        "rows": 15,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "outlet_id bigint(20) unsigned",
+            "name varchar(30)",
+            "area varchar(40)",
+            "seats tinyint(3) unsigned",
+            "shape varchar(10)",
+            "sort_order smallint(5) unsigned",
+            "is_active tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "outlet_id \u2192 outlets"
+        ]
+    },
+    "properties": {
+        "rows": 1,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "code varchar(10)",
+            "name varchar(255)",
+            "legal_name varchar(255) null",
+            "email varchar(255) null",
+            "phone varchar(40) null",
+            "address varchar(255) null",
+            "city varchar(80) null",
+            "country varchar(80) null",
+            "tax_id varchar(60) null",
+            "timezone varchar(60)",
+            "currency char(3)",
+            "tax_pct decimal(5,2)",
+            "service_charge_pct decimal(5,2)",
+            "check_in_time time",
+            "check_out_time time",
+            "latitude decimal(10,7) null",
+            "longitude decimal(10,7) null",
+            "settings longtext null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "rates": {
+        "rows": 36,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "villa_type_id bigint(20) unsigned",
+            "season_id bigint(20) unsigned",
+            "amount decimal(12,2)",
+            "min_stay tinyint(3) unsigned",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "season_id \u2192 seasons",
+            "villa_type_id \u2192 villa_types"
+        ]
+    },
+    "rate_plans": {
+        "rows": 3,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "property_id bigint(20) unsigned",
+            "code varchar(20)",
+            "name varchar(100)",
+            "description varchar(500) null",
+            "meal_plan varchar(20)",
+            "is_refundable tinyint(1)",
+            "free_cancel_days smallint(5) unsigned",
+            "cancel_penalty_pct decimal(5,2)",
+            "deposit_pct decimal(5,2)",
+            "price_adjust_pct decimal(6,2)",
+            "is_public tinyint(1)",
+            "is_active tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "property_id \u2192 properties"
+        ]
+    },
+    "recipes": {
+        "rows": 19,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "menu_item_id bigint(20) unsigned",
+            "stock_item_id bigint(20) unsigned",
+            "quantity decimal(12,3)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "menu_item_id \u2192 menu_items",
+            "stock_item_id \u2192 stock_items"
+        ]
+    },
+    "roles": {
+        "rows": 15,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "slug varchar(50)",
+            "name varchar(80)",
+            "description varchar(255) null",
+            "home_route varchar(80) null",
+            "is_system tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "role_user": {
+        "rows": 17,
+        "columns": [
+            "user_id bigint(20) unsigned PK",
+            "role_id bigint(20) unsigned PK"
+        ],
+        "foreign_keys": [
+            "role_id \u2192 roles",
+            "user_id \u2192 users"
+        ]
+    },
+    "roster_entries": {
+        "rows": 192,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "employee_id bigint(20) unsigned",
+            "shift_id bigint(20) unsigned",
+            "work_date date",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "employee_id \u2192 employees",
+            "shift_id \u2192 shifts"
+        ]
+    },
+    "seasons": {
+        "rows": 9,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "property_id bigint(20) unsigned",
+            "name varchar(80)",
+            "start_date date",
+            "end_date date",
+            "color varchar(9)",
+            "priority tinyint(3) unsigned",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "property_id \u2192 properties"
+        ]
+    },
+    "sessions": {
+        "rows": 1,
+        "columns": [
+            "id varchar(255) PK",
+            "user_id bigint(20) unsigned null",
+            "ip_address varchar(45) null",
+            "user_agent text null",
+            "payload longtext",
+            "last_activity int(11)"
+        ],
+        "foreign_keys": []
+    },
+    "settings": {
+        "rows": 13,
+        "columns": [
+            "key varchar(100) PK",
+            "value text null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "shifts": {
+        "rows": 4,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "name varchar(60)",
+            "start_time time",
+            "end_time time",
+            "grace_minutes smallint(5) unsigned",
+            "break_minutes smallint(5) unsigned",
+            "color varchar(9)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "site_services": {
+        "rows": 6,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "title varchar(120)",
+            "slug varchar(140)",
+            "summary varchar(300) null",
+            "description text null",
+            "icon varchar(40)",
+            "image varchar(500) null",
+            "price_from decimal(12,2) null",
+            "charge_item_id bigint(20) unsigned null",
+            "sort_order smallint(5) unsigned",
+            "is_active tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "charge_item_id \u2192 charge_items"
+        ]
+    },
+    "social_links": {
+        "rows": 5,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "platform varchar(20)",
+            "label varchar(60) null",
+            "url varchar(255)",
+            "scope varchar(12)",
+            "is_active tinyint(1)",
+            "sort_order smallint(5) unsigned",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "stay_guests": {
+        "rows": 3,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "booking_villa_id bigint(20) unsigned",
+            "guest_id bigint(20) unsigned null",
+            "first_name varchar(80)",
+            "last_name varchar(80)",
+            "nationality varchar(80) null",
+            "passport_no text null",
+            "date_of_birth date null",
+            "is_child tinyint(1)",
+            "is_primary tinyint(1)",
+            "flight_details varchar(120) null",
+            "notes varchar(300) null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "booking_villa_id \u2192 booking_villas",
+            "guest_id \u2192 guests"
+        ]
+    },
+    "stock_items": {
+        "rows": 16,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "sku varchar(30)",
+            "name varchar(120)",
+            "category varchar(40)",
+            "unit varchar(15)",
+            "current_qty decimal(14,3)",
+            "reorder_level decimal(14,3)",
+            "unit_cost decimal(12,2)",
+            "supplier_id bigint(20) unsigned null",
+            "is_active tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "supplier_id \u2192 suppliers"
+        ]
+    },
+    "stock_movements": {
+        "rows": 209,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "stock_item_id bigint(20) unsigned",
+            "type varchar(10)",
+            "quantity decimal(14,3)",
+            "unit_cost decimal(12,2)",
+            "balance_after decimal(14,3)",
+            "supplier_id bigint(20) unsigned null",
+            "reference varchar(80) null",
+            "reason varchar(200) null",
+            "source_type varchar(40) null",
+            "source_id bigint(20) unsigned null",
+            "user_id bigint(20) unsigned null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "stock_item_id \u2192 stock_items",
+            "supplier_id \u2192 suppliers",
+            "user_id \u2192 users"
+        ]
+    },
+    "suppliers": {
+        "rows": 3,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "name varchar(150)",
+            "contact_name varchar(100) null",
+            "email varchar(255) null",
+            "phone varchar(40) null",
+            "address varchar(300) null",
+            "tax_id varchar(60) null",
+            "notes varchar(500) null",
+            "is_active tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "table_reservations": {
+        "rows": 6,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "outlet_id bigint(20) unsigned",
+            "pos_table_id bigint(20) unsigned null",
+            "booking_id bigint(20) unsigned null",
+            "pos_order_id bigint(20) unsigned null",
+            "guest_name varchar(120)",
+            "phone varchar(40) null",
+            "party_size tinyint(3) unsigned",
+            "reserved_for datetime",
+            "duration_minutes smallint(5) unsigned",
+            "status varchar(12)",
+            "notes varchar(300) null",
+            "created_by bigint(20) unsigned null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "booking_id \u2192 bookings",
+            "created_by \u2192 users",
+            "outlet_id \u2192 outlets",
+            "pos_order_id \u2192 pos_orders",
+            "pos_table_id \u2192 pos_tables"
+        ]
+    },
+    "testimonials": {
+        "rows": 4,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "guest_name varchar(100)",
+            "country varchar(80) null",
+            "rating tinyint(3) unsigned",
+            "content text",
+            "source varchar(40) null",
+            "is_active tinyint(1)",
+            "sort_order smallint(5) unsigned",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    },
+    "tour_operators": {
+        "rows": 3,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "property_id bigint(20) unsigned",
+            "code varchar(20)",
+            "company_name varchar(150)",
+            "legal_name varchar(150) null",
+            "registration_no varchar(60) null",
+            "tax_id varchar(60) null",
+            "contact_name varchar(100)",
+            "email varchar(255)",
+            "phone varchar(40) null",
+            "address varchar(300) null",
+            "country varchar(80) null",
+            "website varchar(255) null",
+            "logo_path varchar(255) null",
+            "bank_details text null",
+            "status varchar(20)",
+            "credit_limit decimal(14,2)",
+            "payment_terms_days smallint(5) unsigned",
+            "notes text null",
+            "approved_at timestamp null",
+            "approved_by bigint(20) unsigned null",
+            "created_at timestamp null",
+            "updated_at timestamp null",
+            "deleted_at timestamp null"
+        ],
+        "foreign_keys": [
+            "approved_by \u2192 users",
+            "property_id \u2192 properties"
+        ]
+    },
+    "users": {
+        "rows": 17,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "property_id bigint(20) unsigned null",
+            "user_type varchar(20)",
+            "tour_operator_id bigint(20) unsigned null",
+            "name varchar(255)",
+            "username varchar(50) null",
+            "email varchar(255)",
+            "phone varchar(40) null",
+            "password varchar(255)",
+            "status varchar(20)",
+            "theme varchar(10)",
+            "avatar_path varchar(255) null",
+            "failed_attempts smallint(5) unsigned",
+            "locked_until timestamp null",
+            "last_login_at timestamp null",
+            "last_login_ip varchar(45) null",
+            "password_changed_at timestamp null",
+            "remember_token varchar(100) null",
+            "created_at timestamp null",
+            "updated_at timestamp null",
+            "deleted_at timestamp null"
+        ],
+        "foreign_keys": [
+            "property_id \u2192 properties",
+            "tour_operator_id \u2192 tour_operators"
+        ]
+    },
+    "villas": {
+        "rows": 8,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "property_id bigint(20) unsigned",
+            "villa_type_id bigint(20) unsigned",
+            "code varchar(20)",
+            "name varchar(100)",
+            "slug varchar(120)",
+            "zone varchar(60) null",
+            "description text null",
+            "rate_override decimal(12,2) null",
+            "lock_ref varchar(60) null",
+            "occupancy_status varchar(20)",
+            "hk_status varchar(20)",
+            "maintenance_status varchar(20)",
+            "is_active tinyint(1)",
+            "sort_order smallint(5) unsigned",
+            "notes varchar(500) null",
+            "created_at timestamp null",
+            "updated_at timestamp null",
+            "deleted_at timestamp null"
+        ],
+        "foreign_keys": [
+            "property_id \u2192 properties",
+            "villa_type_id \u2192 villa_types"
+        ]
+    },
+    "villa_blocks": {
+        "rows": 0,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "villa_id bigint(20) unsigned",
+            "start_date date",
+            "end_date date",
+            "reason varchar(20)",
+            "notes varchar(300) null",
+            "created_by bigint(20) unsigned null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": [
+            "created_by \u2192 users",
+            "villa_id \u2192 villas"
+        ]
+    },
+    "villa_types": {
+        "rows": 4,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "property_id bigint(20) unsigned",
+            "name varchar(100)",
+            "slug varchar(120)",
+            "short_description varchar(300) null",
+            "description text null",
+            "max_adults tinyint(3) unsigned",
+            "max_children tinyint(3) unsigned",
+            "bedrooms tinyint(3) unsigned",
+            "bathrooms tinyint(3) unsigned",
+            "size_sqm smallint(5) unsigned null",
+            "bed_configuration varchar(120) null",
+            "base_rate decimal(12,2)",
+            "extra_adult_rate decimal(12,2)",
+            "extra_child_rate decimal(12,2)",
+            "base_occupancy tinyint(3) unsigned",
+            "sort_order smallint(5) unsigned",
+            "is_active tinyint(1)",
+            "created_at timestamp null",
+            "updated_at timestamp null",
+            "deleted_at timestamp null"
+        ],
+        "foreign_keys": [
+            "property_id \u2192 properties"
+        ]
+    },
+    "webhook_inbox": {
+        "rows": 2,
+        "columns": [
+            "id bigint(20) unsigned PK",
+            "provider varchar(30)",
+            "event_id varchar(150)",
+            "event_type varchar(80) null",
+            "payload longtext",
+            "processed_at timestamp null",
+            "error varchar(500) null",
+            "created_at timestamp null",
+            "updated_at timestamp null"
+        ],
+        "foreign_keys": []
+    }
+}

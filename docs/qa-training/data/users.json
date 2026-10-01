@@ -1,0 +1,138 @@
+[
+    {
+        "username": "admin",
+        "email": "admin@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "admin",
+        "home": "admin.dashboard"
+    },
+    {
+        "username": "owner",
+        "email": "owner@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "owner",
+        "home": "admin.dashboard"
+    },
+    {
+        "username": "manager",
+        "email": "manager@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "manager",
+        "home": "admin.dashboard"
+    },
+    {
+        "username": "reception",
+        "email": "reception@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "receptionist",
+        "home": "admin.frontdesk.index"
+    },
+    {
+        "username": "accounts",
+        "email": "accounts@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "accountant",
+        "home": "admin.payments.index"
+    },
+    {
+        "username": "posmanager",
+        "email": "posmanager@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "pos_manager",
+        "home": "pos.dashboard"
+    },
+    {
+        "username": "cashier",
+        "email": "cashier@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "cashier",
+        "home": "pos.terminal"
+    },
+    {
+        "username": "waiter",
+        "email": "waiter@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "waiter",
+        "home": "pos.terminal"
+    },
+    {
+        "username": "kitchen",
+        "email": "kitchen@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "kitchen",
+        "home": "pos.kds"
+    },
+    {
+        "username": "stores",
+        "email": "stores@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "inventory",
+        "home": "pos.inventory.items.index"
+    },
+    {
+        "username": "hksupervisor",
+        "email": "hksupervisor@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "hk_supervisor",
+        "home": "admin.housekeeping.index"
+    },
+    {
+        "username": "housekeeping",
+        "email": "housekeeping@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "housekeeper",
+        "home": "admin.housekeeping.my"
+    },
+    {
+        "username": "housekeeping2",
+        "email": "housekeeping2@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "housekeeper",
+        "home": "admin.housekeeping.my"
+    },
+    {
+        "username": "maintenance",
+        "email": "maintenance@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "maintenance",
+        "home": "admin.maintenance.index"
+    },
+    {
+        "username": "operator",
+        "email": "operator@sunrise-tours.test",
+        "type": "operator",
+        "status": "active",
+        "roles": "tour_operator",
+        "home": "operator.dashboard"
+    },
+    {
+        "username": "katrin",
+        "email": "katrin@euroasia.test",
+        "type": "operator",
+        "status": "active",
+        "roles": "tour_operator",
+        "home": "operator.dashboard"
+    },
+    {
+        "username": "staff",
+        "email": "staff@vaasalvilla.test",
+        "type": "staff",
+        "status": "active",
+        "roles": "staff",
+        "home": "admin.staff.my-timecard"
+    }
+]

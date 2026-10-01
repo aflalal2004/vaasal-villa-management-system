@@ -1,0 +1,83 @@
+{
+    "total": 257,
+    "by_source": {
+        "Automated (tests\/QA\/QaAuditTest.php)": {
+            "PASS": 153,
+            "BLOCKED": 2
+        },
+        "Live HTTP check (XAMPP)": {
+            "PASS": 19,
+            "BLOCKED": 1
+        },
+        "Browser walkthrough (headless Chrome)": {
+            "PASS": 82
+        }
+    },
+    "automated_by_module": {
+        "Roles & login": {
+            "PASS": 15
+        },
+        "Roles & permissions": {
+            "PASS": 15
+        },
+        "Security": {
+            "PASS": 13
+        },
+        "Hotel PMS": {
+            "PASS": 5
+        },
+        "Key cards": {
+            "PASS": 8,
+            "BLOCKED": 1
+        },
+        "Billing": {
+            "PASS": 5
+        },
+        "Front desk": {
+            "PASS": 3
+        },
+        "Integration": {
+            "PASS": 7
+        },
+        "Housekeeping": {
+            "PASS": 12
+        },
+        "Walk-in": {
+            "PASS": 10
+        },
+        "Booking sources": {
+            "PASS": 7,
+            "BLOCKED": 1
+        },
+        "Payments": {
+            "PASS": 7
+        },
+        "POS": {
+            "PASS": 11
+        },
+        "POS \/ KOT": {
+            "PASS": 1
+        },
+        "Kitchen": {
+            "PASS": 3
+        },
+        "Tables": {
+            "PASS": 4
+        },
+        "Night audit": {
+            "PASS": 4
+        },
+        "Reports": {
+            "PASS": 17
+        },
+        "Login": {
+            "PASS": 3
+        },
+        "Errors": {
+            "PASS": 2
+        },
+        "Reservations": {
+            "PASS": 1
+        }
+    }
+}

@@ -1,0 +1,3440 @@
+[
+    {
+        "methods": "GET",
+        "uri": "/",
+        "name": "home",
+        "action": "Website\\Http\\Controllers\\SiteController@home",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/about",
+        "name": "site.about",
+        "action": "Website\\Http\\Controllers\\SiteController@about",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/account/password",
+        "name": "password.change",
+        "action": "Auth\\Http\\Controllers\\PasswordController@changeForm",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/account/password",
+        "name": "password.change.update",
+        "action": "Auth\\Http\\Controllers\\PasswordController@change",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/account/profile",
+        "name": "profile.edit",
+        "action": "Core\\Http\\Controllers\\ProfileController@edit",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/account/profile",
+        "name": "profile.update",
+        "action": "Core\\Http\\Controllers\\ProfileController@update",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/account/theme",
+        "name": "preferences.theme",
+        "action": "Core\\Http\\Controllers\\ProfileController@theme",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin",
+        "name": "admin.dashboard",
+        "action": "Reports\\Http\\Controllers\\DashboardController@index",
+        "auth": "auth",
+        "permission": "dashboard.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/access/devices",
+        "name": "admin.access.devices",
+        "action": "KeyCards\\Http\\Controllers\\AccessControlController@devices",
+        "auth": "auth",
+        "permission": "keycards.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/access/devices",
+        "name": "admin.access.devices.store",
+        "action": "KeyCards\\Http\\Controllers\\AccessControlController@storeDevice",
+        "auth": "auth",
+        "permission": "keycards.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/access/devices/{device}",
+        "name": "admin.access.devices.update",
+        "action": "KeyCards\\Http\\Controllers\\AccessControlController@updateDevice",
+        "auth": "auth",
+        "permission": "keycards.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/access/devices/{device}/token",
+        "name": "admin.access.devices.token",
+        "action": "KeyCards\\Http\\Controllers\\AccessControlController@rotateToken",
+        "auth": "auth",
+        "permission": "keycards.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/access/simulator",
+        "name": "admin.access.simulator",
+        "action": "KeyCards\\Http\\Controllers\\AccessControlController@simulator",
+        "auth": "auth",
+        "permission": "keycards.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/access/simulator",
+        "name": "admin.access.simulate",
+        "action": "KeyCards\\Http\\Controllers\\AccessControlController@simulate",
+        "auth": "auth",
+        "permission": "keycards.manage",
+        "throttle": "throttle:60,1"
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/audit",
+        "name": "admin.audit.index",
+        "action": "Core\\Http\\Controllers\\AuditController@index",
+        "auth": "auth",
+        "permission": "audit.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/audit/logins",
+        "name": "admin.audit.logins",
+        "action": "Core\\Http\\Controllers\\AuditController@logins",
+        "auth": "auth",
+        "permission": "audit.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/bookings",
+        "name": "admin.bookings.index",
+        "action": "Booking\\Http\\Controllers\\BookingController@index",
+        "auth": "auth",
+        "permission": "bookings.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/bookings",
+        "name": "admin.bookings.store",
+        "action": "Booking\\Http\\Controllers\\BookingController@store",
+        "auth": "auth",
+        "permission": "bookings.view & bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/bookings/create",
+        "name": "admin.bookings.create",
+        "action": "Booking\\Http\\Controllers\\BookingController@create",
+        "auth": "auth",
+        "permission": "bookings.view & bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/bookings/quote",
+        "name": "admin.bookings.quote",
+        "action": "Booking\\Http\\Controllers\\BookingController@quote",
+        "auth": "auth",
+        "permission": "bookings.view & bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/bookings/{booking}",
+        "name": "admin.bookings.show",
+        "action": "Booking\\Http\\Controllers\\BookingController@show",
+        "auth": "auth",
+        "permission": "bookings.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/bookings/{booking}/cancel",
+        "name": "admin.bookings.cancel",
+        "action": "Booking\\Http\\Controllers\\BookingController@cancel",
+        "auth": "auth",
+        "permission": "bookings.view & bookings.cancel",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/bookings/{booking}/confirm",
+        "name": "admin.bookings.confirm",
+        "action": "Booking\\Http\\Controllers\\BookingController@confirm",
+        "auth": "auth",
+        "permission": "bookings.view & bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/bookings/{booking}/confirmation",
+        "name": "admin.bookings.confirmation",
+        "action": "Booking\\Http\\Controllers\\BookingController@confirmation",
+        "auth": "auth",
+        "permission": "bookings.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/bookings/{booking}/dates",
+        "name": "admin.bookings.dates",
+        "action": "Booking\\Http\\Controllers\\BookingController@changeDates",
+        "auth": "auth",
+        "permission": "bookings.view & bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/bookings/{booking}/no-show",
+        "name": "admin.bookings.no-show",
+        "action": "Booking\\Http\\Controllers\\BookingController@noShow",
+        "auth": "auth",
+        "permission": "bookings.view & bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/bookings/{booking}/notes",
+        "name": "admin.bookings.notes",
+        "action": "Booking\\Http\\Controllers\\BookingController@updateNotes",
+        "auth": "auth",
+        "permission": "bookings.view & bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/bookings/{booking}/payment-link",
+        "name": "admin.bookings.payment-link",
+        "action": "Booking\\Http\\Controllers\\BookingController@paymentLink",
+        "auth": "auth",
+        "permission": "bookings.view & bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/bookings/{booking}/proforma",
+        "name": "admin.bookings.proforma",
+        "action": "Booking\\Http\\Controllers\\BookingController@proforma",
+        "auth": "auth",
+        "permission": "bookings.view & bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/bookings/{booking}/registration-card",
+        "name": "admin.bookings.registration",
+        "action": "Booking\\Http\\Controllers\\BookingController@registrationCard",
+        "auth": "auth",
+        "permission": "bookings.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/bookings/{booking}/send-confirmation",
+        "name": "admin.bookings.send",
+        "action": "Booking\\Http\\Controllers\\BookingController@sendConfirmation",
+        "auth": "auth",
+        "permission": "bookings.view & bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/bookings/{booking}/stay-guests",
+        "name": "admin.bookings.stay-guests",
+        "action": "Booking\\Http\\Controllers\\BookingController@addStayGuest",
+        "auth": "auth",
+        "permission": "bookings.view & bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/admin/bookings/{booking}/stay-guests/{stayGuest}",
+        "name": "admin.bookings.stay-guests.destroy",
+        "action": "Booking\\Http\\Controllers\\BookingController@removeStayGuest",
+        "auth": "auth",
+        "permission": "bookings.view & bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/bookings/{booking}/villas/{bookingVilla}/move",
+        "name": "admin.bookings.move",
+        "action": "Booking\\Http\\Controllers\\BookingController@moveVilla",
+        "auth": "auth",
+        "permission": "bookings.view & bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/bookings/{booking}/voucher",
+        "name": "admin.bookings.voucher",
+        "action": "Booking\\Http\\Controllers\\BookingController@voucher",
+        "auth": "auth",
+        "permission": "bookings.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/calendar",
+        "name": "admin.calendar",
+        "action": "Booking\\Http\\Controllers\\CalendarController@index",
+        "auth": "auth",
+        "permission": "calendar.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/calendar/blocks",
+        "name": "admin.calendar.block",
+        "action": "Booking\\Http\\Controllers\\CalendarController@block",
+        "auth": "auth",
+        "permission": "villas.manage|bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/admin/calendar/blocks/{block}",
+        "name": "admin.calendar.unblock",
+        "action": "Booking\\Http\\Controllers\\CalendarController@unblock",
+        "auth": "auth",
+        "permission": "villas.manage|bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/channels",
+        "name": "admin.channels.index",
+        "action": "Channel\\Http\\Controllers\\ChannelController@index",
+        "auth": "auth",
+        "permission": "channels.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/channels/full-sync",
+        "name": "admin.channels.full-sync",
+        "action": "Channel\\Http\\Controllers\\ChannelController@fullSync",
+        "auth": "auth",
+        "permission": "channels.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/channels/mappings",
+        "name": "admin.channels.mappings.store",
+        "action": "Channel\\Http\\Controllers\\ChannelController@storeMapping",
+        "auth": "auth",
+        "permission": "channels.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/admin/channels/mappings/{mapping}",
+        "name": "admin.channels.mappings.destroy",
+        "action": "Channel\\Http\\Controllers\\ChannelController@destroyMapping",
+        "auth": "auth",
+        "permission": "channels.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/channels/retry",
+        "name": "admin.channels.retry",
+        "action": "Channel\\Http\\Controllers\\ChannelController@retry",
+        "auth": "auth",
+        "permission": "channels.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/channels/simulate",
+        "name": "admin.channels.simulate",
+        "action": "Channel\\Http\\Controllers\\ChannelController@simulate",
+        "auth": "auth",
+        "permission": "channels.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/channels/{channel}",
+        "name": "admin.channels.update",
+        "action": "Channel\\Http\\Controllers\\ChannelController@update",
+        "auth": "auth",
+        "permission": "channels.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/charge-items",
+        "name": "admin.charge-items.index",
+        "action": "Billing\\Http\\Controllers\\ChargeItemController@index",
+        "auth": "auth",
+        "permission": "folio.post",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/charge-items",
+        "name": "admin.charge-items.store",
+        "action": "Billing\\Http\\Controllers\\ChargeItemController@store",
+        "auth": "auth",
+        "permission": "folio.post",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/charge-items/create",
+        "name": "admin.charge-items.create",
+        "action": "Billing\\Http\\Controllers\\ChargeItemController@create",
+        "auth": "auth",
+        "permission": "folio.post",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT|PATCH",
+        "uri": "/admin/charge-items/{charge_item}",
+        "name": "admin.charge-items.update",
+        "action": "Billing\\Http\\Controllers\\ChargeItemController@update",
+        "auth": "auth",
+        "permission": "folio.post",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/charge-items/{charge_item}/edit",
+        "name": "admin.charge-items.edit",
+        "action": "Billing\\Http\\Controllers\\ChargeItemController@edit",
+        "auth": "auth",
+        "permission": "folio.post",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/conflicts",
+        "name": "admin.conflicts.index",
+        "action": "Booking\\Http\\Controllers\\ConflictController@index",
+        "auth": "auth",
+        "permission": "conflicts.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/conflicts/{conflict}/assign",
+        "name": "admin.conflicts.assign",
+        "action": "Booking\\Http\\Controllers\\ConflictController@assign",
+        "auth": "auth",
+        "permission": "conflicts.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/conflicts/{conflict}/reject",
+        "name": "admin.conflicts.reject",
+        "action": "Booking\\Http\\Controllers\\ConflictController@reject",
+        "auth": "auth",
+        "permission": "conflicts.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/enquiries",
+        "name": "admin.enquiries.index",
+        "action": "Booking\\Http\\Controllers\\EnquiryController@index",
+        "auth": "auth",
+        "permission": "bookings.view",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/enquiries/{enquiry}",
+        "name": "admin.enquiries.update",
+        "action": "Booking\\Http\\Controllers\\EnquiryController@update",
+        "auth": "auth",
+        "permission": "bookings.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/facilities",
+        "name": "admin.facilities.store",
+        "action": "Villa\\Http\\Controllers\\VillaTypeController@storeFacility",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/folio-lines/{line}/reverse",
+        "name": "admin.folios.reverse",
+        "action": "Billing\\Http\\Controllers\\FolioController@reverse",
+        "auth": "auth",
+        "permission": "folio.adjust",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/folios/{folio}/charges",
+        "name": "admin.folios.charge",
+        "action": "Billing\\Http\\Controllers\\FolioController@postCharge",
+        "auth": "auth",
+        "permission": "folio.post",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/folios/{folio}/interim-invoice",
+        "name": "admin.folios.interim",
+        "action": "Billing\\Http\\Controllers\\FolioController@interimInvoice",
+        "auth": "auth",
+        "permission": "folio.post",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/folios/{folio}/payments",
+        "name": "admin.folios.payment",
+        "action": "Billing\\Http\\Controllers\\FolioController@payment",
+        "auth": "auth",
+        "permission": "payments.receive",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/folios/{folio}/print",
+        "name": "admin.folios.print",
+        "action": "Billing\\Http\\Controllers\\FolioController@print",
+        "auth": "auth",
+        "permission": "invoices.view|folio.post",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/folios/{folio}/refunds",
+        "name": "admin.folios.refund",
+        "action": "Billing\\Http\\Controllers\\FolioController@refund",
+        "auth": "auth",
+        "permission": "payments.refund",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/front-desk",
+        "name": "admin.frontdesk.index",
+        "action": "FrontDesk\\Http\\Controllers\\FrontDeskController@index",
+        "auth": "auth",
+        "permission": "frontdesk.checkin|frontdesk.checkout",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/front-desk/night-audit",
+        "name": "admin.frontdesk.night-audit",
+        "action": "FrontDesk\\Http\\Controllers\\FrontDeskController@nightAudit",
+        "auth": "auth",
+        "permission": "frontdesk.checkin|frontdesk.checkout & frontdesk.night_audit",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/front-desk/walk-in",
+        "name": "admin.frontdesk.walk-in",
+        "action": "FrontDesk\\Http\\Controllers\\FrontDeskController@walkIn",
+        "auth": "auth",
+        "permission": "frontdesk.checkin|frontdesk.checkout & bookings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/front-desk/{booking}/check-in",
+        "name": "admin.frontdesk.checkin",
+        "action": "FrontDesk\\Http\\Controllers\\FrontDeskController@checkInForm",
+        "auth": "auth",
+        "permission": "frontdesk.checkin|frontdesk.checkout & frontdesk.checkin",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/front-desk/{booking}/check-in",
+        "name": "admin.frontdesk.checkin.store",
+        "action": "FrontDesk\\Http\\Controllers\\FrontDeskController@checkIn",
+        "auth": "auth",
+        "permission": "frontdesk.checkin|frontdesk.checkout & frontdesk.checkin",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/front-desk/{booking}/check-out",
+        "name": "admin.frontdesk.checkout",
+        "action": "FrontDesk\\Http\\Controllers\\FrontDeskController@checkOutForm",
+        "auth": "auth",
+        "permission": "frontdesk.checkin|frontdesk.checkout & frontdesk.checkout",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/front-desk/{booking}/check-out",
+        "name": "admin.frontdesk.checkout.store",
+        "action": "FrontDesk\\Http\\Controllers\\FrontDeskController@checkOut",
+        "auth": "auth",
+        "permission": "frontdesk.checkin|frontdesk.checkout & frontdesk.checkout",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/front-desk/{booking}/restaurant-settlement",
+        "name": "admin.frontdesk.restaurant-settlement",
+        "action": "FrontDesk\\Http\\Controllers\\FrontDeskController@requestRestaurantSettlement",
+        "auth": "auth",
+        "permission": "frontdesk.checkin|frontdesk.checkout & frontdesk.checkout",
+        "throttle": "throttle:10,1"
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/guests",
+        "name": "admin.guests.index",
+        "action": "Booking\\Http\\Controllers\\GuestController@index",
+        "auth": "auth",
+        "permission": "guests.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/guests/{guest}",
+        "name": "admin.guests.show",
+        "action": "Booking\\Http\\Controllers\\GuestController@show",
+        "auth": "auth",
+        "permission": "guests.view",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/guests/{guest}",
+        "name": "admin.guests.update",
+        "action": "Booking\\Http\\Controllers\\GuestController@update",
+        "auth": "auth",
+        "permission": "guests.view & guests.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/guests/{guest}/edit",
+        "name": "admin.guests.edit",
+        "action": "Booking\\Http\\Controllers\\GuestController@edit",
+        "auth": "auth",
+        "permission": "guests.view & guests.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/guests/{guest}/id-document",
+        "name": "admin.guests.id-document",
+        "action": "Booking\\Http\\Controllers\\GuestController@idDocument",
+        "auth": "auth",
+        "permission": "guests.view & guests.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/housekeeping",
+        "name": "admin.housekeeping.index",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@index",
+        "auth": "auth",
+        "permission": "housekeeping.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/housekeeping/checklists",
+        "name": "admin.housekeeping.checklists",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@checklists",
+        "auth": "auth",
+        "permission": "housekeeping.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/housekeeping/checklists",
+        "name": "admin.housekeeping.checklists.save",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@saveChecklist",
+        "auth": "auth",
+        "permission": "housekeeping.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/housekeeping/linen",
+        "name": "admin.housekeeping.linen",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@linen",
+        "auth": "auth",
+        "permission": "housekeeping.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/housekeeping/linen",
+        "name": "admin.housekeeping.linen.save",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@saveLinen",
+        "auth": "auth",
+        "permission": "housekeeping.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/housekeeping/my-tasks",
+        "name": "admin.housekeeping.my",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@my",
+        "auth": "auth",
+        "permission": "housekeeping.work",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/housekeeping/stayovers",
+        "name": "admin.housekeeping.stayovers",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@stayovers",
+        "auth": "auth",
+        "permission": "housekeeping.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/housekeeping/tasks",
+        "name": "admin.housekeeping.tasks.store",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@store",
+        "auth": "auth",
+        "permission": "housekeeping.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/housekeeping/tasks/{task}",
+        "name": "admin.housekeeping.tasks.show",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@show",
+        "auth": "auth",
+        "permission": "housekeeping.view|housekeeping.work",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/housekeeping/tasks/{task}/accept",
+        "name": "admin.housekeeping.tasks.accept",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@accept",
+        "auth": "auth",
+        "permission": "housekeeping.work|housekeeping.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/housekeeping/tasks/{task}/approve",
+        "name": "admin.housekeeping.tasks.approve",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@approve",
+        "auth": "auth",
+        "permission": "housekeeping.inspect",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/housekeeping/tasks/{task}/assign",
+        "name": "admin.housekeeping.tasks.assign",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@assign",
+        "auth": "auth",
+        "permission": "housekeeping.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/housekeeping/tasks/{task}/cancel",
+        "name": "admin.housekeeping.tasks.cancel",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@cancel",
+        "auth": "auth",
+        "permission": "housekeeping.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/housekeeping/tasks/{task}/items/{item}",
+        "name": "admin.housekeeping.tasks.toggle",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@toggle",
+        "auth": "auth",
+        "permission": "housekeeping.work|housekeeping.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/housekeeping/tasks/{task}/pause",
+        "name": "admin.housekeeping.tasks.pause",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@pause",
+        "auth": "auth",
+        "permission": "housekeeping.work|housekeeping.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/housekeeping/tasks/{task}/reject",
+        "name": "admin.housekeeping.tasks.reject",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@reject",
+        "auth": "auth",
+        "permission": "housekeeping.inspect",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/housekeeping/tasks/{task}/start",
+        "name": "admin.housekeeping.tasks.start",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@start",
+        "auth": "auth",
+        "permission": "housekeeping.work|housekeeping.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/housekeeping/tasks/{task}/submit",
+        "name": "admin.housekeeping.tasks.submit",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@submit",
+        "auth": "auth",
+        "permission": "housekeeping.work|housekeeping.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/housekeeping/villas/{villa}/status",
+        "name": "admin.housekeeping.villa-status",
+        "action": "Housekeeping\\Http\\Controllers\\HousekeepingController@setStatus",
+        "auth": "auth",
+        "permission": "housekeeping.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/invoices",
+        "name": "admin.invoices.index",
+        "action": "Billing\\Http\\Controllers\\InvoiceController@index",
+        "auth": "auth",
+        "permission": "invoices.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/invoices/{invoice}",
+        "name": "admin.invoices.show",
+        "action": "Billing\\Http\\Controllers\\InvoiceController@show",
+        "auth": "auth",
+        "permission": "invoices.view|folio.post",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/invoices/{invoice}/email",
+        "name": "admin.invoices.email",
+        "action": "Billing\\Http\\Controllers\\InvoiceController@email",
+        "auth": "auth",
+        "permission": "invoices.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/key-cards",
+        "name": "admin.keycards.index",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@index",
+        "auth": "auth",
+        "permission": "keycards.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/key-cards",
+        "name": "admin.keycards.store",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@store",
+        "auth": "auth",
+        "permission": "keycards.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/key-cards/access-logs",
+        "name": "admin.keycards.logs",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@logs",
+        "auth": "auth",
+        "permission": "keycards.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/key-cards/assignments/{assignment}/extend",
+        "name": "admin.keycards.extend",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@extend",
+        "auth": "auth",
+        "permission": "keycards.issue",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/key-cards/assignments/{assignment}/revoke",
+        "name": "admin.keycards.revoke",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@revoke",
+        "auth": "auth",
+        "permission": "keycards.issue",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/key-cards/issue/{booking}",
+        "name": "admin.keycards.issue",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@issue",
+        "auth": "auth",
+        "permission": "keycards.issue",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/key-cards/jobs/{job}/retry",
+        "name": "admin.keycards.retry",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@retry",
+        "auth": "auth",
+        "permission": "keycards.issue",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/key-cards/lock-bridge",
+        "name": "admin.keycards.bridge",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@bridge",
+        "auth": "auth",
+        "permission": "keycards.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/key-cards/lock-bridge/token",
+        "name": "admin.keycards.bridge.token",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@rotateToken",
+        "auth": "auth",
+        "permission": "keycards.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/key-cards/simulate-access",
+        "name": "admin.keycards.simulate",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@simulateAccess",
+        "auth": "auth",
+        "permission": "keycards.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/key-cards/staff-issue",
+        "name": "admin.keycards.staff-issue",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@issueStaff",
+        "auth": "auth",
+        "permission": "keycards.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/key-cards/{card}",
+        "name": "admin.keycards.show",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@show",
+        "auth": "auth",
+        "permission": "keycards.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/key-cards/{card}/block",
+        "name": "admin.keycards.block",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@block",
+        "auth": "auth",
+        "permission": "keycards.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/key-cards/{card}/lost",
+        "name": "admin.keycards.lost",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@lost",
+        "auth": "auth",
+        "permission": "keycards.issue",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/key-cards/{card}/unblock",
+        "name": "admin.keycards.unblock",
+        "action": "KeyCards\\Http\\Controllers\\KeyCardController@unblock",
+        "auth": "auth",
+        "permission": "keycards.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/lost-found",
+        "name": "admin.lost-found.index",
+        "action": "Housekeeping\\Http\\Controllers\\LostFoundController@index",
+        "auth": "auth",
+        "permission": "lostfound.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/lost-found",
+        "name": "admin.lost-found.store",
+        "action": "Housekeeping\\Http\\Controllers\\LostFoundController@store",
+        "auth": "auth",
+        "permission": "lostfound.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/lost-found/create",
+        "name": "admin.lost-found.create",
+        "action": "Housekeeping\\Http\\Controllers\\LostFoundController@create",
+        "auth": "auth",
+        "permission": "lostfound.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT|PATCH",
+        "uri": "/admin/lost-found/{item}",
+        "name": "admin.lost-found.update",
+        "action": "Housekeeping\\Http\\Controllers\\LostFoundController@update",
+        "auth": "auth",
+        "permission": "lostfound.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/lost-found/{item}/edit",
+        "name": "admin.lost-found.edit",
+        "action": "Housekeeping\\Http\\Controllers\\LostFoundController@edit",
+        "auth": "auth",
+        "permission": "lostfound.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/maintenance",
+        "name": "admin.maintenance.index",
+        "action": "Maintenance\\Http\\Controllers\\MaintenanceController@index",
+        "auth": "auth",
+        "permission": "maintenance.view|maintenance.report",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/maintenance",
+        "name": "admin.maintenance.store",
+        "action": "Maintenance\\Http\\Controllers\\MaintenanceController@store",
+        "auth": "auth",
+        "permission": "maintenance.report",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/maintenance/create",
+        "name": "admin.maintenance.create",
+        "action": "Maintenance\\Http\\Controllers\\MaintenanceController@create",
+        "auth": "auth",
+        "permission": "maintenance.report",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/maintenance/{ticket}",
+        "name": "admin.maintenance.show",
+        "action": "Maintenance\\Http\\Controllers\\MaintenanceController@show",
+        "auth": "auth",
+        "permission": "maintenance.view|maintenance.report",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/maintenance/{ticket}/assign",
+        "name": "admin.maintenance.assign",
+        "action": "Maintenance\\Http\\Controllers\\MaintenanceController@assign",
+        "auth": "auth",
+        "permission": "maintenance.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/maintenance/{ticket}/status",
+        "name": "admin.maintenance.status",
+        "action": "Maintenance\\Http\\Controllers\\MaintenanceController@status",
+        "auth": "auth",
+        "permission": "maintenance.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/admin/media/{media}",
+        "name": "admin.media.destroy",
+        "action": "Villa\\Http\\Controllers\\VillaTypeController@deleteMedia",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/media/{media}/cover",
+        "name": "admin.media.cover",
+        "action": "Villa\\Http\\Controllers\\VillaTypeController@coverMedia",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/notifications",
+        "name": "admin.notifications.index",
+        "action": "Notifications\\Http\\Controllers\\NotificationController@index",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/notifications/poll",
+        "name": "admin.notifications.poll",
+        "action": "Notifications\\Http\\Controllers\\NotificationController@poll",
+        "auth": "auth",
+        "permission": "",
+        "throttle": "throttle:120,1"
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/notifications/read-all",
+        "name": "admin.notifications.read-all",
+        "action": "Notifications\\Http\\Controllers\\NotificationController@readAll",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/notifications/{notification}/open",
+        "name": "admin.notifications.open",
+        "action": "Notifications\\Http\\Controllers\\NotificationController@open",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/offers",
+        "name": "admin.offers.index",
+        "action": "Villa\\Http\\Controllers\\OfferController@index",
+        "auth": "auth",
+        "permission": "rates.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/offers",
+        "name": "admin.offers.store",
+        "action": "Villa\\Http\\Controllers\\OfferController@store",
+        "auth": "auth",
+        "permission": "rates.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/offers/create",
+        "name": "admin.offers.create",
+        "action": "Villa\\Http\\Controllers\\OfferController@create",
+        "auth": "auth",
+        "permission": "rates.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT|PATCH",
+        "uri": "/admin/offers/{offer}",
+        "name": "admin.offers.update",
+        "action": "Villa\\Http\\Controllers\\OfferController@update",
+        "auth": "auth",
+        "permission": "rates.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/admin/offers/{offer}",
+        "name": "admin.offers.destroy",
+        "action": "Villa\\Http\\Controllers\\OfferController@destroy",
+        "auth": "auth",
+        "permission": "rates.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/offers/{offer}/edit",
+        "name": "admin.offers.edit",
+        "action": "Villa\\Http\\Controllers\\OfferController@edit",
+        "auth": "auth",
+        "permission": "rates.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/operator-contracts/{contract}",
+        "name": "admin.operators.contracts.update",
+        "action": "Operators\\Http\\Controllers\\OperatorController@updateContract",
+        "auth": "auth",
+        "permission": "operators.view & operators.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/operators",
+        "name": "admin.operators.index",
+        "action": "Operators\\Http\\Controllers\\OperatorController@index",
+        "auth": "auth",
+        "permission": "operators.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/operators",
+        "name": "admin.operators.store",
+        "action": "Operators\\Http\\Controllers\\OperatorController@store",
+        "auth": "auth",
+        "permission": "operators.view & operators.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/operators/create",
+        "name": "admin.operators.create",
+        "action": "Operators\\Http\\Controllers\\OperatorController@create",
+        "auth": "auth",
+        "permission": "operators.view & operators.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/operators/{operator}",
+        "name": "admin.operators.show",
+        "action": "Operators\\Http\\Controllers\\OperatorController@show",
+        "auth": "auth",
+        "permission": "operators.view",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/operators/{operator}",
+        "name": "admin.operators.update",
+        "action": "Operators\\Http\\Controllers\\OperatorController@update",
+        "auth": "auth",
+        "permission": "operators.view & operators.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/operators/{operator}/approve",
+        "name": "admin.operators.approve",
+        "action": "Operators\\Http\\Controllers\\OperatorController@approve",
+        "auth": "auth",
+        "permission": "operators.view & operators.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/operators/{operator}/commissions/settle",
+        "name": "admin.operators.commissions.settle",
+        "action": "Operators\\Http\\Controllers\\OperatorController@settleCommissions",
+        "auth": "auth",
+        "permission": "operators.view & operators.finance",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/operators/{operator}/contracts",
+        "name": "admin.operators.contracts.store",
+        "action": "Operators\\Http\\Controllers\\OperatorController@storeContract",
+        "auth": "auth",
+        "permission": "operators.view & operators.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/operators/{operator}/edit",
+        "name": "admin.operators.edit",
+        "action": "Operators\\Http\\Controllers\\OperatorController@edit",
+        "auth": "auth",
+        "permission": "operators.view & operators.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/operators/{operator}/payments",
+        "name": "admin.operators.payment",
+        "action": "Operators\\Http\\Controllers\\OperatorController@payment",
+        "auth": "auth",
+        "permission": "operators.view & operators.finance",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/operators/{operator}/statement",
+        "name": "admin.operators.statement",
+        "action": "Operators\\Http\\Controllers\\OperatorController@statement",
+        "auth": "auth",
+        "permission": "operators.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/operators/{operator}/suspend",
+        "name": "admin.operators.suspend",
+        "action": "Operators\\Http\\Controllers\\OperatorController@suspend",
+        "auth": "auth",
+        "permission": "operators.view & operators.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/operators/{operator}/users",
+        "name": "admin.operators.users",
+        "action": "Operators\\Http\\Controllers\\OperatorController@addUser",
+        "auth": "auth",
+        "permission": "operators.view & operators.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/payments",
+        "name": "admin.payments.index",
+        "action": "Billing\\Http\\Controllers\\PaymentController@index",
+        "auth": "auth",
+        "permission": "payments.receive|invoices.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/payments/{payment}/proof",
+        "name": "admin.payments.proof",
+        "action": "Billing\\Http\\Controllers\\PaymentController@proof",
+        "auth": "auth",
+        "permission": "payments.receive|operators.finance",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/rates",
+        "name": "admin.rates.index",
+        "action": "Villa\\Http\\Controllers\\RateController@index",
+        "auth": "auth",
+        "permission": "rates.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/rates/matrix",
+        "name": "admin.rates.matrix",
+        "action": "Villa\\Http\\Controllers\\RateController@saveMatrix",
+        "auth": "auth",
+        "permission": "rates.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/rates/plans",
+        "name": "admin.rates.plans.store",
+        "action": "Villa\\Http\\Controllers\\RateController@storePlan",
+        "auth": "auth",
+        "permission": "rates.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/rates/plans/{plan}",
+        "name": "admin.rates.plans.update",
+        "action": "Villa\\Http\\Controllers\\RateController@updatePlan",
+        "auth": "auth",
+        "permission": "rates.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/rates/seasons",
+        "name": "admin.rates.seasons.store",
+        "action": "Villa\\Http\\Controllers\\RateController@storeSeason",
+        "auth": "auth",
+        "permission": "rates.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/rates/seasons/{season}",
+        "name": "admin.rates.seasons.update",
+        "action": "Villa\\Http\\Controllers\\RateController@updateSeason",
+        "auth": "auth",
+        "permission": "rates.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/admin/rates/seasons/{season}",
+        "name": "admin.rates.seasons.destroy",
+        "action": "Villa\\Http\\Controllers\\RateController@destroySeason",
+        "auth": "auth",
+        "permission": "rates.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/reports",
+        "name": "admin.reports.index",
+        "action": "Reports\\Http\\Controllers\\ReportController@index",
+        "auth": "auth",
+        "permission": "reports.operational|reports.financial|pos.reports|inventory.view|staff.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/reports/{type}",
+        "name": "admin.reports.show",
+        "action": "Reports\\Http\\Controllers\\ReportController@show",
+        "auth": "auth",
+        "permission": "reports.operational|reports.financial|pos.reports|inventory.view|staff.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/roles",
+        "name": "admin.roles.index",
+        "action": "Core\\Http\\Controllers\\RoleController@index",
+        "auth": "auth",
+        "permission": "users.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/roles",
+        "name": "admin.roles.store",
+        "action": "Core\\Http\\Controllers\\RoleController@store",
+        "auth": "auth",
+        "permission": "users.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/roles/create",
+        "name": "admin.roles.create",
+        "action": "Core\\Http\\Controllers\\RoleController@create",
+        "auth": "auth",
+        "permission": "users.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/roles/{role}",
+        "name": "admin.roles.update",
+        "action": "Core\\Http\\Controllers\\RoleController@update",
+        "auth": "auth",
+        "permission": "users.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/roles/{role}/edit",
+        "name": "admin.roles.edit",
+        "action": "Core\\Http\\Controllers\\RoleController@edit",
+        "auth": "auth",
+        "permission": "users.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/settings",
+        "name": "admin.settings.edit",
+        "action": "Core\\Http\\Controllers\\SettingsController@edit",
+        "auth": "auth",
+        "permission": "settings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/settings",
+        "name": "admin.settings.update",
+        "action": "Core\\Http\\Controllers\\SettingsController@update",
+        "auth": "auth",
+        "permission": "settings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/settings/currencies",
+        "name": "admin.settings.currencies",
+        "action": "Core\\Http\\Controllers\\SettingsController@currencies",
+        "auth": "auth",
+        "permission": "settings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/settings/currencies/refresh",
+        "name": "admin.settings.currencies.refresh",
+        "action": "Core\\Http\\Controllers\\SettingsController@refreshRates",
+        "auth": "auth",
+        "permission": "settings.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/staff/attendance",
+        "name": "admin.staff.attendance.index",
+        "action": "Staff\\Http\\Controllers\\AttendanceController@index",
+        "auth": "auth",
+        "permission": "attendance.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/staff/attendance/export",
+        "name": "admin.staff.attendance.export",
+        "action": "Staff\\Http\\Controllers\\AttendanceController@export",
+        "auth": "auth",
+        "permission": "attendance.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/attendance/manual",
+        "name": "admin.staff.attendance.manual",
+        "action": "Staff\\Http\\Controllers\\AttendanceController@manual",
+        "auth": "auth",
+        "permission": "attendance.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/attendance/{record}/correct",
+        "name": "admin.staff.attendance.correct",
+        "action": "Staff\\Http\\Controllers\\AttendanceController@correct",
+        "auth": "auth",
+        "permission": "attendance.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/clock",
+        "name": "admin.staff.clock",
+        "action": "Staff\\Http\\Controllers\\AttendanceController@clock",
+        "auth": "auth",
+        "permission": "attendance.self",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/staff/departments",
+        "name": "admin.staff.departments.index",
+        "action": "Staff\\Http\\Controllers\\EmployeeController@departments",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/departments",
+        "name": "admin.staff.departments.store",
+        "action": "Staff\\Http\\Controllers\\EmployeeController@storeDepartment",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/staff/devices",
+        "name": "admin.staff.devices.index",
+        "action": "Staff\\Http\\Controllers\\RosterController@devices",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/devices",
+        "name": "admin.staff.devices.store",
+        "action": "Staff\\Http\\Controllers\\RosterController@storeDevice",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/staff/employees",
+        "name": "admin.staff.employees.index",
+        "action": "Staff\\Http\\Controllers\\EmployeeController@index",
+        "auth": "auth",
+        "permission": "staff.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/employees",
+        "name": "admin.staff.employees.store",
+        "action": "Staff\\Http\\Controllers\\EmployeeController@store",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/staff/employees/create",
+        "name": "admin.staff.employees.create",
+        "action": "Staff\\Http\\Controllers\\EmployeeController@create",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/staff/employees/{employee}",
+        "name": "admin.staff.employees.update",
+        "action": "Staff\\Http\\Controllers\\EmployeeController@update",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/staff/employees/{employee}",
+        "name": "admin.staff.employees.show",
+        "action": "Staff\\Http\\Controllers\\EmployeeController@show",
+        "auth": "auth",
+        "permission": "staff.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/staff/employees/{employee}/edit",
+        "name": "admin.staff.employees.edit",
+        "action": "Staff\\Http\\Controllers\\EmployeeController@edit",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/employees/{employee}/login",
+        "name": "admin.staff.employees.login",
+        "action": "Staff\\Http\\Controllers\\EmployeeController@createLogin",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/employees/{employee}/terminate",
+        "name": "admin.staff.employees.terminate",
+        "action": "Staff\\Http\\Controllers\\EmployeeController@terminate",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/job-roles",
+        "name": "admin.staff.job-roles.store",
+        "action": "Staff\\Http\\Controllers\\EmployeeController@storeJobRole",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/staff/leave",
+        "name": "admin.staff.leave.index",
+        "action": "Staff\\Http\\Controllers\\LeaveController@index",
+        "auth": "auth",
+        "permission": "leave.self|leave.approve",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/leave",
+        "name": "admin.staff.leave.store",
+        "action": "Staff\\Http\\Controllers\\LeaveController@store",
+        "auth": "auth",
+        "permission": "leave.self|leave.approve",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/leave-types",
+        "name": "admin.staff.leave-types.store",
+        "action": "Staff\\Http\\Controllers\\LeaveController@storeType",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/leave/{leave}/cancel",
+        "name": "admin.staff.leave.cancel",
+        "action": "Staff\\Http\\Controllers\\LeaveController@cancel",
+        "auth": "auth",
+        "permission": "leave.self|leave.approve",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/leave/{leave}/decide",
+        "name": "admin.staff.leave.decide",
+        "action": "Staff\\Http\\Controllers\\LeaveController@decide",
+        "auth": "auth",
+        "permission": "leave.approve",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/staff/my-time-card",
+        "name": "admin.staff.my-timecard",
+        "action": "Staff\\Http\\Controllers\\AttendanceController@mine",
+        "auth": "auth",
+        "permission": "attendance.self",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/staff/roster",
+        "name": "admin.staff.roster.index",
+        "action": "Staff\\Http\\Controllers\\RosterController@index",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/roster",
+        "name": "admin.staff.roster.save",
+        "action": "Staff\\Http\\Controllers\\RosterController@save",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/staff/shifts",
+        "name": "admin.staff.shifts.store",
+        "action": "Staff\\Http\\Controllers\\RosterController@storeShift",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/staff/shifts/{shift}",
+        "name": "admin.staff.shifts.update",
+        "action": "Staff\\Http\\Controllers\\RosterController@updateShift",
+        "auth": "auth",
+        "permission": "staff.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/users",
+        "name": "admin.users.index",
+        "action": "Core\\Http\\Controllers\\UserController@index",
+        "auth": "auth",
+        "permission": "users.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/users",
+        "name": "admin.users.store",
+        "action": "Core\\Http\\Controllers\\UserController@store",
+        "auth": "auth",
+        "permission": "users.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/users/create",
+        "name": "admin.users.create",
+        "action": "Core\\Http\\Controllers\\UserController@create",
+        "auth": "auth",
+        "permission": "users.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/users/{user}",
+        "name": "admin.users.update",
+        "action": "Core\\Http\\Controllers\\UserController@update",
+        "auth": "auth",
+        "permission": "users.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/users/{user}/edit",
+        "name": "admin.users.edit",
+        "action": "Core\\Http\\Controllers\\UserController@edit",
+        "auth": "auth",
+        "permission": "users.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/users/{user}/reset-password",
+        "name": "admin.users.reset-password",
+        "action": "Core\\Http\\Controllers\\UserController@resetPassword",
+        "auth": "auth",
+        "permission": "users.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/users/{user}/unlock",
+        "name": "admin.users.unlock",
+        "action": "Core\\Http\\Controllers\\UserController@unlock",
+        "auth": "auth",
+        "permission": "users.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/villa-types",
+        "name": "admin.villa-types.index",
+        "action": "Villa\\Http\\Controllers\\VillaTypeController@index",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/villa-types",
+        "name": "admin.villa-types.store",
+        "action": "Villa\\Http\\Controllers\\VillaTypeController@store",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/villa-types/create",
+        "name": "admin.villa-types.create",
+        "action": "Villa\\Http\\Controllers\\VillaTypeController@create",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT|PATCH",
+        "uri": "/admin/villa-types/{villa_type}",
+        "name": "admin.villa-types.update",
+        "action": "Villa\\Http\\Controllers\\VillaTypeController@update",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/admin/villa-types/{villa_type}",
+        "name": "admin.villa-types.destroy",
+        "action": "Villa\\Http\\Controllers\\VillaTypeController@destroy",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/villa-types/{villa_type}/edit",
+        "name": "admin.villa-types.edit",
+        "action": "Villa\\Http\\Controllers\\VillaTypeController@edit",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/villa-types/{villa_type}/media",
+        "name": "admin.villa-types.media",
+        "action": "Villa\\Http\\Controllers\\VillaTypeController@addMedia",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/villas",
+        "name": "admin.villas.index",
+        "action": "Villa\\Http\\Controllers\\VillaController@index",
+        "auth": "auth",
+        "permission": "villas.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/villas",
+        "name": "admin.villas.store",
+        "action": "Villa\\Http\\Controllers\\VillaController@store",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/villas/create",
+        "name": "admin.villas.create",
+        "action": "Villa\\Http\\Controllers\\VillaController@create",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/villas/{villa}",
+        "name": "admin.villas.update",
+        "action": "Villa\\Http\\Controllers\\VillaController@update",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/admin/villas/{villa}",
+        "name": "admin.villas.destroy",
+        "action": "Villa\\Http\\Controllers\\VillaController@destroy",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/villas/{villa}",
+        "name": "admin.villas.show",
+        "action": "Villa\\Http\\Controllers\\VillaController@show",
+        "auth": "auth",
+        "permission": "villas.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/villas/{villa}/edit",
+        "name": "admin.villas.edit",
+        "action": "Villa\\Http\\Controllers\\VillaController@edit",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/villas/{villa}/media",
+        "name": "admin.villas.media",
+        "action": "Villa\\Http\\Controllers\\VillaController@addMedia",
+        "auth": "auth",
+        "permission": "villas.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/website",
+        "name": "admin.cms.index",
+        "action": "Core\\Http\\Controllers\\CmsController@index",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/website/content",
+        "name": "admin.cms.content",
+        "action": "Core\\Http\\Controllers\\CmsController@content",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/website/gallery",
+        "name": "admin.cms.gallery.store",
+        "action": "Core\\Http\\Controllers\\CmsController@storeGallery",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/admin/website/gallery/{item}",
+        "name": "admin.cms.gallery.destroy",
+        "action": "Core\\Http\\Controllers\\CmsController@destroyGallery",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/website/media/search",
+        "name": "admin.cms.media.search",
+        "action": "Core\\Http\\Controllers\\MediaLibraryController@search",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": "throttle:60,1"
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/website/media/use",
+        "name": "admin.cms.media.use",
+        "action": "Core\\Http\\Controllers\\MediaLibraryController@use",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/website/services",
+        "name": "admin.cms.services.store",
+        "action": "Core\\Http\\Controllers\\CmsController@storeService",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/website/services/{service}",
+        "name": "admin.cms.services.update",
+        "action": "Core\\Http\\Controllers\\CmsController@updateService",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/admin/website/social",
+        "name": "admin.social.index",
+        "action": "Core\\Http\\Controllers\\SocialLinkController@index",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/website/social",
+        "name": "admin.social.store",
+        "action": "Core\\Http\\Controllers\\SocialLinkController@store",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/admin/website/social/{link}",
+        "name": "admin.social.update",
+        "action": "Core\\Http\\Controllers\\SocialLinkController@update",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/admin/website/social/{link}",
+        "name": "admin.social.destroy",
+        "action": "Core\\Http\\Controllers\\SocialLinkController@destroy",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/website/social/{link}/toggle",
+        "name": "admin.social.toggle",
+        "action": "Core\\Http\\Controllers\\SocialLinkController@toggle",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/admin/website/testimonials",
+        "name": "admin.cms.testimonials.store",
+        "action": "Core\\Http\\Controllers\\CmsController@storeTestimonial",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/admin/website/testimonials/{testimonial}",
+        "name": "admin.cms.testimonials.destroy",
+        "action": "Core\\Http\\Controllers\\CmsController@destroyTestimonial",
+        "auth": "auth",
+        "permission": "website.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/api/v1/attendance/punch",
+        "name": "api.attendance.punch",
+        "action": "Staff\\Http\\Controllers\\DeviceApiController@punch",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:120,1"
+    },
+    {
+        "methods": "GET",
+        "uri": "/api/v1/availability",
+        "name": "api.availability",
+        "action": "Api\\Http\\Controllers\\PublicApiController@availability",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:60,1"
+    },
+    {
+        "methods": "GET",
+        "uri": "/api/v1/currencies",
+        "name": "api.currencies",
+        "action": "Website\\Http\\Controllers\\CurrencyController@rates",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:60,1"
+    },
+    {
+        "methods": "POST",
+        "uri": "/api/v1/lock-bridge/events",
+        "name": "api.bridge.events",
+        "action": "KeyCards\\Http\\Controllers\\LockBridgeApiController@events",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:240,1"
+    },
+    {
+        "methods": "POST",
+        "uri": "/api/v1/lock-bridge/heartbeat",
+        "name": "api.bridge.heartbeat",
+        "action": "KeyCards\\Http\\Controllers\\LockBridgeApiController@heartbeat",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:240,1"
+    },
+    {
+        "methods": "GET",
+        "uri": "/api/v1/lock-bridge/jobs",
+        "name": "api.bridge.jobs",
+        "action": "KeyCards\\Http\\Controllers\\LockBridgeApiController@jobs",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:240,1"
+    },
+    {
+        "methods": "POST",
+        "uri": "/api/v1/lock-bridge/jobs/{uuid}/result",
+        "name": "api.bridge.result",
+        "action": "KeyCards\\Http\\Controllers\\LockBridgeApiController@result",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:240,1"
+    },
+    {
+        "methods": "GET",
+        "uri": "/api/v1/offers",
+        "name": "api.offers",
+        "action": "Api\\Http\\Controllers\\PublicApiController@offers",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:60,1"
+    },
+    {
+        "methods": "GET",
+        "uri": "/api/v1/quote",
+        "name": "api.quote",
+        "action": "Api\\Http\\Controllers\\PublicApiController@quote",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:60,1"
+    },
+    {
+        "methods": "POST",
+        "uri": "/api/v1/rfid/scan",
+        "name": "api.rfid.scan",
+        "action": "KeyCards\\Http\\Controllers\\RfidApiController@scan",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:240,1"
+    },
+    {
+        "methods": "GET",
+        "uri": "/api/v1/villa-types",
+        "name": "api.villa-types",
+        "action": "Api\\Http\\Controllers\\PublicApiController@villaTypes",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:60,1"
+    },
+    {
+        "methods": "GET",
+        "uri": "/api/v1/villa-types/{type}",
+        "name": "api.villa-type",
+        "action": "Api\\Http\\Controllers\\PublicApiController@villaType",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:60,1"
+    },
+    {
+        "methods": "GET",
+        "uri": "/book",
+        "name": "book.search",
+        "action": "Website\\Http\\Controllers\\BookingFlowController@search",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/book/confirmation/{token}",
+        "name": "book.confirmation",
+        "action": "Website\\Http\\Controllers\\BookingFlowController@confirmation",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/book/details",
+        "name": "book.details",
+        "action": "Website\\Http\\Controllers\\BookingFlowController@details",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/book/hold",
+        "name": "book.hold",
+        "action": "Website\\Http\\Controllers\\BookingFlowController@hold",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:10,1"
+    },
+    {
+        "methods": "GET",
+        "uri": "/contact",
+        "name": "site.contact",
+        "action": "Website\\Http\\Controllers\\SiteController@contact",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/contact",
+        "name": "site.enquiry",
+        "action": "Website\\Http\\Controllers\\SiteController@enquiry",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:5,10"
+    },
+    {
+        "methods": "POST",
+        "uri": "/currency",
+        "name": "currency.switch",
+        "action": "Website\\Http\\Controllers\\CurrencyController@switch",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:30,1"
+    },
+    {
+        "methods": "GET",
+        "uri": "/forgot-password",
+        "name": "password.request",
+        "action": "Auth\\Http\\Controllers\\PasswordController@forgot",
+        "auth": "guest",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/forgot-password",
+        "name": "password.email",
+        "action": "Auth\\Http\\Controllers\\PasswordController@sendLink",
+        "auth": "guest",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/gallery",
+        "name": "site.gallery",
+        "action": "Website\\Http\\Controllers\\SiteController@gallery",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/login",
+        "name": "login",
+        "action": "Auth\\Http\\Controllers\\LoginController@show",
+        "auth": "guest",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/login",
+        "name": "login.attempt",
+        "action": "Auth\\Http\\Controllers\\LoginController@login",
+        "auth": "guest",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/logout",
+        "name": "logout",
+        "action": "Auth\\Http\\Controllers\\LoginController@logout",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/my-booking",
+        "name": "manage.lookup",
+        "action": "Website\\Http\\Controllers\\ManageBookingController@lookup",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/my-booking",
+        "name": "manage.find",
+        "action": "Website\\Http\\Controllers\\ManageBookingController@find",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:10,5"
+    },
+    {
+        "methods": "GET",
+        "uri": "/my-booking/{token}",
+        "name": "manage.show",
+        "action": "Website\\Http\\Controllers\\ManageBookingController@show",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/my-booking/{token}/pay",
+        "name": "manage.pay",
+        "action": "Website\\Http\\Controllers\\ManageBookingController@pay",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:10,5"
+    },
+    {
+        "methods": "GET",
+        "uri": "/my-booking/{token}/voucher",
+        "name": "manage.voucher",
+        "action": "Website\\Http\\Controllers\\ManageBookingController@voucher",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/offers",
+        "name": "site.offers",
+        "action": "Website\\Http\\Controllers\\SiteController@offers",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/partners",
+        "name": "operator.dashboard",
+        "action": "Operators\\Http\\Controllers\\PortalController@dashboard",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/partners/availability",
+        "name": "operator.availability",
+        "action": "Operators\\Http\\Controllers\\PortalController@availability",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/partners/bookings",
+        "name": "operator.bookings",
+        "action": "Operators\\Http\\Controllers\\PortalController@bookings",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/partners/bookings",
+        "name": "operator.bookings.store",
+        "action": "Operators\\Http\\Controllers\\PortalController@store",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/partners/bookings/new",
+        "name": "operator.bookings.create",
+        "action": "Operators\\Http\\Controllers\\PortalController@create",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/partners/bookings/{booking}",
+        "name": "operator.bookings.show",
+        "action": "Operators\\Http\\Controllers\\PortalController@show",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/partners/bookings/{booking}/cancel",
+        "name": "operator.bookings.cancel",
+        "action": "Operators\\Http\\Controllers\\PortalController@cancel",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/partners/bookings/{booking}/rooming-list",
+        "name": "operator.bookings.rooming",
+        "action": "Operators\\Http\\Controllers\\PortalController@roomingList",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/partners/bookings/{booking}/rooming-list/upload",
+        "name": "operator.bookings.rooming.upload",
+        "action": "Operators\\Http\\Controllers\\PortalController@uploadRoomingList",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/partners/bookings/{booking}/voucher",
+        "name": "operator.bookings.voucher",
+        "action": "Operators\\Http\\Controllers\\PortalController@voucher",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/partners/company",
+        "name": "operator.company",
+        "action": "Operators\\Http\\Controllers\\PortalController@company",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/partners/company",
+        "name": "operator.company.update",
+        "action": "Operators\\Http\\Controllers\\PortalController@updateCompany",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/partners/invoices",
+        "name": "operator.invoices",
+        "action": "Operators\\Http\\Controllers\\PortalController@invoices",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/partners/invoices/{invoice}",
+        "name": "operator.invoices.show",
+        "action": "Operators\\Http\\Controllers\\PortalController@invoice",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/partners/payments",
+        "name": "operator.payments.store",
+        "action": "Operators\\Http\\Controllers\\PortalController@payment",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/partners/register",
+        "name": "operator.register",
+        "action": "Operators\\Http\\Controllers\\RegistrationController@create",
+        "auth": "guest",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/partners/register",
+        "name": "operator.register.store",
+        "action": "Operators\\Http\\Controllers\\RegistrationController@store",
+        "auth": "guest",
+        "permission": "",
+        "throttle": "throttle:5,10"
+    },
+    {
+        "methods": "GET",
+        "uri": "/partners/rooming-list-template.csv",
+        "name": "operator.rooming.template",
+        "action": "Operators\\Http\\Controllers\\PortalController@template",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/partners/statement",
+        "name": "operator.statement",
+        "action": "Operators\\Http\\Controllers\\PortalController@statement",
+        "auth": "auth",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pay/{token}/cancel",
+        "name": "pay.cancel",
+        "action": "Website\\Http\\Controllers\\PublicPaymentController@cancel",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pay/{token}/return",
+        "name": "pay.return",
+        "action": "Website\\Http\\Controllers\\PublicPaymentController@return",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pay/{token}/sandbox",
+        "name": "pay.sandbox",
+        "action": "Website\\Http\\Controllers\\PublicPaymentController@sandbox",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pay/{token}/sandbox",
+        "name": "pay.sandbox.complete",
+        "action": "Website\\Http\\Controllers\\PublicPaymentController@sandboxComplete",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos",
+        "name": "pos.terminal",
+        "action": "POS\\Http\\Controllers\\TerminalController@index",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos-access",
+        "name": "pos.access",
+        "action": "POS\\Http\\Controllers\\PosAccessController",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/api/in-house",
+        "name": "pos.api.in-house",
+        "action": "POS\\Http\\Controllers\\PosApiController@inHouse",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/api/menu",
+        "name": "pos.api.menu",
+        "action": "POS\\Http\\Controllers\\PosApiController@menu",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/api/orders",
+        "name": "pos.api.orders.open",
+        "action": "POS\\Http\\Controllers\\PosApiController@open",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/api/orders/{order}",
+        "name": "pos.api.orders.show",
+        "action": "POS\\Http\\Controllers\\PosApiController@show",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/api/orders/{order}/bill",
+        "name": "pos.api.orders.bill",
+        "action": "POS\\Http\\Controllers\\PosApiController@printBill",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/api/orders/{order}/discount",
+        "name": "pos.api.orders.discount",
+        "action": "POS\\Http\\Controllers\\PosApiController@discount",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill & pos.discount",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/api/orders/{order}/fire",
+        "name": "pos.api.orders.fire",
+        "action": "POS\\Http\\Controllers\\PosApiController@fire",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/api/orders/{order}/items",
+        "name": "pos.api.orders.items.add",
+        "action": "POS\\Http\\Controllers\\PosApiController@addItem",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "PATCH",
+        "uri": "/pos/api/orders/{order}/items/{item}",
+        "name": "pos.api.orders.items.update",
+        "action": "POS\\Http\\Controllers\\PosApiController@updateItem",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/pos/api/orders/{order}/items/{item}",
+        "name": "pos.api.orders.items.remove",
+        "action": "POS\\Http\\Controllers\\PosApiController@removeItem",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/api/orders/{order}/merge",
+        "name": "pos.api.orders.merge",
+        "action": "POS\\Http\\Controllers\\PosApiController@merge",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/api/orders/{order}/notes",
+        "name": "pos.api.orders.notes",
+        "action": "POS\\Http\\Controllers\\PosApiController@notes",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/api/orders/{order}/pay",
+        "name": "pos.api.orders.pay",
+        "action": "POS\\Http\\Controllers\\PosApiController@pay",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill & pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/api/orders/{order}/split",
+        "name": "pos.api.orders.split",
+        "action": "POS\\Http\\Controllers\\PosApiController@split",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/api/orders/{order}/transfer",
+        "name": "pos.api.orders.transfer",
+        "action": "POS\\Http\\Controllers\\PosApiController@transfer",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/api/orders/{order}/void",
+        "name": "pos.api.orders.void",
+        "action": "POS\\Http\\Controllers\\PosApiController@void",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill & pos.void",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/api/tables",
+        "name": "pos.api.tables",
+        "action": "POS\\Http\\Controllers\\PosApiController@tables",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/cash-movements",
+        "name": "pos.cash-movements",
+        "action": "POS\\Http\\Controllers\\ShiftController@movements",
+        "auth": "auth",
+        "permission": "pos.access & pos.shift|pos.reports|pos.shift_review",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/dashboard",
+        "name": "pos.dashboard",
+        "action": "POS\\Http\\Controllers\\PosDashboardController",
+        "auth": "auth",
+        "permission": "pos.access",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/day-end",
+        "name": "pos.day-end",
+        "action": "POS\\Http\\Controllers\\ShiftController@dayEnd",
+        "auth": "auth",
+        "permission": "pos.access & pos.shift|pos.shift_review",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/inventory",
+        "name": "pos.inventory.items.index",
+        "action": "Inventory\\Http\\Controllers\\StockController@index",
+        "auth": "auth",
+        "permission": "pos.access & inventory.view",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/inventory/count",
+        "name": "pos.inventory.count",
+        "action": "Inventory\\Http\\Controllers\\StockController@count",
+        "auth": "auth",
+        "permission": "pos.access & inventory.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/inventory/items",
+        "name": "pos.inventory.items.store",
+        "action": "Inventory\\Http\\Controllers\\StockController@store",
+        "auth": "auth",
+        "permission": "pos.access & inventory.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/pos/inventory/items/{item}",
+        "name": "pos.inventory.items.update",
+        "action": "Inventory\\Http\\Controllers\\StockController@update",
+        "auth": "auth",
+        "permission": "pos.access & inventory.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/inventory/movements",
+        "name": "pos.inventory.movements",
+        "action": "Inventory\\Http\\Controllers\\StockController@movements",
+        "auth": "auth",
+        "permission": "pos.access & inventory.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/inventory/recipes",
+        "name": "pos.inventory.recipes",
+        "action": "Inventory\\Http\\Controllers\\StockController@recipes",
+        "auth": "auth",
+        "permission": "pos.access & inventory.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/inventory/recipes",
+        "name": "pos.inventory.recipes.save",
+        "action": "Inventory\\Http\\Controllers\\StockController@saveRecipe",
+        "auth": "auth",
+        "permission": "pos.access & inventory.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/pos/inventory/recipes/{recipe}",
+        "name": "pos.inventory.recipes.destroy",
+        "action": "Inventory\\Http\\Controllers\\StockController@destroyRecipe",
+        "auth": "auth",
+        "permission": "pos.access & inventory.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/inventory/stock-in",
+        "name": "pos.inventory.stock-in",
+        "action": "Inventory\\Http\\Controllers\\StockController@stockIn",
+        "auth": "auth",
+        "permission": "pos.access & inventory.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/inventory/stock-out",
+        "name": "pos.inventory.stock-out",
+        "action": "Inventory\\Http\\Controllers\\StockController@stockOut",
+        "auth": "auth",
+        "permission": "pos.access & inventory.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/inventory/suppliers",
+        "name": "pos.inventory.suppliers.index",
+        "action": "Inventory\\Http\\Controllers\\SupplierController@index",
+        "auth": "auth",
+        "permission": "pos.access & inventory.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/inventory/suppliers",
+        "name": "pos.inventory.suppliers.store",
+        "action": "Inventory\\Http\\Controllers\\SupplierController@store",
+        "auth": "auth",
+        "permission": "pos.access & inventory.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/inventory/suppliers/create",
+        "name": "pos.inventory.suppliers.create",
+        "action": "Inventory\\Http\\Controllers\\SupplierController@create",
+        "auth": "auth",
+        "permission": "pos.access & inventory.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT|PATCH",
+        "uri": "/pos/inventory/suppliers/{supplier}",
+        "name": "pos.inventory.suppliers.update",
+        "action": "Inventory\\Http\\Controllers\\SupplierController@update",
+        "auth": "auth",
+        "permission": "pos.access & inventory.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/inventory/suppliers/{supplier}/edit",
+        "name": "pos.inventory.suppliers.edit",
+        "action": "Inventory\\Http\\Controllers\\SupplierController@edit",
+        "auth": "auth",
+        "permission": "pos.access & inventory.manage",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/kds",
+        "name": "pos.kds",
+        "action": "POS\\Http\\Controllers\\KdsController@index",
+        "auth": "auth",
+        "permission": "pos.access & pos.kds",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/kds/feed",
+        "name": "pos.kds.feed",
+        "action": "POS\\Http\\Controllers\\KdsController@feed",
+        "auth": "auth",
+        "permission": "pos.access & pos.kds|pos.order",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/kds/{kot}/status",
+        "name": "pos.kds.status",
+        "action": "POS\\Http\\Controllers\\KdsController@status",
+        "auth": "auth",
+        "permission": "pos.access & pos.kds",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/menu",
+        "name": "pos.menu.index",
+        "action": "POS\\Http\\Controllers\\MenuController@index",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/menu/categories",
+        "name": "pos.menu.categories.store",
+        "action": "POS\\Http\\Controllers\\MenuController@storeCategory",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/pos/menu/categories/{category}",
+        "name": "pos.menu.categories.update",
+        "action": "POS\\Http\\Controllers\\MenuController@updateCategory",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/menu/items",
+        "name": "pos.menu.items.store",
+        "action": "POS\\Http\\Controllers\\MenuController@store",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/menu/items/create",
+        "name": "pos.menu.items.create",
+        "action": "POS\\Http\\Controllers\\MenuController@create",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/pos/menu/items/{item}",
+        "name": "pos.menu.items.update",
+        "action": "POS\\Http\\Controllers\\MenuController@update",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/pos/menu/items/{item}",
+        "name": "pos.menu.items.destroy",
+        "action": "POS\\Http\\Controllers\\MenuController@destroy",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/menu/items/{item}/availability",
+        "name": "pos.menu.items.toggle",
+        "action": "POS\\Http\\Controllers\\MenuController@toggle",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/menu/items/{item}/edit",
+        "name": "pos.menu.items.edit",
+        "action": "POS\\Http\\Controllers\\MenuController@edit",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/menu/modifier-groups",
+        "name": "pos.menu.groups.store",
+        "action": "POS\\Http\\Controllers\\MenuController@storeGroup",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/menu/modifier-groups/{group}/modifiers",
+        "name": "pos.menu.modifiers.store",
+        "action": "POS\\Http\\Controllers\\MenuController@storeModifier",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/pos/menu/modifiers/{modifier}",
+        "name": "pos.menu.modifiers.destroy",
+        "action": "POS\\Http\\Controllers\\MenuController@destroyModifier",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/order/{order}",
+        "name": "pos.order",
+        "action": "POS\\Http\\Controllers\\TerminalController@order",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/order/{order}/bill",
+        "name": "pos.bill.print",
+        "action": "POS\\Http\\Controllers\\TerminalController@bill",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.bill",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/order/{order}/kot/{kot}",
+        "name": "pos.kot.print",
+        "action": "POS\\Http\\Controllers\\TerminalController@kot",
+        "auth": "auth",
+        "permission": "pos.access & pos.order|pos.kds",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/order/{order}/receipt",
+        "name": "pos.receipt",
+        "action": "POS\\Http\\Controllers\\TerminalController@receipt",
+        "auth": "auth",
+        "permission": "pos.access & pos.bill|pos.order",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/orders",
+        "name": "pos.orders.index",
+        "action": "POS\\Http\\Controllers\\OrderHistoryController@index",
+        "auth": "auth",
+        "permission": "pos.access & pos.bill|pos.reports",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/orders/{order}/refund",
+        "name": "pos.orders.refund",
+        "action": "POS\\Http\\Controllers\\OrderHistoryController@refund",
+        "auth": "auth",
+        "permission": "pos.access & pos.refund",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/outlets",
+        "name": "pos.outlets.index",
+        "action": "POS\\Http\\Controllers\\OutletController@index",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/outlets",
+        "name": "pos.outlets.store",
+        "action": "POS\\Http\\Controllers\\OutletController@store",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/pos/outlets/{outlet}",
+        "name": "pos.outlets.update",
+        "action": "POS\\Http\\Controllers\\OutletController@update",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/outlets/{outlet}/tables",
+        "name": "pos.tables.store",
+        "action": "POS\\Http\\Controllers\\OutletController@storeTable",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/reports",
+        "name": "pos.reports",
+        "action": "Closure",
+        "auth": "auth",
+        "permission": "pos.access & pos.reports",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/reservations",
+        "name": "pos.reservations.index",
+        "action": "POS\\Http\\Controllers\\ReservationController@index",
+        "auth": "auth",
+        "permission": "pos.access & pos.reservations",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/reservations",
+        "name": "pos.reservations.store",
+        "action": "POS\\Http\\Controllers\\ReservationController@store",
+        "auth": "auth",
+        "permission": "pos.access & pos.reservations",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/pos/reservations/{reservation}",
+        "name": "pos.reservations.update",
+        "action": "POS\\Http\\Controllers\\ReservationController@update",
+        "auth": "auth",
+        "permission": "pos.access & pos.reservations",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/reservations/{reservation}/status",
+        "name": "pos.reservations.status",
+        "action": "POS\\Http\\Controllers\\ReservationController@status",
+        "auth": "auth",
+        "permission": "pos.access & pos.reservations",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/sales/{type?}",
+        "name": "pos.sales",
+        "action": "POS\\Http\\Controllers\\SalesReportController",
+        "auth": "auth",
+        "permission": "pos.access & pos.reports|inventory.view",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/shifts",
+        "name": "pos.shifts.index",
+        "action": "POS\\Http\\Controllers\\ShiftController@index",
+        "auth": "auth",
+        "permission": "pos.access & pos.shift|pos.reports|pos.shift_review",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/shifts/open",
+        "name": "pos.shifts.open",
+        "action": "POS\\Http\\Controllers\\ShiftController@open",
+        "auth": "auth",
+        "permission": "pos.access & pos.shift",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/shifts/{shift}",
+        "name": "pos.shifts.show",
+        "action": "POS\\Http\\Controllers\\ShiftController@show",
+        "auth": "auth",
+        "permission": "pos.access & pos.shift|pos.reports|pos.shift_review",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/shifts/{shift}/cash",
+        "name": "pos.shifts.cash",
+        "action": "POS\\Http\\Controllers\\ShiftController@cash",
+        "auth": "auth",
+        "permission": "pos.access & pos.shift|pos.shift_review",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/shifts/{shift}/close",
+        "name": "pos.shifts.close",
+        "action": "POS\\Http\\Controllers\\ShiftController@close",
+        "auth": "auth",
+        "permission": "pos.access & pos.shift|pos.shift_review",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/shifts/{shift}/print",
+        "name": "pos.shifts.print",
+        "action": "POS\\Http\\Controllers\\ShiftController@print",
+        "auth": "auth",
+        "permission": "pos.access & pos.shift|pos.reports|pos.shift_review",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/shifts/{shift}/reopen",
+        "name": "pos.shifts.reopen",
+        "action": "POS\\Http\\Controllers\\ShiftController@reopen",
+        "auth": "auth",
+        "permission": "pos.access & pos.shift_review",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/shifts/{shift}/review",
+        "name": "pos.shifts.review",
+        "action": "POS\\Http\\Controllers\\ShiftController@review",
+        "auth": "auth",
+        "permission": "pos.access & pos.shift_review",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/social",
+        "name": "pos.social.index",
+        "action": "Core\\Http\\Controllers\\SocialLinkController@index",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/social",
+        "name": "pos.social.store",
+        "action": "Core\\Http\\Controllers\\SocialLinkController@store",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/pos/social/{link}",
+        "name": "pos.social.update",
+        "action": "Core\\Http\\Controllers\\SocialLinkController@update",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "DELETE",
+        "uri": "/pos/social/{link}",
+        "name": "pos.social.destroy",
+        "action": "Core\\Http\\Controllers\\SocialLinkController@destroy",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/pos/social/{link}/toggle",
+        "name": "pos.social.toggle",
+        "action": "Core\\Http\\Controllers\\SocialLinkController@toggle",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/pos/tables/{table}",
+        "name": "pos.tables.update",
+        "action": "POS\\Http\\Controllers\\OutletController@updateTable",
+        "auth": "auth",
+        "permission": "pos.access & pos.menu",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/pos/today",
+        "name": "pos.today",
+        "action": "POS\\Http\\Controllers\\ShiftController@today",
+        "auth": "auth",
+        "permission": "pos.access & pos.shift|pos.reports|pos.shift_review",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/reset-password",
+        "name": "password.update",
+        "action": "Auth\\Http\\Controllers\\PasswordController@reset",
+        "auth": "guest",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/reset-password/{token}",
+        "name": "password.reset",
+        "action": "Auth\\Http\\Controllers\\PasswordController@resetForm",
+        "auth": "guest",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/services",
+        "name": "site.services",
+        "action": "Website\\Http\\Controllers\\SiteController@services",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/storage/{path}",
+        "name": "storage.local",
+        "action": "Closure",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "PUT",
+        "uri": "/storage/{path}",
+        "name": "storage.local.upload",
+        "action": "Closure",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/up",
+        "name": null,
+        "action": "Closure",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/villas",
+        "name": "site.villas",
+        "action": "Website\\Http\\Controllers\\SiteController@villas",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/villas/{type}",
+        "name": "site.villa",
+        "action": "Website\\Http\\Controllers\\SiteController@villa",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "GET",
+        "uri": "/weather",
+        "name": "site.weather",
+        "action": "Website\\Http\\Controllers\\SiteController@weather",
+        "auth": "public",
+        "permission": "",
+        "throttle": "throttle:30,1"
+    },
+    {
+        "methods": "POST",
+        "uri": "/webhooks/channel/{provider}",
+        "name": "webhooks.channel",
+        "action": "Channel\\Http\\Controllers\\ChannelWebhookController@handle",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    },
+    {
+        "methods": "POST",
+        "uri": "/webhooks/payments/{provider}",
+        "name": "webhooks.payment",
+        "action": "Billing\\Http\\Controllers\\WebhookController@payment",
+        "auth": "public",
+        "permission": "",
+        "throttle": ""
+    }
+]

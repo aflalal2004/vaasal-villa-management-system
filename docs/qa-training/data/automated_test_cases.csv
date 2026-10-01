@@ -1,0 +1,156 @@
+ID,Module,"Test case",Expected,Actual,Status
+ROLE-01-LOGIN,"Roles & login","Administrator (admin) signs in with username","Redirect to the role home page","Redirected to admin.dashboard",PASS
+ROLE-01-URLS,"Roles & permissions","admin: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","90 opened, 0 denied with 403, 0 server errors",PASS
+ROLE-02-LOGIN,"Roles & login","Owner (owner) signs in with username","Redirect to the role home page","Redirected to admin.dashboard",PASS
+ROLE-02-URLS,"Roles & permissions","owner: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","29 opened, 61 denied with 403, 0 server errors",PASS
+ROLE-03-LOGIN,"Roles & login","Hotel Manager (manager) signs in with username","Redirect to the role home page","Redirected to admin.dashboard",PASS
+ROLE-03-URLS,"Roles & permissions","manager: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","59 opened, 31 denied with 403, 0 server errors",PASS
+ROLE-04-LOGIN,"Roles & login","Receptionist (reception) signs in with username","Redirect to the role home page","Redirected to admin.frontdesk.index",PASS
+ROLE-04-URLS,"Roles & permissions","reception: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","35 opened, 55 denied with 403, 0 server errors",PASS
+ROLE-05-LOGIN,"Roles & login","Accountant (accounts) signs in with username","Redirect to the role home page","Redirected to admin.payments.index",PASS
+ROLE-05-URLS,"Roles & permissions","accounts: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","23 opened, 67 denied with 403, 0 server errors",PASS
+ROLE-06-LOGIN,"Roles & login","Restaurant Manager (posmanager) signs in with username","Redirect to the role home page","Redirected to pos.dashboard",PASS
+ROLE-06-URLS,"Roles & permissions","posmanager: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","36 opened, 54 denied with 403, 0 server errors",PASS
+ROLE-07-LOGIN,"Roles & login","Cashier (cashier) signs in with username","Redirect to the role home page","Redirected to pos.terminal",PASS
+ROLE-07-URLS,"Roles & permissions","cashier: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","25 opened, 65 denied with 403, 0 server errors",PASS
+ROLE-08-LOGIN,"Roles & login","Waiter (waiter) signs in with username","Redirect to the role home page","Redirected to pos.terminal",PASS
+ROLE-08-URLS,"Roles & permissions","waiter: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","20 opened, 70 denied with 403, 0 server errors",PASS
+ROLE-09-LOGIN,"Roles & login","Kitchen Staff (kitchen) signs in with username","Redirect to the role home page","Redirected to pos.kds",PASS
+ROLE-09-URLS,"Roles & permissions","kitchen: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","18 opened, 72 denied with 403, 0 server errors",PASS
+ROLE-10-LOGIN,"Roles & login","Inventory Staff (stores) signs in with username","Redirect to the role home page","Redirected to pos.inventory.items.index",PASS
+ROLE-10-URLS,"Roles & permissions","stores: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","19 opened, 71 denied with 403, 0 server errors",PASS
+ROLE-11-LOGIN,"Roles & login","Housekeeping Supervisor (hksupervisor) signs in with username","Redirect to the role home page","Redirected to admin.housekeeping.index",PASS
+ROLE-11-URLS,"Roles & permissions","hksupervisor: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","24 opened, 66 denied with 403, 0 server errors",PASS
+ROLE-12-LOGIN,"Roles & login","Housekeeping Staff (housekeeping) signs in with username","Redirect to the role home page","Redirected to admin.housekeeping.my",PASS
+ROLE-12-URLS,"Roles & permissions","housekeeping: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","18 opened, 72 denied with 403, 0 server errors",PASS
+ROLE-13-LOGIN,"Roles & login","Maintenance Technician (maintenance) signs in with username","Redirect to the role home page","Redirected to admin.maintenance.index",PASS
+ROLE-13-URLS,"Roles & permissions","maintenance: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","16 opened, 74 denied with 403, 0 server errors",PASS
+ROLE-14-LOGIN,"Roles & login","General Staff (staff) signs in with username","Redirect to the role home page","Redirected to admin.staff.my-timecard",PASS
+ROLE-14-URLS,"Roles & permissions","staff: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","15 opened, 75 denied with 403, 0 server errors",PASS
+ROLE-15-LOGIN,"Roles & login","Tour Operator (operator) signs in with username","Redirect to the role home page","Redirected to operator.dashboard",PASS
+ROLE-15-URLS,"Roles & permissions","operator: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","90 opened, 0 denied with 403, 0 server errors",PASS
+SEC-GUEST-01,Security,"Unauthenticated visitor opens /admin and /pos","Redirect to /login","302 → /login for both",PASS
+SEC-GUEST-02,Security,"Unauthenticated POS API call (the ""Unauthenticated"" message)","HTTP 401 JSON {""message"":""Unauthenticated.""}","401 {""message"":""Unauthenticated.""} — returned whenever the session has ended (idle > SESSION_LIFETIME) or the user signed out in another tab",PASS
+SEC-API-01,Security,"Reception calls POS API directly","HTTP 403",403,PASS
+SEC-API-02,Security,"Hotel Manager calls POS API directly","HTTP 403",403,PASS
+SEC-API-03,Security,"Restaurant Manager opens a hotel folio-charge endpoint","HTTP 403",403,PASS
+SEC-API-04,Security,"Device APIs with a wrong bearer token (RFID, attendance, lock bridge)","HTTP 401 each","401 × 3",PASS
+PMS-01,"Hotel PMS","Availability check for 4 nights shows free villas","At least one free villa","3 villa(s) free; booking form opened",PASS
+PMS-02,"Hotel PMS","Invalid promo code BADCODE","Rejected with ""promo code is not valid""","The promo code ""BADCODE"" is not valid.",PASS
+PMS-03,"Hotel PMS","Promo STAY4 (min 4 nights) on a 2-night stay","Rejected: minimum nights","This offer requires a minimum of 4 nights.",PASS
+PMS-04,"Hotel PMS","Walk-in: 4 nights, 2 adults + 1 child, BB plan, promo STAY4, deposit LKR 20,000 card, Continue to check-in","Booking confirmed, 20% discount, deposit + receipt, redirect to check-in","VV-26-000030: room LKR 169,440.00, discount LKR 25,416.00, total LKR 171,100.51, paid LKR 20,000.00",PASS
+PMS-05,"Hotel PMS","Check-in with passport and key card","Status checked_in, villa Occupied, card Active","Checked in; villa G2 occupied; card 04A1001025 active",PASS
+PMS-06,"Key cards","Guest card at own villa door (SIMULATION)","Access granted","Granted: Guest of villa G2",PASS
+PMS-07,Billing,"Post a laundry guest charge (LKR 2,500 wash & fold)","Line on the guest folio","Posted LKR 2,700.00 (net LKR 2,500.00 + tax/service)",PASS
+PMS-08,"Front desk","Active guests list shows the stay","Guest listed on In-house tab",Listed,PASS
+PMS-09,Billing,"Guest folio visible on the booking","Folio lines and deposit shown",Shown,PASS
+PMS-10,Integration,"Cashier: room-service order charged to the villa","Folio gets one restaurant line for the order","Order ORD-26-000088 LKR 9,979.20 → folio FOL-26-000035 (room_service)",PASS
+PMS-11,Integration,"Checkout blocked while a restaurant check is open","Error, booking stays checked in","1 restaurant check(s) are still open for this stay. Close or charge them to the villa first.",PASS
+PMS-12,Integration,"Reception requests restaurant settlement; cashier notified","Notification to pos.bill with link to the check","Cashier saw the request and charged LKR 950.40 to the villa",PASS
+PMS-13,"Front desk","Checkout with card settlement (early departure confirmed)","Checked out, final invoice paid, villa Dirty, HK task, card revoked","Invoice INV-26-000019 LKR 52,163.57 [Laundry, Room Service, Room] paid; villa Dirty; departure task created; card available",PASS
+PMS-14,Housekeeping,"Housekeeping alerted after checkout","""Villa X is ready for cleaning after guest checkout."" visible to housekeeper","Notification present",PASS
+WALK-01,Walk-in,"1-night booking",Created,"VV-26-000030 · 1 night",PASS
+WALK-02,Walk-in,"Multi-night booking (3 nights, EARLY10 promo)","Created with 10% discount","VV-26-000031: 3 nights, discount LKR 11,400.00",PASS
+WALK-03,Walk-in,"Overlapping booking on the same villa and dates","Rejected; no second booking","Villa G2 is already booked for one or more of the selected nights.",PASS
+WALK-04,Walk-in,"Villa under maintenance (out of order)","Not offered and cannot be booked","Hidden from availability; save rejected: Villa G2 is out of order and cannot be booked.",PASS
+WALK-05,Walk-in,"Departure before arrival","Validation error on departure","The departure field must be a date after arrival.",PASS
+WALK-06,Walk-in,"Arrival in the past (3 days ago)","Validation error ""Arrival cannot be in the past.""","Arrival cannot be in the past.",PASS
+WALK-07,Walk-in,"Missing guest name and no villa selected","Validation errors","Enter the guest first name or choose an existing guest. | Enter the guest last name or choose an existing guest. | Select at least one available villa.",PASS
+WALK-08,Walk-in,"Rate override by Reception (no override permission)","Override ignored; standard rate used","Room total LKR 223,500.00 (override not applied)",PASS
+WALK-11,Walk-in,"Seasonal minimum stay: 1 night where a 3-night season rule applies","Rejected: minimum stay","A minimum stay of 3 nights applies to these dates.",PASS
+WALK-09,Walk-in,"Rate override LKR 30,500/night by Hotel Manager with reason","Room total = 30,500 × nights","VV-26-000033: 4 nights × LKR 30,500 = LKR 122,000.00; grand total incl. service/tax LKR 144,936.00",PASS
+WALK-10,"Front desk","Check-in to a Dirty villa is blocked","Error: villa not ready","Villa P3 is not ready (housekeeping: Dirty).",PASS
+SRC-01,"Booking sources","Source: phone (manual form)","Created with that source; appears in Bookings; villa no longer available","VV-26-000030 · Phone · confirmed",PASS
+SRC-02,"Booking sources","Source: email (manual form)","Created with that source; appears in Bookings; villa no longer available","VV-26-000031 · Email · confirmed",PASS
+SRC-03,"Booking sources","Source: admin (manual form)","Created with that source; appears in Bookings; villa no longer available","VV-26-000032 · Admin · confirmed",PASS
+SRC-04,"Booking sources","Source: tour operator (manual form, contract pricing)","Linked to the operator","VV-26-000033 · Sunrise Tours Lanka",PASS
+SRC-05,"Booking sources","Tour operator partner portal booking","Booking created by the operator login","VV-26-000034 · Tour operator · confirmed",PASS
+SRC-06,"Booking sources","Website booking (hold → sandbox payment approved)","Hold becomes Confirmed; receipt issued","VV-26-000035 · Website · paid LKR 47,044.80 (SANDBOX gateway — no real card processing)",PASS
+SRC-07,Payments,"Website payment declined (sandbox)","Booking stays on hold; no payment recorded","VV-26-000036 status hold; intent failed; paid 0",PASS
+SRC-08,Payments,"Duplicate completion of the same website payment","Posted once (idempotent)","Paid total unchanged at LKR 47,044.80",PASS
+SRC-09,"Booking sources","OTA reservation (Booking.com payload through the OTA ingest service — SIMULATED)","Booking created once; duplicate ignored","VV-26-000037 · OTA · channel Booking.com",PASS
+SRC-10,"Booking sources","Live Booking.com / Agoda / Airbnb / Expedia connection","Reservations arrive by webhook from the channel manager","CHANNEL_DRIVER=null — no Channex credentials; only the simulated ingest path (SRC-09) was tested",BLOCKED
+POS-01,POS,"Restaurant Manager opens a shift (float LKR 10,000)","Shift open","Shift #37 open",PASS
+POS-02,POS,"Open table T1 for 4 guests","Dine-in check opened; table busy","ORD-26-000088 at T1",PASS
+POS-03,POS,"Add breakfast, main (with required spice modifier + note) and drink","3 lines, totals with service 10% + tax 8%","Subtotal LKR 12,800.00 + service LKR 1,280.00 + tax LKR 1,126.40 = LKR 15,206.40",PASS
+POS-04,POS,"Add an item without its required modifier","Rejected: choose at least 1 option","Choose at least 1 option(s) for Spice level.",PASS
+POS-05,POS,"Change quantity of drinks 2 → 3","Line and totals recalculated","New total LKR 16,275.60",PASS
+POS-06,"POS / KOT","Send to kitchen (KOT)","KOT(s) created per station; items fired","2 KOT(s): kitchen, bar",PASS
+POS-07,Kitchen,"Kitchen display receives the KOT","Ticket listed on the KDS feed","7 ticket(s) on the KDS",PASS
+POS-08,Kitchen,"KOT status New → Preparing → Ready → Served","Each step accepted","KOT KOT-26-000150: served",PASS
+POS-09,Kitchen,"Invalid KOT jump New → Served",Rejected,"Cannot move a new ticket to served.",PASS
+POS-10,POS,"Print bill (guest bill)","Check status Billed; bill page opens","Billed LKR 19,720.80",PASS
+POS-11,Payments,"Split payment: part cash (partial) — table stays occupied","Status stays Billed with balance; table still busy","Paid 5,000 of LKR 19,720.80; balance LKR 14,720.80; table still occupied",PASS
+POS-12,Payments,"Overpay with card (more than the balance)","Rejected: payments exceed balance","Payments (LKR 14,820.80) exceed the balance due (LKR 14,720.80).",PASS
+POS-13,Payments,"Settle the balance: card + bank transfer + digital QR","Check Paid/closed; invoice number; table AVAILABLE; not in open checks","Paid; invoice PINV-26-000085; table T1 available",PASS
+POS-14,Payments,"Pay an already-paid check again (duplicate payment)","Rejected: check already closed","This check is already closed.",PASS
+POS-15,Payments,"Cash payment with change (tendered LKR 30,000)","Change = tendered − bill, stored on the payment","Bill LKR 22,096.80; tendered LKR 30,000.00; change LKR 7,903.20 (= 30,000 − bill)",PASS
+POS-16,POS,"Takeaway order paid online","Takeaway check closed","ORD-26-000090 takeaway paid LKR 4,039.20",PASS
+POS-17,POS,"Pay an empty check","Rejected: the check is empty","This check is empty. Add items before taking payment.",PASS
+POS-18,POS,"Room service order does not occupy a restaurant table","No table attached","ORD-26-000092 → Villa O1 (no table)",PASS
+POS-19,Tables,"Move a check to another table","Check moves; first table released","T1 → T2",PASS
+POS-20,Tables,"Merge two table checks","Items combined; source check merged","ORD-26-000095 merged into ORD-26-000094",PASS
+POS-21,Tables,"Split a check (move 1 line to a new check)","New check created at the same table","New check ORD-26-000097",PASS
+POS-22,Tables,"Reserved table indicator on the floor plan","Tables API returns the reservation","T5: Reserved 00:39 · Ms. Silva",PASS
+POS-23,POS,"Cashier refunds a paid check in cash (no pos.refund permission)","HTTP 403 for cashier; allowed for Restaurant Manager","Cashier 403; manager refund LKR 100 recorded",PASS
+POS-24,POS,"Cash/card payment without an open shift","Rejected: open a cashier shift first","Open a cashier shift before taking cash payments.",PASS
+INT-01,Integration,"Stay with room rate LKR 20,000 (override) checked in","Checked in","VV-26-000030 · Villa G2 · Nuwan Perera",PASS
+INT-02,Integration,"Food LKR 4,500 charged to Villa from the POS","One folio line LKR 4,500 on this booking/guest/villa, dated today","Folio FOL-26-000035: 'QA Kitchen check ORD-26-000088' LKR 4,500.00, 2026-09-29; order villa G2",PASS
+INT-03,Integration,"Laundry LKR 1,000 posted at reception","Folio line with net 1,000 (system adds tax where the item is taxable)","Net LKR 1,000.00, tax LKR 80.00, service LKR 0.00, line total LKR 1,080.00",PASS
+INT-04,Integration,"Checkout invoice combines Room 20,000 + Restaurant 4,500 + Laundry 1,000","No duplicate charges; totals reconcile","Invoice INV-26-000019: net by department {""Restaurant"":4500,""Laundry"":1000,""Room"":20000}; grand total incl. service/tax LKR 29,340.00",PASS
+HK-01,Housekeeping,"Checkout → villa Dirty + departure task (Ready for cleaning)","Task pending, unassigned, priority High","Task #23 departure, priority high, unassigned, 11 checklist items",PASS
+HK-02,Housekeeping,"My Cleaning Tasks shows the villa under ""Ready for cleaning""","Visible with Accept button",Visible,PASS
+HK-03,Housekeeping,"Tick a checklist item on an unaccepted pool task, then after Accept but before Start","403, then rejected: start the task first","Unaccepted: 403. Accepted, not started: Start the task before ticking checklist items.",PASS
+HK-04,Housekeeping,"Accept → Start → Pause → Resume","Assigned to me; Cleaning; Paused; Cleaning","Accepted by Malini Ratnam; resumed",PASS
+HK-05,Housekeeping,"Request inspection with checklist incomplete (0/N)","Rejected with open item count","Complete the checklist first — 11 item(s) still open.",PASS
+HK-06,Housekeeping,"Complete checklist (N/N) and request inspection","Task Awaiting inspection; villa Inspection","11/11 checked; villa inspection",PASS
+HK-07,Housekeeping,"Supervisor rejects, attendant fixes, supervisor approves","Villa Available (Ready) after approval","Rejected once, approved; villa available; clean time 0 min",PASS
+HK-08,Housekeeping,"Housekeeper reports a maintenance issue","Ticket created","MNT-26-000004 created",PASS
+HK-09,Housekeeping,"Housekeeper logs a lost item","Lost & found item stored","LF-26-000001 stored",PASS
+HK-10,Housekeeping,"Supervisor creates stay-over tasks and assigns one","Tasks for occupied villas; assignment saved","Task assigned.; task #22 assigned to Sanjeev Maharaj",PASS
+HK-11,Housekeeping,"Housekeeper opens another attendant's task","HTTP 403",403,PASS
+KEY-01,"Key cards","Register a new blank card UID 04A1QA0010","Card available","Status available",PASS
+KEY-02,"Key cards","Register the same UID twice","Rejected: already registered","A card with UID 04A1QA0010 is already registered.",PASS
+KEY-03,"Key cards","Issue card 04A1QA0010 to an in-house guest (duplicate key)","Encoded by the SIMULATOR lock provider; Active","Active for villa O1 (LOCK_DRIVER=simulator)",PASS
+KEY-04,"Key cards","Card at own villa / another villa / Pool zone (SIMULATION)","Granted / Denied / Granted","Own villa granted; G1 denied (Not valid for villa G1); Pool granted",PASS
+KEY-05,"Key cards","Unknown card UID","Denied: Unknown card","Unknown card",PASS
+KEY-06,"Key cards","Revoke the card, then try the door",Denied,"Denied: Card revoked (Guest returned card)",PASS
+KEY-07,"Key cards","Report a card lost","Card status Lost; denied at doors","04A1001025 lost; denied (Card lost)",PASS
+KEY-08,"Key cards","Physical RFID encoder / door lock","Card encoded and door opens","No hardware connected; LOCK_DRIVER=simulator and the vendor adapter in lock-bridge/ is a stub. All key-card results above are SIMULATED.",BLOCKED
+BILL-01,Billing,"Partial folio payment (cash LKR 1,000) issues a receipt","Payment + receipt; balance reduced","Balance LKR 61,205.76 → LKR 60,205.76",PASS
+BILL-02,Billing,"Folio payment of LKR 0","Validation error","The amount field must be at least 0.01.",PASS
+BILL-03,Billing,"Checkout with unpaid balance","Rejected; nothing committed","Folio FOL-26-000022 has an outstanding balance of LKR 48,090.24. Take payment before checkout.",PASS
+NA-01,"Night audit","Reception runs night audit","HTTP 403 (needs frontdesk.night_audit)",403,PASS
+NA-02,"Night audit","Run night audit (Hotel Manager)","Tonight's room night posted to each in-house folio; no-shows flagged; summary saved","Night audit complete for 2026-09-29: 4 room night(s) posted, 1 no-show(s), 0 hold(s) expired, 1 card(s) expired, 2 stay-over task(s).",PASS
+NA-03,"Night audit","Run night audit a second time the same day","No duplicate room charges (idempotent)","Night audit complete for 2026-09-29: 0 room night(s) posted, 0 no-show(s), 0 hold(s) expired, 0 card(s) expired, 0 stay-over task(s).",PASS
+NA-04,"Night audit","Audit trail of the run","Run recorded","Only the latest run summary is kept (setting night_audit_last): {""business_date"":""2026-09-29"",""room_nights"":0,""no_shows"":0,""holds_expired"":0,""cards_expired"":0,""stayovers"":0,""absences"":0,""run_at"":""2026-09-29 23:39:23""}. No per-run audit_logs entry, no business-date lock.",PASS
+RPT-bookings,Reports,"Bookings: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 17 data row(s)",PASS
+RPT-occupancy,Reports,"Occupancy, ADR & RevPAR: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 29 data row(s)",PASS
+RPT-revenue,Reports,"Revenue by department: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 8 data row(s)",PASS
+RPT-payments,Reports,"Payments received: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 27 data row(s)",PASS
+RPT-outstanding,Reports,"Outstanding balances: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 11 data row(s)",PASS
+RPT-guests,Reports,"Guest statistics: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 11 data row(s)",PASS
+RPT-channels,Reports,"OTA & channel production: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 5 data row(s)",PASS
+RPT-operators,Reports,"Tour operator bookings & commission: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 2 data row(s)",PASS
+RPT-pos_sales,Reports,"POS sales: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 25 data row(s)",PASS
+RPT-pos_items,Reports,"POS item sales mix: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 24 data row(s)",PASS
+RPT-inventory,Reports,"Inventory valuation & wastage: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 16 data row(s)",PASS
+RPT-housekeeping,Reports,"Housekeeping performance: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 3 data row(s)",PASS
+RPT-attendance,Reports,"Staff attendance: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 17 data row(s)",PASS
+RPT-maintenance,Reports,"Maintenance: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 3 data row(s)",PASS
+RPT-keycards,Reports,"Key card activity: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 30 data row(s)",PASS
+RPT-POS,Reports,"Restaurant sales inside the POS (Restaurant Manager)","HTTP 200","POS sales + dish mix open; hotel reports 403",PASS
+RPT-ACC,Reports,"Accountant sees financial reports but not settings","Reports 200; settings 403","As expected",PASS
+ERR-01,Login,"Invalid password","Generic error, no account hint","The username/email or password is incorrect.",PASS
+ERR-02,Login,"Unknown username","Same generic error","The username/email or password is incorrect.",PASS
+ERR-03,Login,"5 wrong passwords lock the account","Account locked for 15 minutes","This account is temporarily locked after repeated failed sign-ins. Try again after 23:54 or reset your password.",PASS
+ERR-04,Errors,"Open a booking that does not exist","HTTP 404 page",404,PASS
+ERR-05,Errors,"API validation error","HTTP 422 JSON with field errors","422 outlet_id, type",PASS
+ERR-06,Reservations,"Overlapping table reservation",Rejected,"Table T1 is already reserved for A at 04:00.",PASS
+SEC-01,Security,"Stored XSS: guest name <script>alert(1)</script>","Rendered escaped","Escaped as &lt;script&gt;",PASS
+SEC-02,Security,"SQL injection in search (q=' OR 1=1 --)","No SQL error; normal result","200; queries are parameterised",PASS
+SEC-03,Security,"Upload a PHP script renamed .jpg to the gallery","Rejected by content type check","The image could not be read. Upload a valid JPG, PNG or WebP.",PASS
+SEC-04,Security,"Passwords stored hashed","bcrypt hashes only","17 users, all bcrypt ($2y$)",PASS
+SEC-05,Security,"Security headers on authenticated pages","X-Frame-Options, nosniff, no-store","X-Frame-Options SAMEORIGIN; nosniff; no-store, private",PASS
+SEC-06,Security,"Demo sign-in panel outside APP_ENV=local","Not rendered","Hidden in the testing environment",PASS
+SEC-07,Security,"Tour operator opens another operator's booking","HTTP 403/404","HTTP 404",PASS

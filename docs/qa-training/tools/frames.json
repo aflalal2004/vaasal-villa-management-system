@@ -1,0 +1,260 @@
+[
+    {
+        "shot": "14_login_page",
+        "dur": 42.2,
+        "scene": 1,
+        "file": "01_14_login_page.png"
+    },
+    {
+        "shot": "77_invalid_login",
+        "dur": 18.1,
+        "scene": 2,
+        "file": "02_77_invalid_login.png"
+    },
+    {
+        "shot": "01_admin_dashboard",
+        "dur": 16.7,
+        "scene": 3,
+        "file": "03_01_admin_dashboard.png"
+    },
+    {
+        "shot": "15_front_desk",
+        "dur": 9.700000000000001,
+        "scene": 3,
+        "file": "04_15_front_desk.png"
+    },
+    {
+        "shot": "02_walkin_booking",
+        "dur": 7.5,
+        "scene": 4,
+        "file": "05_02_walkin_booking.png"
+    },
+    {
+        "shot": "03_room_selection",
+        "dur": 8.3,
+        "scene": 4,
+        "file": "06_03_room_selection.png"
+    },
+    {
+        "shot": "02_walkin_booking",
+        "dur": 20.3,
+        "scene": 4,
+        "file": "07_02_walkin_booking.png"
+    },
+    {
+        "shot": "04_checkin",
+        "dur": 24.1,
+        "scene": 4,
+        "file": "08_04_checkin.png"
+    },
+    {
+        "shot": "26_checked_in",
+        "dur": 15.3,
+        "scene": 5,
+        "file": "09_26_checked_in.png"
+    },
+    {
+        "shot": "27_room_service_select",
+        "dur": 9.9,
+        "scene": 6,
+        "file": "10_27_room_service_select.png"
+    },
+    {
+        "shot": "28_room_service_check",
+        "dur": 8.4,
+        "scene": 6,
+        "file": "11_28_room_service_check.png"
+    },
+    {
+        "shot": "07_kitchen_kot",
+        "dur": 8.1,
+        "scene": 6,
+        "file": "12_07_kitchen_kot.png"
+    },
+    {
+        "shot": "08_room_service",
+        "dur": 8.9,
+        "scene": 6,
+        "file": "13_08_room_service.png"
+    },
+    {
+        "shot": "29_laundry_charge",
+        "dur": 8.3,
+        "scene": 7,
+        "file": "14_29_laundry_charge.png"
+    },
+    {
+        "shot": "09_guest_folio",
+        "dur": 15.5,
+        "scene": 7,
+        "file": "15_09_guest_folio.png"
+    },
+    {
+        "shot": "16_checkout_blocked",
+        "dur": 10.1,
+        "scene": 8,
+        "file": "16_16_checkout_blocked.png"
+    },
+    {
+        "shot": "17_settlement_requested",
+        "dur": 7.1000000000000005,
+        "scene": 8,
+        "file": "17_17_settlement_requested.png"
+    },
+    {
+        "shot": "19_pos_charge_to_villa",
+        "dur": 7,
+        "scene": 8,
+        "file": "18_19_pos_charge_to_villa.png"
+    },
+    {
+        "shot": "10_checkout",
+        "dur": 6.5,
+        "scene": 8,
+        "file": "19_10_checkout.png"
+    },
+    {
+        "shot": "21_final_invoice",
+        "dur": 10.500000000000002,
+        "scene": 8,
+        "file": "20_21_final_invoice.png"
+    },
+    {
+        "shot": "22_my_cleaning_tasks",
+        "dur": 7.1000000000000005,
+        "scene": 9,
+        "file": "21_22_my_cleaning_tasks.png"
+    },
+    {
+        "shot": "23_cleaning_checklist",
+        "dur": 9.1,
+        "scene": 9,
+        "file": "22_23_cleaning_checklist.png"
+    },
+    {
+        "shot": "11_housekeeping",
+        "dur": 5.9,
+        "scene": 9,
+        "file": "23_11_housekeeping.png"
+    },
+    {
+        "shot": "24_inspection",
+        "dur": 5.9,
+        "scene": 9,
+        "file": "24_24_inspection.png"
+    },
+    {
+        "shot": "25_villa_ready",
+        "dur": 5.9,
+        "scene": 9,
+        "file": "25_25_villa_ready.png"
+    },
+    {
+        "shot": "30_pos_floor_plan",
+        "dur": 7.800000000000001,
+        "scene": 10,
+        "file": "26_30_pos_floor_plan.png"
+    },
+    {
+        "shot": "05_pos_table",
+        "dur": 7.1000000000000005,
+        "scene": 10,
+        "file": "27_05_pos_table.png"
+    },
+    {
+        "shot": "31_kitchen_kot_t6",
+        "dur": 5.7,
+        "scene": 10,
+        "file": "28_31_kitchen_kot_t6.png"
+    },
+    {
+        "shot": "06_pos_payment",
+        "dur": 8.700000000000001,
+        "scene": 10,
+        "file": "29_06_pos_payment.png"
+    },
+    {
+        "shot": "36_table_released",
+        "dur": 7.8,
+        "scene": 10,
+        "file": "30_36_table_released.png"
+    },
+    {
+        "shot": "32_open_shift",
+        "dur": 7.800000000000001,
+        "scene": 11,
+        "file": "31_32_open_shift.png"
+    },
+    {
+        "shot": "81_day_end_count",
+        "dur": 9,
+        "scene": 11,
+        "file": "32_81_day_end_count.png"
+    },
+    {
+        "shot": "82_shift_closed",
+        "dur": 8.3,
+        "scene": 11,
+        "file": "33_82_shift_closed.png"
+    },
+    {
+        "shot": "12_key_cards",
+        "dur": 9.5,
+        "scene": 12,
+        "file": "34_12_key_cards.png"
+    },
+    {
+        "shot": "47_rfid_simulator",
+        "dur": 10.600000000000001,
+        "scene": 12,
+        "file": "35_47_rfid_simulator.png"
+    },
+    {
+        "shot": "49_night_audit_confirm",
+        "dur": 6.5,
+        "scene": 13,
+        "file": "36_49_night_audit_confirm.png"
+    },
+    {
+        "shot": "13_night_audit",
+        "dur": 8.2,
+        "scene": 13,
+        "file": "37_13_night_audit.png"
+    },
+    {
+        "shot": "50_folio_after_audit",
+        "dur": 10.9,
+        "scene": 13,
+        "file": "38_50_folio_after_audit.png"
+    },
+    {
+        "shot": "60_reports",
+        "dur": 7.2,
+        "scene": 14,
+        "file": "39_60_reports.png"
+    },
+    {
+        "shot": "38_pos_dashboard",
+        "dur": 8.600000000000001,
+        "scene": 14,
+        "file": "40_38_pos_dashboard.png"
+    },
+    {
+        "shot": "75_session_ended",
+        "dur": 9.700000000000001,
+        "scene": 15,
+        "file": "41_75_session_ended.png"
+    },
+    {
+        "shot": "73_forbidden_403",
+        "dur": 8.3,
+        "scene": 15,
+        "file": "42_73_forbidden_403.png"
+    },
+    {
+        "shot": "78_website_home",
+        "dur": 15.400000000000002,
+        "scene": 16,
+        "file": "43_78_website_home.png"
+    }
+]

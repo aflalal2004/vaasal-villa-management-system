@@ -1,0 +1,830 @@
+<!doctype html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<title>VAASAL VILLA — முழுமையான பயன்பாட்டு வழிகாட்டி &amp; QA TEST REPORT</title>
+<style>
+@page { size: A4; margin: 15mm 0 16mm 0; }
+@page cover { margin: 0 0 16mm 0; }
+:root {
+  --ink: #1d2629; --muted: #5d6b6e; --line: #ddd3c2; --sand: #fbf6ee; --sand-2: #f4ead9;
+  --teal: #0d5a4e; --teal-2: #138a73; --teal-3: #d9f0e8; --gold: #b8872f; --gold-2: #e9c877; --gold-3: #fbefd2;
+  --terra: #c0562f; --terra-3: #fbe2d6; --plum: #6a3d9a; --plum-3: #ece2f7; --sky: #2468a8; --sky-3: #dcebf8;
+  --red: #b83227; --red-3: #fbdcd8; --green: #1d7f47; --green-3: #d8f1e2; --amber: #a86c00; --amber-3: #fff0cc;
+}
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; padding: 0 16mm; font-family: 'Nirmala UI', 'Latha', 'Segoe UI', sans-serif; font-size: 10.2pt; line-height: 1.62; color: var(--ink); background: #fff; }
+body.en { font-family: 'Segoe UI', 'Nirmala UI', sans-serif; font-size: 9.6pt; line-height: 1.5; }
+p { margin: 0 0 7px; }
+b, strong { font-weight: 700; }
+a { color: var(--teal-2); text-decoration: none; }
+code, .mono { font-family: Consolas, 'Cascadia Mono', monospace; font-size: 0.88em; background: var(--sand-2); padding: 0 4px; border-radius: 3px; }
+.ui { font-family: 'Segoe UI', sans-serif; font-weight: 700; color: var(--teal); background: var(--teal-3); padding: 0 5px; border-radius: 4px; white-space: nowrap; font-size: 0.93em; }
+.en-t { font-family: 'Segoe UI', sans-serif; color: var(--muted); font-size: 0.9em; }
+
+/* ---------- Cover ---------- */
+.cover { page: cover; height: 280.5mm; margin: 0 -16mm; position: relative; overflow: hidden; color: #fff;
+  background: radial-gradient(circle at 85% 12%, rgba(233,200,119,.35), transparent 34%), radial-gradient(circle at 8% 92%, rgba(192,86,47,.45), transparent 38%), linear-gradient(155deg, #0b4a40 0%, #0d5a4e 45%, #123d45 100%); break-after: page; }
+.cover .band { position: absolute; left: 0; right: 0; height: 9mm; background: repeating-linear-gradient(90deg, var(--gold) 0 18mm, var(--terra) 18mm 36mm, var(--teal-2) 36mm 54mm, var(--gold-2) 54mm 72mm); }
+.cover .band.top { top: 0; } .cover .band.bottom { bottom: 0; }
+.cover .inner { position: absolute; left: 20mm; right: 20mm; top: 34mm; }
+.cover .logo { width: 34mm; height: 34mm; background: #fff; border-radius: 50%; padding: 4mm; box-shadow: 0 6px 22px rgba(0,0,0,.35); }
+.cover .logo img { width: 100%; height: 100%; object-fit: contain; }
+.cover .brand { font-family: Georgia, 'Times New Roman', serif; font-size: 44pt; letter-spacing: 3px; margin: 12mm 0 0; line-height: 1.05; color: var(--gold-2); }
+.cover .sys { font-family: 'Segoe UI', sans-serif; font-size: 15pt; letter-spacing: 2px; font-weight: 700; margin-top: 4mm; }
+.cover .ta { font-size: 21pt; font-weight: 700; margin-top: 14mm; line-height: 1.4; }
+.cover .qa { display: inline-block; margin-top: 5mm; background: var(--gold-2); color: #3a2a06; font-family: 'Segoe UI', sans-serif; font-weight: 800; letter-spacing: 1.5px; padding: 2mm 5mm; border-radius: 2mm; font-size: 13pt; }
+.cover .chips { margin-top: 14mm; display: flex; flex-wrap: wrap; gap: 3mm; }
+.cover .chips span { border: 1px solid rgba(255,255,255,.45); border-radius: 20px; padding: 1.2mm 4mm; font-size: 9.5pt; background: rgba(255,255,255,.08); }
+.cover .meta { position: absolute; left: 20mm; right: 20mm; bottom: 22mm; font-size: 9.5pt; opacity: .95; display: grid; grid-template-columns: 1fr 1fr; gap: 2mm 10mm; }
+.cover .meta b { color: var(--gold-2); font-weight: 700; }
+
+/* ---------- Headings ---------- */
+h1 { break-before: page; margin: 0 -16mm 7mm; padding: 9mm 16mm 6mm; font-size: 19pt; line-height: 1.3; color: #fff;
+  background: linear-gradient(120deg, var(--teal) 0%, var(--teal-2) 70%, #1b9c83 100%); border-bottom: 3mm solid var(--gold); }
+h1 .num { display: inline-block; min-width: 11mm; height: 11mm; line-height: 11mm; text-align: center; border-radius: 50%; background: var(--gold-2); color: #3a2a06; font-family: 'Segoe UI', sans-serif; font-size: 13pt; margin-right: 4mm; vertical-align: 1mm; }
+h1 .sub { display: block; font-family: 'Segoe UI', sans-serif; font-size: 10pt; font-weight: 400; opacity: .85; margin-top: 1.5mm; letter-spacing: .3px; }
+h2 { font-size: 13.2pt; color: var(--teal); margin: 7mm 0 3mm; padding: 1.5mm 0 1.5mm 4mm; border-left: 2.2mm solid var(--gold); background: linear-gradient(90deg, var(--gold-3), transparent 75%); break-after: avoid; }
+h2 .num { color: var(--terra); margin-right: 2mm; font-family: 'Segoe UI', sans-serif; }
+.h3 { font-weight: 700; color: var(--terra); font-size: 11pt; margin: 5mm 0 2mm; break-after: avoid; }
+.lead { font-size: 10.8pt; color: #33413f; }
+
+/* ---------- TOC ---------- */
+.toc-title { font-size: 20pt; font-weight: 700; color: var(--teal); margin: 4mm 0 5mm; border-bottom: 1.2mm solid var(--gold); padding-bottom: 2mm; }
+ol.toc { list-style: none; margin: 0; padding: 0; }
+ol.toc li a { display: flex; align-items: baseline; gap: 2mm; color: var(--ink); padding: 0.6mm 0; }
+ol.toc li.toc-h1 { margin-top: 2.2mm; }
+ol.toc li.toc-h1 a { font-weight: 700; color: var(--teal); font-size: 10.8pt; }
+ol.toc li.toc-h2 a { padding-left: 11mm; font-size: 9.6pt; color: #3d4a4c; }
+.toc-num { min-width: 9mm; font-family: 'Segoe UI', sans-serif; color: var(--terra); }
+.toc-dots { flex: 1; border-bottom: 1px dotted #b9ab92; transform: translateY(-1mm); }
+.toc-pg { min-width: 8mm; text-align: right; font-family: 'Segoe UI', sans-serif; font-weight: 700; color: var(--gold); }
+
+/* ---------- Blocks ---------- */
+.callout { border-radius: 2.5mm; padding: 3mm 4mm 3mm 13mm; margin: 3.5mm 0; position: relative; break-inside: avoid; border: 1px solid; }
+.callout::before { position: absolute; left: 3.5mm; top: 2.6mm; width: 6.5mm; height: 6.5mm; border-radius: 50%; color: #fff; font-family: 'Segoe UI', sans-serif; font-weight: 800; text-align: center; line-height: 6.5mm; font-size: 9pt; }
+.callout .t { font-weight: 700; display: block; margin-bottom: 0.6mm; }
+.callout.tip { background: var(--green-3); border-color: #a9dcbd; } .callout.tip::before { content: '✓'; background: var(--green); } .callout.tip .t { color: var(--green); }
+.callout.warn { background: var(--amber-3); border-color: #efd28a; } .callout.warn::before { content: '!'; background: var(--amber); } .callout.warn .t { color: var(--amber); }
+.callout.rule { background: var(--sky-3); border-color: #afcdea; } .callout.rule::before { content: 'i'; background: var(--sky); } .callout.rule .t { color: var(--sky); }
+.callout.sim { background: var(--plum-3); border-color: #cdb7ea; } .callout.sim::before { content: 'S'; background: var(--plum); } .callout.sim .t { color: var(--plum); }
+.callout.issue { background: var(--red-3); border-color: #f0b3ab; } .callout.issue::before { content: '✕'; background: var(--red); } .callout.issue .t { color: var(--red); }
+.callout.example { background: var(--gold-3); border-color: #ecd49a; } .callout.example::before { content: '₨'; background: var(--gold); } .callout.example .t { color: #8a5f12; }
+.callout p:last-child, .callout ul:last-child, .callout ol:last-child { margin-bottom: 0; }
+
+ol.steps { counter-reset: st; list-style: none; padding: 0; margin: 2mm 0 4mm; }
+ol.steps > li { counter-increment: st; position: relative; padding: 0.6mm 0 1.6mm 10mm; }
+ol.steps > li::before { content: counter(st); position: absolute; left: 0; top: 0.6mm; width: 6.6mm; height: 6.6mm; border-radius: 50%; background: var(--terra); color: #fff; text-align: center; line-height: 6.6mm; font-family: 'Segoe UI', sans-serif; font-weight: 700; font-size: 8.8pt; }
+ul { margin: 1mm 0 3mm; padding-left: 6mm; }
+ul li { margin: 0.4mm 0; }
+ul li::marker { color: var(--gold); }
+
+table.grid { width: 100%; border-collapse: separate; border-spacing: 0; margin: 3mm 0 5mm; font-size: 8.9pt; line-height: 1.4; border: 1px solid var(--line); border-radius: 2mm; overflow: hidden; }
+table.grid th { background: var(--teal); color: #fff; text-align: left; padding: 1.8mm 2.2mm; font-weight: 700; font-family: 'Segoe UI', 'Nirmala UI', sans-serif; }
+table.grid td { padding: 1.5mm 2.2mm; border-top: 1px solid var(--line); vertical-align: top; }
+table.grid tr:nth-child(even) td { background: var(--sand); }
+table.grid td.num, table.grid th.num { text-align: right; white-space: nowrap; font-family: 'Segoe UI', sans-serif; }
+table.grid tr.total td { background: var(--gold-3); font-weight: 700; border-top: 2px solid var(--gold); }
+table.grid.small { font-size: 8pt; }
+table.grid.matrix td, table.grid.matrix th { text-align: center; padding: 1.2mm 0.8mm; }
+table.grid.matrix td:first-child, table.grid.matrix th:first-child { text-align: left; padding-left: 2mm; }
+table.grid.matrix th { font-size: 7pt; line-height: 1.15; vertical-align: bottom; }
+.y { color: var(--green); font-weight: 800; } .n { color: #c9b9a4; }
+tr { break-inside: avoid; }
+
+.badge { display: inline-block; padding: 0 2.2mm; border-radius: 10px; font-size: 8pt; font-weight: 700; font-family: 'Segoe UI', sans-serif; line-height: 1.7; white-space: nowrap; }
+.b-pass, .b-impl { background: var(--green-3); color: var(--green); } .b-fail, .b-missing { background: var(--red-3); color: var(--red); }
+.b-blocked, .b-partial { background: var(--amber-3); color: var(--amber); } .b-sim { background: var(--plum-3); color: var(--plum); }
+.b-tested { background: var(--sky-3); color: var(--sky); } .b-fixed { background: var(--teal-3); color: var(--teal); }
+.b-crit { background: #7d1d16; color: #fff; } .b-high { background: var(--red); color: #fff; } .b-med { background: var(--amber); color: #fff; } .b-low { background: #6f7f82; color: #fff; } .b-info { background: #b7c3c5; color: #22302f; }
+
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin: 4mm 0; }
+.kpi { border-radius: 2.5mm; padding: 3mm; color: #fff; break-inside: avoid; }
+.kpi .v { font-family: 'Segoe UI', sans-serif; font-size: 20pt; font-weight: 800; line-height: 1.1; }
+.kpi .l { font-size: 8.5pt; opacity: .95; }
+.kpi.k1 { background: linear-gradient(135deg, var(--teal), var(--teal-2)); } .kpi.k2 { background: linear-gradient(135deg, #1d7f47, #34a866); }
+.kpi.k3 { background: linear-gradient(135deg, var(--gold), #d9a84a); } .kpi.k4 { background: linear-gradient(135deg, var(--terra), #d9774d); }
+.kpi.k5 { background: linear-gradient(135deg, var(--plum), #8a5cc0); } .kpi.k6 { background: linear-gradient(135deg, var(--sky), #3f8bd0); }
+
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5mm; margin: 3mm 0 4mm; }
+.flow span { padding: 1.2mm 3mm; border-radius: 12px; font-weight: 700; font-size: 9pt; background: var(--sand-2); border: 1px solid var(--line); }
+.flow i { font-style: normal; color: var(--gold); font-weight: 800; }
+.flow .s-dirty { background: var(--red-3); color: var(--red); border-color: #f0b3ab; } .flow .s-cleaning { background: var(--amber-3); color: var(--amber); border-color: #efd28a; }
+.flow .s-insp { background: var(--sky-3); color: var(--sky); border-color: #afcdea; } .flow .s-ready { background: var(--green-3); color: var(--green); border-color: #a9dcbd; }
+
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+.box { border: 1px solid var(--line); border-radius: 2.5mm; padding: 3mm 4mm; background: var(--sand); break-inside: avoid; }
+.box .h { font-weight: 700; color: var(--teal); margin-bottom: 1mm; }
+.sys-diagram { display: grid; grid-template-columns: 1fr 34mm 1fr; gap: 3mm; align-items: stretch; margin: 4mm 0; break-inside: avoid; }
+.sys-diagram .sys { border-radius: 3mm; padding: 4mm; color: #fff; }
+.sys-diagram .pms { background: linear-gradient(150deg, var(--teal), var(--teal-2)); }
+.sys-diagram .pos { background: linear-gradient(150deg, var(--terra), #d9774d); }
+.sys-diagram .sys b { font-size: 12pt; display: block; margin-bottom: 1.5mm; }
+.sys-diagram .sys ul { padding-left: 4.5mm; margin: 0; font-size: 8.8pt; }
+.sys-diagram .sys ul li::marker { color: #fff; }
+.sys-diagram .mid { display: flex; flex-direction: column; justify-content: center; gap: 2mm; }
+.sys-diagram .mid div { background: var(--gold-3); border: 1px solid #ecd49a; border-radius: 2mm; padding: 1.8mm; font-size: 8pt; text-align: center; font-weight: 700; color: #6d4a0c; }
+
+figure.shot { margin: 3mm 0 5mm; break-inside: avoid; text-align: center; }
+figure.shot img { width: 100%; display: block; border-radius: 1.8mm; border: 1px solid #cdbfa6; box-shadow: 0 1.2mm 3.5mm rgba(40,30,10,.18); }
+figure.shot.mobile img { width: 62mm; margin: 0 auto; }
+figure.shot figcaption { text-align: left; font-size: 8.6pt; color: #4b5657; margin-top: 1.8mm; line-height: 1.45; padding-left: 2mm; border-left: 1mm solid var(--gold-2); }
+figure.shot figcaption b { color: var(--terra); }
+figure.shot figcaption .file { display: block; font-family: Consolas, monospace; font-size: 7.4pt; color: #8c7d66; }
+.fig-row { display: flex; gap: 4mm; justify-content: center; }
+.fig-row figure.shot.mobile img { width: 58mm; }
+.scene { margin: 4mm 0 5mm; }
+.scene-h { display: flex; align-items: center; gap: 2.5mm; padding: 2mm 3mm; border-radius: 2mm; background: linear-gradient(90deg, var(--teal-3), var(--sand)); border-left: 2mm solid var(--terra); }
+.scene-h .sn { width: 8mm; height: 8mm; line-height: 8mm; border-radius: 50%; background: var(--terra); color: #fff; text-align: center; font-family: 'Segoe UI', sans-serif; font-weight: 800; }
+.scene-h b { color: var(--teal); font-size: 11pt; }
+.scene-h .st { margin-left: auto; font-family: 'Segoe UI', sans-serif; font-weight: 700; color: var(--gold); }
+img.thumb { width: 40mm; border-radius: 1mm; border: 1px solid #cdbfa6; display: block; margin-bottom: 0.8mm; }
+pre.cmd { font-family: Consolas, monospace; font-size: 7.8pt; background: #14201e; color: #e8f1ee; border-radius: 2mm; padding: 3mm 4mm; white-space: pre-wrap; word-break: break-all; margin: 2mm 0 4mm; break-inside: avoid; }
+.pb { break-before: page; }
+.avoid { break-inside: avoid; }
+.muted { color: var(--muted); }
+.small { font-size: 8.6pt; }
+.center { text-align: center; }
+.sig { margin-top: 10mm; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8mm; }
+.sig div { border-top: 1px solid #999; padding-top: 1.5mm; font-size: 8.5pt; color: var(--muted); }
+
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div class="band top"></div>
+  <div class="inner">
+    <div class="logo"><img src="../../../public/assets/brand/L1.png" alt="Vaasal Villa"></div>
+    <div class="brand">VAASAL VILLA</div>
+    <div class="sys">HOTEL + RESTAURANT MANAGEMENT SYSTEM</div>
+    <div class="ta">முழுமையான பயன்பாட்டு வழிகாட்டி</div>
+    <div class="qa">&amp; QA TEST REPORT</div>
+    <div class="chips">
+      <span>ஹோட்டல் PMS</span><span>உணவக POS</span><span>சமையலறை KOT</span><span>வீட்டுப் பராமரிப்பு</span>
+      <span>சாவி அட்டைகள் (சிமுலேஷன்)</span><span>இரவுத் தணிக்கை</span><span>அறிக்கைகள்</span><span>82 உண்மைத் திரைப்படங்கள்</span>
+    </div>
+  </div>
+  <div class="meta">
+    <div><b>இடம்:</b> Vaasal Villa, யாழ்ப்பாணம், இலங்கை</div>
+    <div><b>தொடர்பு:</b> 0764413420 · aflalal2004@gmail.com</div>
+    <div><b>பதிப்பு:</b> 1.0 — 30 செப்டம்பர் 2026</div>
+    <div><b>சோதனைச் சூழல்:</b> XAMPP · PHP 8.2 · Laravel 12 · MariaDB 10.4</div>
+    <div><b>திரைப்படங்கள்:</b> உண்மையான கணினியில், உண்மையான தரவுடன் (29.09.2026)</div>
+    <div><b>கடவுச்சொற்கள்:</b> இந்த ஆவணத்தில் இல்லை — README பார்க்கவும்</div>
+  </div>
+  <div class="band bottom"></div>
+</section>
+
+<div class="toc-title">உள்ளடக்கம்</div>
+<ol class="toc"><li class="toc-h1"><a href="#ch1"><span class="toc-num">1</span><span class="toc-text">அறிமுகம்</span><span class="toc-dots"></span><span class="toc-pg">4</span></a></li><li class="toc-h2"><a href="#ch1-2"><span class="toc-num">1.1</span><span class="toc-text">இந்த ஆவணத்தில் உள்ள திரைப்படங்கள்</span><span class="toc-dots"></span><span class="toc-pg">4</span></a></li><li class="toc-h2"><a href="#ch1-3"><span class="toc-num">1.2</span><span class="toc-text">நிலைக் குறியீடுகள்</span><span class="toc-dots"></span><span class="toc-pg">4</span></a></li><li class="toc-h2"><a href="#ch1-4"><span class="toc-num">1.3</span><span class="toc-text">இந்த வழிகாட்டியில் வரும் உதாரணங்கள்</span><span class="toc-dots"></span><span class="toc-pg">5</span></a></li><li class="toc-h1"><a href="#ch2"><span class="toc-num">2</span><span class="toc-text">உள்நுழைவு மற்றும் பாதுகாப்பு</span><span class="toc-dots"></span><span class="toc-pg">6</span></a></li><li class="toc-h2"><a href="#ch2-1"><span class="toc-num">2.1</span><span class="toc-text">உள்நுழைவது எப்படி</span><span class="toc-dots"></span><span class="toc-pg">6</span></a></li><li class="toc-h2"><a href="#ch2-2"><span class="toc-num">2.2</span><span class="toc-text">தவறான கடவுச்சொல் மற்றும் கணக்குப் பூட்டு</span><span class="toc-dots"></span><span class="toc-pg">7</span></a></li><li class="toc-h2"><a href="#ch2-3"><span class="toc-num">2.3</span><span class="toc-text">அமர்வு முடிவு (Session ended)</span><span class="toc-dots"></span><span class="toc-pg">7</span></a></li><li class="toc-h1"><a href="#ch3"><span class="toc-num">3</span><span class="toc-text">பாத்திரங்கள் மற்றும் அனுமதிகள்</span><span class="toc-dots"></span><span class="toc-pg">10</span></a></li><li class="toc-h1"><a href="#ch4"><span class="toc-num">4</span><span class="toc-text">டாஷ்போர்டு மற்றும் முன் மேசை</span><span class="toc-dots"></span><span class="toc-pg">12</span></a></li><li class="toc-h1"><a href="#ch5"><span class="toc-num">5</span><span class="toc-text">முன்பதிவுகள் — உதாரணம் A</span><span class="toc-dots"></span><span class="toc-pg">16</span></a></li><li class="toc-h2"><a href="#ch5-1"><span class="toc-num">5.1</span><span class="toc-text">முன்பதிவு மூலங்கள் (Booking sources)</span><span class="toc-dots"></span><span class="toc-pg">16</span></a></li><li class="toc-h2"><a href="#ch5-2"><span class="toc-num">5.2</span><span class="toc-text">கணினி சரிபார்க்கும் விதிகள்</span><span class="toc-dots"></span><span class="toc-pg">16</span></a></li><li class="toc-h2"><a href="#ch5-3"><span class="toc-num">5.3</span><span class="toc-text">உதாரணம் A — Walk-in முன்பதிவு</span><span class="toc-dots"></span><span class="toc-pg">16</span></a></li><li class="toc-h2"><a href="#ch5-4"><span class="toc-num">5.4</span><span class="toc-text">முன்பதிவுப் பட்டியல் மற்றும் வில்லா காலண்டர்</span><span class="toc-dots"></span><span class="toc-pg">19</span></a></li><li class="toc-h1"><a href="#ch6"><span class="toc-num">6</span><span class="toc-text">வருகைப் பதிவு (Check-in)</span><span class="toc-dots"></span><span class="toc-pg">21</span></a></li><li class="toc-h1"><a href="#ch7"><span class="toc-num">7</span><span class="toc-text">அறை சேவை — உதாரணம் C</span><span class="toc-dots"></span><span class="toc-pg">24</span></a></li><li class="toc-h2"><a href="#ch7-1"><span class="toc-num">7.1</span><span class="toc-text">சமையலறைத் திரை (KOT / KDS)</span><span class="toc-dots"></span><span class="toc-pg">25</span></a></li><li class="toc-h2"><a href="#ch7-2"><span class="toc-num">7.2</span><span class="toc-text">வில்லாக் கணக்கில் சேர்த்தல்</span><span class="toc-dots"></span><span class="toc-pg">27</span></a></li><li class="toc-h1"><a href="#ch8"><span class="toc-num">8</span><span class="toc-text">விருந்தினர் கணக்கு (Folio)</span><span class="toc-dots"></span><span class="toc-pg">28</span></a></li><li class="toc-h2"><a href="#ch8-1"><span class="toc-num">8.1</span><span class="toc-text">கூடுதல் கட்டணம் சேர்த்தல் — சலவை</span><span class="toc-dots"></span><span class="toc-pg">28</span></a></li><li class="toc-h1"><a href="#ch9"><span class="toc-num">9</span><span class="toc-text">வெளியேறுதல் (Checkout) — உதாரணம் D</span><span class="toc-dots"></span><span class="toc-pg">30</span></a></li><li class="toc-h2"><a href="#ch9-1"><span class="toc-num">9.1</span><span class="toc-text">திறந்த உணவகக் கணக்கு checkout-ஐத் தடுக்கிறது</span><span class="toc-dots"></span><span class="toc-pg">30</span></a></li><li class="toc-h2"><a href="#ch9-2"><span class="toc-num">9.2</span><span class="toc-text">நிலுவையைச் செலுத்தி checkout முடித்தல்</span><span class="toc-dots"></span><span class="toc-pg">32</span></a></li><li class="toc-h1"><a href="#ch10"><span class="toc-num">10</span><span class="toc-text">வீட்டுப் பராமரிப்பு — உதாரணம் E</span><span class="toc-dots"></span><span class="toc-pg">37</span></a></li><li class="toc-h2"><a href="#ch10-1"><span class="toc-num">10.1</span><span class="toc-text">அறைப் பணியாளர் (Room attendant)</span><span class="toc-dots"></span><span class="toc-pg">37</span></a></li><li class="toc-h2"><a href="#ch10-2"><span class="toc-num">10.2</span><span class="toc-text">மேற்பார்வையாளர் (HK Supervisor)</span><span class="toc-dots"></span><span class="toc-pg">40</span></a></li><li class="toc-h1"><a href="#ch11"><span class="toc-num">11</span><span class="toc-text">உணவக POS — உதாரணம் B</span><span class="toc-dots"></span><span class="toc-pg">44</span></a></li><li class="toc-h2"><a href="#ch11-1"><span class="toc-num">11.1</span><span class="toc-text">மேசை வரைபடம் (Floor plan)</span><span class="toc-dots"></span><span class="toc-pg">44</span></a></li><li class="toc-h2"><a href="#ch11-2"><span class="toc-num">11.2</span><span class="toc-text">ஆர்டர் எடுத்தல் (Waiter)</span><span class="toc-dots"></span><span class="toc-pg">44</span></a></li><li class="toc-h2"><a href="#ch11-3"><span class="toc-num">11.3</span><span class="toc-text">பில் மற்றும் பணம் செலுத்துதல் (Cashier)</span><span class="toc-dots"></span><span class="toc-pg">46</span></a></li><li class="toc-h1"><a href="#ch12"><span class="toc-num">12</span><span class="toc-text">காசாளர் ஷிப்ட் மற்றும் நாள் முடிவு</span><span class="toc-dots"></span><span class="toc-pg">50</span></a></li><li class="toc-h2"><a href="#ch12-1"><span class="toc-num">12.1</span><span class="toc-text">நாள் முடிவு (Day-end closing)</span><span class="toc-dots"></span><span class="toc-pg">50</span></a></li><li class="toc-h2"><a href="#ch12-2"><span class="toc-num">12.2</span><span class="toc-text">புதிய ஷிப்ட் திறத்தல்</span><span class="toc-dots"></span><span class="toc-pg">52</span></a></li><li class="toc-h1"><a href="#ch13"><span class="toc-num">13</span><span class="toc-text">உணவக மேலாளர் பகுதி</span><span class="toc-dots"></span><span class="toc-pg">58</span></a></li><li class="toc-h1"><a href="#ch14"><span class="toc-num">14</span><span class="toc-text">சாவி அட்டைகள் மற்றும் அணுகல் கட்டுப்பாடு</span><span class="toc-dots"></span><span class="toc-pg">67</span></a></li><li class="toc-h1"><a href="#ch15"><span class="toc-num">15</span><span class="toc-text">இரவுத் தணிக்கை (Night audit)</span><span class="toc-dots"></span><span class="toc-pg">72</span></a></li><li class="toc-h1"><a href="#ch16"><span class="toc-num">16</span><span class="toc-text">அறிக்கைகள்</span><span class="toc-dots"></span><span class="toc-pg">76</span></a></li><li class="toc-h1"><a href="#ch17"><span class="toc-num">17</span><span class="toc-text">பிற ஹோட்டல் பக்கங்கள்</span><span class="toc-dots"></span><span class="toc-pg">79</span></a></li><li class="toc-h1"><a href="#ch18"><span class="toc-num">18</span><span class="toc-text">நிர்வாக அமைப்புகள்</span><span class="toc-dots"></span><span class="toc-pg">85</span></a></li><li class="toc-h1"><a href="#ch19"><span class="toc-num">19</span><span class="toc-text">கைபேசி மற்றும் டேப்லெட்</span><span class="toc-dots"></span><span class="toc-pg">94</span></a></li><li class="toc-h1"><a href="#ch20"><span class="toc-num">20</span><span class="toc-text">பிழைச் செய்திகள் மற்றும் தீர்வுகள்</span><span class="toc-dots"></span><span class="toc-pg">95</span></a></li><li class="toc-h1"><a href="#ch21"><span class="toc-num">21</span><span class="toc-text">பொது இணையதளம்</span><span class="toc-dots"></span><span class="toc-pg">97</span></a></li><li class="toc-h1"><a href="#ch22"><span class="toc-num">22</span><span class="toc-text">நாள்தோறும் சரிபார்ப்புப் பட்டியல்கள்</span><span class="toc-dots"></span><span class="toc-pg">102</span></a></li><li class="toc-h1"><a href="#ch23"><span class="toc-num">23</span><span class="toc-text">QA சோதனைச் சுருக்கம்</span><span class="toc-dots"></span><span class="toc-pg">103</span></a></li><li class="toc-h1"><a href="#ch24"><span class="toc-num">24</span><span class="toc-text">சொற்களஞ்சியம்</span><span class="toc-dots"></span><span class="toc-pg">105</span></a></li><li class="toc-h1"><a href="#ch25"><span class="toc-num">25</span><span class="toc-text">உதவி மற்றும் தொடர்பு</span><span class="toc-dots"></span><span class="toc-pg">106</span></a></li></ol>
+
+<h1 id="ch1"><span class="num">1</span>அறிமுகம்<span class="sub">Introduction — இந்த வழிகாட்டியை எப்படிப் பயன்படுத்துவது</span></h1>
+
+<p class="lead">Vaasal Villa மேலாண்மை அமைப்பு இரண்டு <b>தனித்தனி</b> அமைப்புகளைக் கொண்டது: வில்லாக்களை நிர்வகிக்கும் <b>ஹோட்டல் PMS</b> (Property Management System) மற்றும் உணவகத்தை நடத்தும் <b>உணவக POS</b> (Point of Sale). இரண்டும் ஒரே உள்நுழைவுப் பக்கத்தைப் பயன்படுத்தினாலும், ஒவ்வொரு பணியாளரும் தமது பாத்திரத்துக்கு (role) அனுமதிக்கப்பட்ட பகுதியை மட்டுமே காண முடியும்.</p>
+
+<div class="sys-diagram">
+  <div class="sys pms"><b>ஹோட்டல் PMS</b>
+    <ul><li>முன்பதிவுகள், வில்லா காலண்டர்</li><li>வருகைப் பதிவு / வெளியேறுதல்</li><li>விருந்தினர் கணக்கு (Folio), விலைப்பட்டியல்</li><li>வீட்டுப் பராமரிப்பு, பராமரிப்புப் பணிகள்</li><li>சாவி அட்டைகள், இரவுத் தணிக்கை, அறிக்கைகள்</li></ul></div>
+  <div class="mid">
+    <div>POS "Charge to villa" → விருந்தினர் Folio</div>
+    <div>திறந்த உணவகக் கணக்கு → Checkout தடை</div>
+    <div>Checkout → வீட்டுப் பராமரிப்புப் பணி</div>
+  </div>
+  <div class="sys pos"><b>உணவக POS</b>
+    <ul><li>மேசைகள், ஆர்டர்கள், டேக்அவே</li><li>அறை சேவை (Room service)</li><li>சமையலறைத் திரை (KOT / KDS)</li><li>பில், பணம், மீதி, பற்றுச்சீட்டு</li><li>காசாளர் ஷிப்ட், நாள் முடிவு, விற்பனை</li></ul></div>
+</div>
+
+<p>இரு அமைப்புகளும் மூன்று இடங்களில் மட்டுமே இணைகின்றன (மேலே நடுவில்). மற்ற எல்லாவற்றிலும் அவை தனித்தனியாக இயங்குகின்றன — உதாரணமாக வரவேற்பாளர் (Reception) POS-ஐத் திறக்க முடியாது; காசாளர் (Cashier) ஹோட்டல் முன்பதிவுகளைப் பார்க்க முடியாது.</p>
+
+<h2 id="ch1-2"><span class="num">1.1</span>இந்த ஆவணத்தில் உள்ள திரைப்படங்கள்</h2>
+<p>இதிலுள்ள 82 திரைப்படங்களும் (screenshots) 29 செப்டம்பர் 2026 அன்று உள்ளூர் XAMPP கணினியில், உண்மையான தரவுத்தளத்தில், உண்மையான பயனர் இடைமுகத்தின் மூலம் எடுக்கப்பட்டவை. எந்தப் படமும் வரையப்படவோ திருத்தப்படவோ இல்லை. முழு அளவுப் படங்கள் <code>screenshots/</code> கோப்புறையில் உள்ளன; இந்த PDF-இல் நீளமான பக்கங்கள் பல பகுதிகளாகப் பிரிக்கப்பட்டுள்ளன.</p>
+<p>சில பயனர்கள் வெளிர் நிறத் தோற்றத்தையும் (light theme), சிலர் இருண்ட தோற்றத்தையும் (dark theme) தேர்ந்தெடுத்திருப்பதால் படங்களின் நிறம் வேறுபடலாம். மேல் வலது மூலையில் உள்ள <span class="ui">◐</span> பொத்தான் மூலம் இதை மாற்றலாம்.</p>
+
+<h2 id="ch1-3"><span class="num">1.2</span>நிலைக் குறியீடுகள்</h2>
+<p>ஒவ்வொரு வசதியும் பின்வரும் நிலைகளில் ஒன்றாகக் குறிக்கப்பட்டுள்ளது:</p>
+<table class="grid">
+<tr><th style="width:34mm">குறியீடு</th><th>பொருள்</th></tr>
+<tr><td><span class="badge b-impl">Implemented</span></td><td>கணினியில் உள்ளது, பயன்படுத்தலாம்.</td></tr>
+<tr><td><span class="badge b-tested">Tested</span></td><td>இந்த QA-இல் உண்மையாகச் சோதிக்கப்பட்டு சரியாக வேலை செய்தது.</td></tr>
+<tr><td><span class="badge b-partial">Partially</span></td><td>ஒரு பகுதி மட்டும் உள்ளது அல்லது வெளிச் சேவை இல்லாமல் முழுமையாகச் சோதிக்க முடியவில்லை.</td></tr>
+<tr><td><span class="badge b-sim">Simulated</span></td><td>உண்மையான கருவி/சேவைக்குப் பதிலாக சிமுலேட்டர் பயன்படுகிறது (உ-ம்: RFID கதவுப் பூட்டுகள், sandbox பணக் கொடுப்பனவு).</td></tr>
+<tr><td><span class="badge b-missing">Missing</span></td><td>கணினியில் இல்லை (உ-ம்: SMS அனுப்புதல்).</td></tr>
+</table>
+
+<h2 id="ch1-4"><span class="num">1.3</span>இந்த வழிகாட்டியில் வரும் உதாரணங்கள்</h2>
+<table class="grid">
+<tr><th style="width:14mm">உதா.</th><th>நிகழ்வு</th><th style="width:36mm">அத்தியாயம்</th></tr>
+<tr><td><b>A</b></td><td>Walk-in விருந்தினர் <b>Nuwan Perera</b>, வில்லா <b>G1</b>, 29 செப் → 3 அக் 2026, 2 பெரியவர்கள், இரவுக்கு LKR 30,500, முற்பணம் LKR 20,000</td><td>5, 6</td></tr>
+<tr><td><b>B</b></td><td>உணவகத்தில் மேசை <b>T6</b>, 4 விருந்தினர்கள், பணமாகச் செலுத்துதல் (LKR 30,000 → மீதி)</td><td>11, 12</td></tr>
+<tr><td><b>C</b></td><td>Nuwan-க்கு (G1) அறை சேவை — உணவு LKR 8,500, வில்லாக் கணக்கில் சேர்த்தல்</td><td>7, 8</td></tr>
+<tr><td><b>D</b></td><td>Checkout — அறை + உணவகம் + சலவைக் கட்டணங்கள் ஒரே பில்லில்</td><td>9</td></tr>
+<tr><td><b>E</b></td><td>G1 வில்லாவைச் சுத்தம் செய்து "Ready" ஆக்குதல்</td><td>10</td></tr>
+</table>
+<div class="callout rule"><span class="t">உண்மை நிகழ்வு வரிசை</span>
+<p>G1-இல் ஏற்கனவே தங்கியிருந்த விருந்தினர் <b>Oliver Jensen</b> முதலில் வெளியேறினார் (உதா. D), பின்னர் G1 சுத்தம் செய்யப்பட்டது (உதா. E), அதன் பிறகே Nuwan Perera G1-இல் தங்க வந்தார் (உதா. A). அதனால் படங்களும் அதே வரிசையில் எடுக்கப்பட்டன.</p></div>
+
+<h1 id="ch2"><span class="num">2</span>உள்நுழைவு மற்றும் பாதுகாப்பு<span class="sub">Sign in, sign out, session and password rules</span></h1>
+
+<h2 id="ch2-1"><span class="num">2.1</span>உள்நுழைவது எப்படி</h2>
+<ol class="steps">
+<li>உலாவியில் கணினியின் முகவரியைத் திறந்து <span class="ui">Staff sign in</span> பக்கத்துக்குச் செல்லுங்கள்.</li>
+<li><span class="ui">Username or email</span> பெட்டியில் உங்கள் பயனர் பெயரை (உ-ம்: <code>reception</code>) அல்லது மின்னஞ்சலை உள்ளிடுங்கள்.</li>
+<li><span class="ui">Password</span> பெட்டியில் கடவுச்சொல்லை உள்ளிட்டு <span class="ui">Sign in</span> அழுத்துங்கள். கண் குறியை அழுத்தினால் தட்டச்சு செய்ததைப் பார்க்கலாம்.</li>
+<li>உங்கள் பாத்திரத்துக்கான முகப்புப் பக்கம் தானாகத் திறக்கும் (உ-ம்: காசாளர் → POS Terminal, சமையலறை → Kitchen display).</li>
+</ol>
+<figure class="shot" id="fig-14_login_page"><img src="img/14_login_page-1.jpg" alt="உள்நுழைவுப் பக்கம். கீழே உள்ள &quot;Quick role sign-in&quot; அட்டைகள் உள்ளூர் (APP_ENV=local) சோதனைக்கு மட்டுமே; production-இல் தானாக மறைந்துவிடும்."><figcaption><b>படம் 1 · Figure 1 —</b> உள்நுழைவுப் பக்கம். கீழே உள்ள &quot;Quick role sign-in&quot; அட்டைகள் உள்ளூர் (APP_ENV=local) சோதனைக்கு மட்டுமே; production-இல் தானாக மறைந்துவிடும். <span class="file">screenshots/14_login_page.png · 1440×1003 px</span></figcaption></figure>
+
+<div class="callout warn"><span class="t">டெமோ கடவுச்சொற்கள்</span>
+<p>டெமோ கணக்குகளின் கடவுச்சொல் இந்த ஆவணத்தில் அச்சிடப்படவில்லை. அது திட்டத்தின் <code>README.md</code> கோப்பில் மட்டுமே உள்ளது. உண்மையான பயன்பாட்டுக்கு முன் ஒவ்வொரு கணக்கின் கடவுச்சொல்லையும் மாற்றுங்கள் (<span class="ui">My profile</span> → Change password; குறைந்தது 10 எழுத்துகள்).</p></div>
+
+<h2 id="ch2-2"><span class="num">2.2</span>தவறான கடவுச்சொல் மற்றும் கணக்குப் பூட்டு</h2>
+<ul>
+<li>பயனர் பெயர் அல்லது கடவுச்சொல் தவறானால் ஒரே பொதுவான செய்தி வரும்: <i>"The username/email or password is incorrect."</i> — எது தவறு என்று கணினி சொல்லாது (பாதுகாப்புக்காக).</li>
+<li><b>5 முறை</b> தவறாக முயன்றால் கணக்கு <b>15 நிமிடங்கள்</b> பூட்டப்படும். திரையில் "Try again after HH:MM" என்று நேரம் காட்டும். நிர்வாகி <span class="ui">Users</span> பக்கத்தில் பூட்டை நீக்கலாம்.</li>
+<li>ஒரே IP முகவரியிலிருந்து அதிக முயற்சிகள் வந்தாலும் தற்காலிகமாகத் தடுக்கப்படும்.</li>
+</ul>
+<figure class="shot" id="fig-77_invalid_login"><img src="img/77_invalid_login-1.jpg" alt="தவறான கடவுச்சொல்: பொதுவான பிழைச் செய்தி. கடவுச்சொல் பெட்டி தானாகக் காலியாகிறது."><figcaption><b>படம் 2 · Figure 2 —</b> தவறான கடவுச்சொல்: பொதுவான பிழைச் செய்தி. கடவுச்சொல் பெட்டி தானாகக் காலியாகிறது. <span class="file">screenshots/77_invalid_login.png · 1440×1129 px</span></figcaption></figure>
+
+<h2 id="ch2-3"><span class="num">2.3</span>அமர்வு முடிவு (Session ended)</h2>
+<p>30 நிமிடங்கள் எதுவும் செய்யாமல் இருந்தால், அல்லது அதே உலாவியில் வேறொரு கணக்கில் உள்நுழைந்தால், அல்லது வேறொரு tab-இல் வெளியேறினால் உங்கள் அமர்வு (session) முடிந்துவிடும். முன்பு POS திரையில் இது வெறும் "Unauthenticated" என்று காட்டியது. இந்த QA-இல் அது சரிசெய்யப்பட்டது: இப்போது தெளிவான செய்தி தோன்றி, 2.5 விநாடிகளில் உள்நுழைவுப் பக்கத்துக்குச் செல்லும்; மீண்டும் உள்நுழைந்ததும் நீங்கள் இருந்த அதே பக்கத்துக்குத் திரும்புவீர்கள்.</p>
+<figure class="shot" id="fig-75_session_ended"><img src="img/75_session_ended-1.jpg" alt="POS திரையில் அமர்வு முடிந்தது: &quot;Your session has ended … Taking you to sign-in…&quot; செய்தி."><figcaption><b>படம் 3 · Figure 3 —</b> POS திரையில் அமர்வு முடிந்தது: &quot;Your session has ended … Taking you to sign-in…&quot; செய்தி. <span class="file">screenshots/75_session_ended.png · 1440×900 px</span></figcaption></figure>
+<figure class="shot" id="fig-76_session_return"><img src="img/76_session_return-1.jpg" alt="உள்நுழைவுப் பக்கம் — உள்நுழைந்ததும் முன்பு இருந்த POS பக்கத்துக்கே திரும்பும்."><figcaption><b>படம் 4 · Figure 4 —</b> உள்நுழைவுப் பக்கம் — உள்நுழைந்ததும் முன்பு இருந்த POS பக்கத்துக்கே திரும்பும். <span class="file">screenshots/76_session_return.png · 1440×1083 px</span></figcaption></figure>
+<div class="callout tip"><span class="t">நல்ல பழக்கங்கள்</span>
+<ul><li>ஒரே உலாவியில் இரண்டு வெவ்வேறு கணக்குகளில் ஒரே நேரத்தில் வேலை செய்ய வேண்டாம்.</li>
+<li>மேசையை விட்டுச் செல்லும்போது இடது கீழே உள்ள <span class="ui">Log out</span> அழுத்துங்கள்.</li>
+<li>பகிர்ந்து பயன்படுத்தும் கணினியில் "Remember me" தேர்வு செய்ய வேண்டாம்.</li></ul></div>
+
+<h1 id="ch3"><span class="num">3</span>பாத்திரங்கள் மற்றும் அனுமதிகள்<span class="sub">Roles &amp; permission matrix — tested by direct URL access</span></h1>
+<p>ஒவ்வொரு பயனருக்கும் ஒரு பாத்திரம் (role) உண்டு. பக்கப்பட்டியில் (sidebar) அனுமதியுள்ள பக்கங்கள் மட்டுமே தெரியும். மறைக்கப்பட்ட பக்கத்தின் முகவரியை நேரடியாகத் தட்டச்சு செய்தாலும் சேவையகம் <b>403 Forbidden</b> பதிலைத் தரும் — இது 15 பாத்திரங்களுக்கும், ஒவ்வொன்றுக்கும் 90 பக்கங்கள் வீதம் சோதிக்கப்பட்டது (ஒரு பிழையும் இல்லை).</p>
+<table class="grid">
+<tr><th>பாத்திரம்</th><th>டெமோ பயனர்</th><th>முகப்புப் பக்கம்</th><th>முக்கியப் பணிகள்</th></tr>
+<tr><td>Administrator</td><td><code>admin</code></td><td>Dashboard</td><td>எல்லாவற்றுக்கும் அனுமதி, பயனர்கள், அமைப்புகள்</td></tr>
+<tr><td>Owner</td><td><code>owner</code></td><td>Dashboard</td><td>பார்வை அனுமதி மட்டும்: டாஷ்போர்டு, அறிக்கைகள் (உணவக விற்பனை உட்பட), கொடுப்பனவுகள், வில்லாக்கள், audit log</td></tr>
+<tr><td>Hotel Manager</td><td><code>manager</code></td><td>Dashboard</td><td>முன்பதிவு, விலை மாற்றம், பில், இரவுத் தணிக்கை</td></tr>
+<tr><td>Receptionist</td><td><code>reception</code></td><td>Front desk</td><td>முன்பதிவு, check-in/out, Folio, சாவி அட்டை</td></tr>
+<tr><td>Accountant</td><td><code>accounts</code></td><td>Payments</td><td>கொடுப்பனவுகள், விலைப்பட்டியல், அறிக்கைகள்</td></tr>
+<tr><td>Restaurant Manager</td><td><code>posmanager</code></td><td>POS dashboard</td><td>மெனு, மேசைகள், ஷிப்ட் மீளாய்வு, விற்பனை, கையிருப்பு</td></tr>
+<tr><td>Cashier</td><td><code>cashier</code></td><td>POS Terminal</td><td>பில், பணம், அறைக் கணக்கில் சேர்த்தல், சொந்த ஷிப்ட்</td></tr>
+<tr><td>Waiter</td><td><code>waiter</code></td><td>POS Terminal</td><td>மேசை ஆர்டர், சமையலறைக்கு அனுப்புதல் (பணம் வாங்க முடியாது)</td></tr>
+<tr><td>Kitchen Staff</td><td><code>kitchen</code></td><td>Kitchen display</td><td>KOT நிலை மாற்றுதல்</td></tr>
+<tr><td>Inventory Staff</td><td><code>stores</code></td><td>Inventory</td><td>கையிருப்பு, கொள்முதல், விநியோகஸ்தர்கள்</td></tr>
+<tr><td>HK Supervisor</td><td><code>hksupervisor</code></td><td>Housekeeping board</td><td>பணி ஒதுக்கீடு, ஆய்வு, அங்கீகாரம்</td></tr>
+<tr><td>Housekeeping</td><td><code>housekeeping</code></td><td>My cleaning tasks</td><td>சுத்தம் செய்யும் பணிகள், சரிபார்ப்புப் பட்டியல்</td></tr>
+<tr><td>Maintenance</td><td><code>maintenance</code></td><td>Maintenance</td><td>பழுது பார்க்கும் பணிகள்</td></tr>
+<tr><td>General Staff</td><td><code>staff</code></td><td>My time card</td><td>சொந்த வருகைப் பதிவு, விடுப்பு</td></tr>
+<tr><td>Tour Operator</td><td><code>operator</code></td><td>Partner portal</td><td>தமது முன்பதிவுகள் மட்டும் (பணியாளர் பக்கங்கள் இல்லை)</td></tr>
+</table>
+<div class="h3">அனுமதி அட்டவணை (நேரடி URL சோதனை முடிவு)</div>
+<table class="grid matrix small"><tr><th>Role</th><th>Booking</th><th>Check-in</th><th>Check-out</th><th>Room Management</th><th>Housekeeping Board</th><th>My Cleaning Tasks</th><th>Guests</th><th>Key Cards</th><th>Restaurant Pos</th><th>Kot / Kitchen</th><th>Payments (pms)</th><th>Folio / Guest Charges</th><th>Reports (pms)</th><th>Restaurant Sales</th><th>Admin Settings</th><th>Night Audit</th></tr><tr><td>Administrator</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr><tr><td>Owner</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="y">✓</td><td class="n">—</td><td class="y">✓</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr><tr><td>Hotel Manager</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">—</td><td class="y">✓</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td></tr><tr><td>Receptionist</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">—</td><td class="y">✓</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr><tr><td>Accountant</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr><tr><td>Restaurant Manager</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td></tr><tr><td>Cashier</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr><tr><td>Waiter</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr><tr><td>Kitchen Staff</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td></tr><tr><td>Inventory Staff</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td></tr><tr><td>Housekeeping Supervisor</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr><tr><td>Housekeeping Staff</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr><tr><td>Maintenance Technician</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr><tr><td>General Staff</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr><tr><td>Tour Operator</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr></table>
+<p class="small muted">✓ = பக்கம் திறந்தது (HTTP 200) · — = மறுக்கப்பட்டது (403, அல்லது partner portal-க்குத் திருப்பப்பட்டது 302). ஹோட்டல் பணியாளர்கள் POS-ஐயும், உணவகப் பணியாளர்கள் ஹோட்டல் பக்கங்களையும் திறக்க முடியாது என்பதை அட்டவணை உறுதிப்படுத்துகிறது.</p>
+
+<h1 id="ch4"><span class="num">4</span>டாஷ்போர்டு மற்றும் முன் மேசை<span class="sub">Admin dashboard &amp; Front desk</span></h1>
+<p>நிர்வாகி மற்றும் மேலாளர் உள்நுழைந்ததும் <span class="ui">Dashboard</span> திறக்கும். இதில் இன்றைய வருகைகள், தங்கியுள்ளோர், வெளியேற வேண்டியோர், நிரம்பல் சதவீதம், வருமானம், வீட்டுப் பராமரிப்பு நிலை, திறந்த உணவகக் கணக்குகள் போன்றவை ஒரே பார்வையில் தெரியும். மேலே உள்ள மணிக் குறி (🔔 எண்) புதிய அறிவிப்புகளைக் காட்டும்.</p>
+<figure class="shot" id="fig-01_admin_dashboard"><img src="img/01_admin_dashboard-1.jpg" alt="நிர்வாகி டாஷ்போர்டு (Administrator)."><figcaption><b>படம் 5 · Figure 5 (1/2) —</b> நிர்வாகி டாஷ்போர்டு (Administrator). </figcaption></figure><figure class="shot cont"><img src="img/01_admin_dashboard-2.jpg" alt="நிர்வாகி டாஷ்போர்டு (Administrator)."><figcaption><b>படம் 5 · Figure 5 (தொடர்ச்சி 2/2) —</b> நிர்வாகி டாஷ்போர்டு (Administrator). <span class="file">screenshots/01_admin_dashboard.png · 1440×2900 px</span></figcaption></figure>
+<p>வரவேற்பாளரின் முதன்மைப் பக்கம் <span class="ui">Front desk</span>. மேலே நான்கு எண்ணிக்கைகள்: <i>Arrivals pending</i>, <i>In-house</i>, <i>Departures pending</i>, <i>Villas ready</i>. கீழே தாவல்கள் (tabs): Arrivals, In-house, Departures, Next 3 days, Villa status. <span class="ui">Walk-in</span> மற்றும் <span class="ui">Run night audit</span> பொத்தான்கள் மேல் வலதில் உள்ளன.</p>
+<figure class="shot" id="fig-15_front_desk"><img src="img/15_front_desk-1.jpg" alt="முன் மேசை (Front desk) — வரவேற்பாளர் பார்வை."><figcaption><b>படம் 6 · Figure 6 —</b> முன் மேசை (Front desk) — வரவேற்பாளர் பார்வை. <span class="file">screenshots/15_front_desk.png · 1440×927 px</span></figcaption></figure>
+
+<h1 id="ch5"><span class="num">5</span>முன்பதிவுகள் — உதாரணம் A<span class="sub">Bookings &amp; walk-in: Nuwan Perera, villa G1</span></h1>
+
+<h2 id="ch5-1"><span class="num">5.1</span>முன்பதிவு மூலங்கள் (Booking sources)</h2>
+<table class="grid">
+<tr><th>மூலம்</th><th>யார் உருவாக்குவது</th><th>நிலை</th></tr>
+<tr><td>Phone / Email / Admin</td><td>வரவேற்பாளர் அல்லது மேலாளர் — <span class="ui">Bookings → New booking</span></td><td><span class="badge b-tested">Tested</span></td></tr>
+<tr><td>Walk-in</td><td>முன் மேசை — <span class="ui">Walk-in</span> பொத்தான்</td><td><span class="badge b-tested">Tested</span></td></tr>
+<tr><td>Tour operator</td><td>பணியாளர் (ஒப்பந்த விலை) அல்லது operator தனது partner portal-இல்</td><td><span class="badge b-tested">Tested</span></td></tr>
+<tr><td>Website</td><td>விருந்தினர் இணையதளத்தில்; கட்டணம் செலுத்தும் வரை "hold"</td><td><span class="badge b-sim">Simulated</span> sandbox கட்டணம்</td></tr>
+<tr><td>OTA (Booking.com போன்றவை)</td><td>Channel manager webhook</td><td><span class="badge b-sim">Simulated</span> — நேரடி இணைப்பு இல்லை (CHANNEL_DRIVER=null)</td></tr>
+</table>
+
+<h2 id="ch5-2"><span class="num">5.2</span>கணினி சரிபார்க்கும் விதிகள்</h2>
+<div class="callout rule"><span class="t">முன்பதிவு விதிகள் (சோதிக்கப்பட்டவை)</span>
+<ul>
+<li>வருகைத் தேதி கடந்த தேதியாக இருக்க முடியாது; புறப்படும் தேதி வருகைக்குப் பின் இருக்க வேண்டும்.</li>
+<li>தங்கும் ஒவ்வொரு இரவிலும் வில்லா காலியாக இருக்க வேண்டும் — ஒரு இரவு கூட முன்பதிவாகியிருந்தால் அந்த வில்லா பட்டியலில் வராது. ஒரே வில்லாவுக்கு இரட்டை முன்பதிவு சாத்தியமில்லை.</li>
+<li>பழுதில் உள்ள (Out of order) வில்லா பட்டியலில் வராது, சேமிக்கவும் முடியாது.</li>
+<li>சில தேதிகளுக்கு/சலுகைகளுக்கு குறைந்தபட்ச இரவுகள் உண்டு (உ-ம்: "A minimum stay of 3 nights applies"; STAY4 சலுகைக்கு 4 இரவுகள்).</li>
+<li>தவறான promo code நிராகரிக்கப்படும்.</li>
+<li>இன்றே வருகை என்றால் வில்லா <b>Ready</b> நிலையில் இருக்க வேண்டும் (அத்தியாயம் 10).</li>
+<li>இரவு விலையை மாற்ற (override) <b>Hotel Manager</b> அனுமதி தேவை, காரணமும் கட்டாயம்; இது History-இல் பதிவாகும்.</li>
+</ul></div>
+
+<h2 id="ch5-3"><span class="num">5.3</span>உதாரணம் A — Walk-in முன்பதிவு</h2>
+<p>விருந்தினர் Nuwan Perera முன்பதிவின்றி நேரடியாக வந்து, 29 செப்டம்பர் முதல் 3 அக்டோபர் 2026 வரை (4 இரவுகள்) இருவருக்குத் தங்க விரும்புகிறார். மேலாளர் இரவுக்கு LKR 30,500 விலைக்கு ஒப்புக்கொண்டார்; விருந்தினர் LKR 20,000 முற்பணத்தை அட்டையால் செலுத்தினார்.</p>
+<ol class="steps">
+<li><span class="ui">Front desk</span> → <span class="ui">Walk-in</span> அழுத்துங்கள். இன்றைய தேதியுடன் முன்பதிவுப் படிவம் திறக்கும் (Booking source = Walk-in).</li>
+<li><b>1 · Stay</b>: Arrival = 29/09/2026, Departure = 03/10/2026. Rate plan தேர்வு செய்யுங்கள்.</li>
+<li><b>2 · Villas available</b>: அந்த 4 இரவுகளிலும் காலியாக உள்ள வில்லாக்கள் மட்டும் தெரியும் (இங்கு G1, P3, F1). <b>G1</b>-ஐ டிக் செய்து Adults = 2, Children = 0.</li>
+<li><b>3 · Guest</b>: பெயர், நாடு, மின்னஞ்சல், தொலைபேசி, எதிர்பார்க்கும் வருகை நேரம். (மின்னஞ்சல் மூலம் பழைய விருந்தினர் தானாகப் பொருத்தப்படுவார்.)</li>
+<li>வலப்பக்க <b>Summary</b>-இல் <span class="ui">Override nightly rate</span> திறந்து 30500 மற்றும் காரணம் "Walk-in rate agreed by manager".</li>
+<li><span class="ui">Deposit taken now</span> = 20000, Method = Card. <span class="ui">Continue to check-in</span> டிக் செய்திருக்கட்டும்.</li>
+<li><span class="ui">Create booking</span> அழுத்துங்கள். முன்பதிவு எண் உருவாகி நேரடியாக check-in பக்கம் திறக்கும்.</li>
+</ol>
+<figure class="shot" id="fig-02_walkin_booking"><img src="img/02_walkin_booking-1.jpg" alt="Walk-in முன்பதிவுப் படிவம் — Nuwan Perera, G1, 29 செப் → 3 அக், 2 பெரியவர்கள், இரவுக்கு LKR 30,500, முற்பணம் LKR 20,000."><figcaption><b>படம் 7 · Figure 7 —</b> Walk-in முன்பதிவுப் படிவம் — Nuwan Perera, G1, 29 செப் → 3 அக், 2 பெரியவர்கள், இரவுக்கு LKR 30,500, முற்பணம் LKR 20,000. <span class="file">screenshots/02_walkin_booking.png · 1440×1449 px</span></figcaption></figure>
+<figure class="shot" id="fig-03_room_selection"><img src="img/03_room_selection-1.jpg" alt="வில்லா தேர்வு: அனைத்து இரவுகளிலும் காலியாக உள்ள வில்லாக்கள், வீட்டுப் பராமரிப்பு நிலையுடன். G1 டிக் செய்யப்பட்டுள்ளது."><figcaption><b>படம் 8 · Figure 8 —</b> வில்லா தேர்வு: அனைத்து இரவுகளிலும் காலியாக உள்ள வில்லாக்கள், வீட்டுப் பராமரிப்பு நிலையுடன். G1 டிக் செய்யப்பட்டுள்ளது. <span class="file">screenshots/03_room_selection.png · 1440×900 px</span></figcaption></figure>
+
+<div class="callout issue"><span class="t">தெரிந்த குறைபாடு — Summary மொத்தம்</span>
+<p>விலையை override செய்தாலும் படிவத்தின் வலப்பக்க "Total" பழைய (சாதாரண) விலையிலேயே LKR 162,756.00 என்று காட்டுகிறது (<a href="#fig-03_room_selection">படம் 8</a>). ஆனால் சேமித்த முன்பதிவு சரியான override விலையில் கணக்கிடப்படுகிறது (கீழே). சேமித்த பின் check-in பக்கத்திலுள்ள "Booking total"-ஐயே நம்புங்கள்.</p></div>
+
+<div class="callout example"><span class="t">உதாரணம் A — கணினி கணக்கிட்ட தொகை (VV-26-000033)</span>
+<table class="grid" style="margin:1mm 0 0">
+<tr><th>விவரம்</th><th class="num">LKR</th></tr>
+<tr><td>அறை: 4 இரவுகள் × 30,500</td><td class="num">122,000.00</td></tr>
+<tr><td>சேவைக் கட்டணம் 10%</td><td class="num">12,200.00</td></tr>
+<tr><td>வரி 8% (அறை + சேவைக் கட்டணம் மீது)</td><td class="num">10,736.00</td></tr>
+<tr class="total"><td>முன்பதிவு மொத்தம் (Booking total)</td><td class="num">144,936.00</td></tr>
+<tr><td>முற்பணம் (அட்டை, PAY-26-000044)</td><td class="num">− 20,000.00</td></tr>
+<tr class="total"><td>முன்பதிவுக்கு எதிரான நிலுவை</td><td class="num">124,936.00</td></tr>
+</table>
+<p class="small" style="margin-top:2mm">கொள்கைப்படி பரிந்துரைக்கப்படும் முற்பணம் 30% = LKR 43,480.80; குறைவாகப் பெற்றாலும் கணினி ஏற்கிறது, "Deposit due" என்று காட்டுகிறது.</p></div>
+
+<h2 id="ch5-4"><span class="num">5.4</span>முன்பதிவுப் பட்டியல் மற்றும் வில்லா காலண்டர்</h2>
+<p><span class="ui">Bookings</span> பக்கத்தில் எல்லா முன்பதிவுகளையும் நிலை, மூலம், தேதி மூலம் தேடலாம். <span class="ui">Villa calendar</span> ஒவ்வொரு வில்லாவின் ஒவ்வொரு இரவையும் வண்ணத்தில் காட்டும்.</p>
+<figure class="shot" id="fig-51_bookings"><img src="img/51_bookings-1.jpg" alt="முன்பதிவுப் பட்டியல்."><figcaption><b>படம் 9 · Figure 9 —</b> முன்பதிவுப் பட்டியல். <span class="file">screenshots/51_bookings.png · 1440×1753 px</span></figcaption></figure>
+<figure class="shot" id="fig-52_villa_calendar"><img src="img/52_villa_calendar-1.jpg" alt="வில்லா காலண்டர்."><figcaption><b>படம் 10 · Figure 10 —</b> வில்லா காலண்டர். <span class="file">screenshots/52_villa_calendar.png · 1440×900 px</span></figcaption></figure>
+
+<h1 id="ch6"><span class="num">6</span>வருகைப் பதிவு (Check-in)<span class="sub">Identity, villa assignment and key card</span></h1>
+<p>Walk-in முன்பதிவைச் சேமித்ததும் check-in பக்கம் தானாகத் திறக்கும். முன்கூட்டிய முன்பதிவுகளுக்கு <span class="ui">Front desk → Arrivals</span> → விருந்தினர் பெயர் → <span class="ui">Check in</span>.</p>
+<ol class="steps">
+<li><b>1 · Verify identity</b>: ஆவண வகை (Passport / National ID / Driving licence), ஆவண எண் (கட்டாயம்), காலாவதி, தேசியம், தொலைபேசி. ஆவணப் படத்தை scan செய்து இணைக்கலாம் — அது தனிப்பட்ட முறையில் சேமிக்கப்படும்; பின்னர் எண் மறைக்கப்பட்டு (••••2211) காட்டப்படும்.</li>
+<li><b>2 · Villa &amp; key cards</b>: வில்லாவின் வீட்டுப் பராமரிப்பு நிலை <b>Ready</b> ஆக இருக்க வேண்டும். வேறு வில்லா ஒதுக்க வேண்டுமெனில் "Assign a different villa". "Free cards" பட்டியலில் இருந்து ஒரு அட்டையை அழுத்தினால் அதன் UID "Key card UID" பெட்டியில் நிரம்பும் (அல்லது encoder reader-இல் அட்டையைத் தட்டுங்கள்).</li>
+<li>உடன் வந்தவர்களைப் பதிய <span class="ui">Register accompanying guests</span>.</li>
+<li><b>3 · Payment</b>: தேவையெனில் மேலும் முற்பணம் பெறலாம்.</li>
+<li><span class="ui">Complete check-in</span> அழுத்துங்கள். பதிவு அட்டையை அச்சிட <span class="ui">Print registration card</span>.</li>
+</ol>
+<figure class="shot" id="fig-04_checkin"><img src="img/04_checkin-1.jpg" alt="Check-in: அடையாள ஆவணம் மற்றும் G1-க்கான சாவி அட்டை (04EE00000001)."><figcaption><b>படம் 11 · Figure 11 —</b> Check-in: அடையாள ஆவணம் மற்றும் G1-க்கான சாவி அட்டை (04EE00000001). <span class="file">screenshots/04_checkin.png · 1440×900 px</span></figcaption></figure>
+<div class="callout rule"><span class="t">Check-in விதிகள்</span>
+<ul><li>வில்லா Ready இல்லையெனில் check-in தடுக்கப்படும் ("Villa P3 is not ready (housekeeping: Dirty)"). மேலாளர்/மேற்பார்வையாளர் மட்டும் "Check in anyway" தேர்வை உறுதிப்படுத்திப் பயன்படுத்தலாம்.</li>
+<li>புதிய சாவி அட்டை வழங்கினால் அதே வில்லாவுக்கான பழைய அட்டை தானாகச் செல்லாததாகும்.</li>
+<li>அட்டை வெளியேறும் நாள் 12:00 வரை செல்லுபடியாகும் (இங்கு 03 அக் 2026, 12:00).</li></ul></div>
+<p>Check-in முடிந்ததும் முன்பதிவுப் பக்கம் <b>Checked in</b> நிலையைக் காட்டும்; வில்லா <b>Occupied</b> ஆகும்; விருந்தினர் கணக்கு (Folio) உணவக மற்றும் சேவைக் கட்டணங்களுக்குத் திறக்கப்படும்.</p>
+<figure class="shot" id="fig-26_checked_in"><img src="img/26_checked_in-1.jpg" alt="Check-in முடிந்தது: VV-26-000033 — Checked in, G1, சாவி அட்டை Active."><figcaption><b>படம் 12 · Figure 12 —</b> Check-in முடிந்தது: VV-26-000033 — Checked in, G1, சாவி அட்டை Active. <span class="file">screenshots/26_checked_in.png · 1440×1430 px</span></figcaption></figure>
+<div class="callout sim"><span class="t">சாவி அட்டை — சிமுலேஷன்</span>
+<p>இந்தக் கணினியில் <code>LOCK_DRIVER=simulator</code>. அட்டை "encode" செய்வது Lock Bridge வழியாக உண்மையான கதவுப் பூட்டுக்குச் செல்வதில்லை; உண்மையான RFID/பூட்டு வன்பொருள் இணைக்கப்படவில்லை. விவரம்: அத்தியாயம் 14.</p></div>
+
+<h1 id="ch7"><span class="num">7</span>அறை சேவை — உதாரணம் C<span class="sub">Room service for villa G1, charged to the guest folio</span></h1>
+<p>விருந்தினர் வில்லாவிலிருந்து தொலைபேசியில் உணவு கேட்கும்போது, காசாளர் அல்லது பணியாளர் POS-இல் <b>Room service</b> check ஒன்றைத் திறக்கிறார். அந்த check தங்கியுள்ள விருந்தினருடன் இணைக்கப்படுவதால், பின்னர் அதை நேரடியாக வில்லாக் கணக்கில் (folio) சேர்க்கலாம்.</p>
+<ol class="steps">
+<li>POS Terminal-இல் outlet = <b>In-villa dining</b> தேர்வு செய்து <span class="ui">Room service</span> அழுத்துங்கள்.</li>
+<li>தங்கியுள்ள விருந்தினர் பட்டியல் தோன்றும் (வில்லா · பெயர் · முன்பதிவு எண்). <b>G1 · Nuwan Perera</b> தேர்வு செய்யுங்கள்.</li>
+<li>மெனுவிலிருந்து உணவுகளைச் சேர்க்கவும்: Seafood linguine (5,600) + Crab soup (2,900) = உணவு மொத்தம் <b>LKR 8,500</b>. கட்டாய விருப்பத் தேர்வுகள் (உ-ம்: காரத்தின் அளவு) உள்ள உணவுகளுக்கு அவற்றைத் தேர்வு செய்யாமல் சேர்க்க முடியாது.</li>
+<li><span class="ui">Send</span> அழுத்துங்கள் — KOT சமையலறைக்குச் செல்லும்.</li>
+<li>சமையலறை தயாரித்து அனுப்பியதும் <span class="ui">Pay</span> → <span class="ui">Charge to villa</span> → <span class="ui">Complete payment</span>.</li>
+</ol>
+<figure class="shot" id="fig-27_room_service_select"><img src="img/27_room_service_select-1.jpg" alt="Room service: தங்கியுள்ள விருந்தினர்/வில்லாவைத் தேர்வு செய்தல்."><figcaption><b>படம் 13 · Figure 13 —</b> Room service: தங்கியுள்ள விருந்தினர்/வில்லாவைத் தேர்வு செய்தல். <span class="file">screenshots/27_room_service_select.png · 1440×900 px</span></figcaption></figure>
+<figure class="shot" id="fig-28_room_service_check"><img src="img/28_room_service_check-1.jpg" alt="G1-க்கான அறை சேவை check — சமையலறைக்கு அனுப்பும் முன்."><figcaption><b>படம் 14 · Figure 14 —</b> G1-க்கான அறை சேவை check — சமையலறைக்கு அனுப்பும் முன். <span class="file">screenshots/28_room_service_check.png · 1440×900 px</span></figcaption></figure>
+
+<h2 id="ch7-1"><span class="num">7.1</span>சமையலறைத் திரை (KOT / KDS)</h2>
+<p>சமையலறைப் பணியாளர் உள்நுழைந்ததும் <span class="ui">Kitchen display</span> திறக்கும். ஒவ்வொரு அட்டையும் ஒரு KOT (Kitchen Order Ticket): மேசை/வில்லா, KOT எண், outlet, ஆர்டர் எடுத்தவர், நிலையம் (kitchen / bar), உணவுகள், விருப்பத் தேர்வுகள், அனுப்பி எத்தனை நிமிடம் ஆனது. திரை ஒவ்வொரு 5 விநாடிக்கும் தானாகப் புதுப்பிக்கப்படும்; புதிய ticket வந்தால் ஒலி எழும்.</p>
+<div class="flow"><span>New</span><i>→ Start →</i><span class="s-cleaning">Preparing</span><i>→ Ready →</i><span class="s-ready">Ready</span><i>→ Served →</i><span>Served</span></div>
+<p>ஒவ்வொரு பொத்தான் அழுத்தலும் ஒரு படி முன்னேற்றும். New நிலையிலிருந்து நேரடியாக Served-க்குச் செல்ல முடியாது (சோதிக்கப்பட்டது). <span class="ui">Kitchen</span> / <span class="ui">Bar</span> / <span class="ui">All stations</span> தாவல்கள் மூலம் நிலையத்தைத் தேர்வு செய்யலாம்.</p>
+<figure class="shot" id="fig-07_kitchen_kot"><img src="img/07_kitchen_kot-1.jpg" alt="சமையலறைத் திரை — வில்லா G1-க்கான புதிய KOT (கீழ் வலது) மற்றும் பிற tickets."><figcaption><b>படம் 15 · Figure 15 —</b> சமையலறைத் திரை — வில்லா G1-க்கான புதிய KOT (கீழ் வலது) மற்றும் பிற tickets. <span class="file">screenshots/07_kitchen_kot.png · 1440×900 px</span></figcaption></figure>
+<div class="callout warn"><span class="t">பழைய tickets</span>
+<p>"Served" என்று குறிக்கும் வரை ticket திரையில் இருக்கும். படத்தில் முந்தைய நாளின் டெமோ tickets 2,000+ நிமிடங்களாகத் தெரிகின்றன. ஒவ்வொரு உணவும் பரிமாறப்பட்டதும் <span class="ui">Served</span> அழுத்தும் பழக்கத்தைக் கடைப்பிடியுங்கள்.</p></div>
+
+<h2 id="ch7-2"><span class="num">7.2</span>வில்லாக் கணக்கில் சேர்த்தல்</h2>
+<figure class="shot" id="fig-08_room_service"><img src="img/08_room_service-1.jpg" alt="Take payment → &quot;Charge to villa&quot;: G1 (Nuwan Perera) கணக்கில் சேர்த்தல்."><figcaption><b>படம் 16 · Figure 16 —</b> Take payment → &quot;Charge to villa&quot;: G1 (Nuwan Perera) கணக்கில் சேர்த்தல். <span class="file">screenshots/08_room_service.png · 1440×900 px</span></figcaption></figure>
+<div class="callout example"><span class="t">உதாரணம் C — கணினி கணக்கிட்ட தொகை (ORD-26-000097)</span>
+<table class="grid" style="margin:1mm 0 0">
+<tr><th>விவரம்</th><th class="num">LKR</th></tr>
+<tr><td>Seafood linguine 5,600 + Crab soup 2,900</td><td class="num">8,500.00</td></tr>
+<tr><td>சேவைக் கட்டணம் 10%</td><td class="num">850.00</td></tr>
+<tr><td>வரி 8% (உணவு + சேவைக் கட்டணம்)</td><td class="num">748.00</td></tr>
+<tr class="total"><td>G1 folio-வில் சேர்ந்த தொகை</td><td class="num">10,098.00</td></tr>
+</table>
+<p class="small" style="margin-top:2mm">கவனிக்க: "LKR 8,500" என்பது மெனு விலை மட்டும். POS தானாக 10% சேவைக் கட்டணமும் 8% வரியும் சேர்ப்பதால் folio-வில் 10,098.00 பதிவாகிறது.</p></div>
+
+<h1 id="ch8"><span class="num">8</span>விருந்தினர் கணக்கு (Folio)<span class="sub">Guest folio, extra charges and payments</span></h1>
+<p>ஒவ்வொரு தங்கலுக்கும் ஒரு folio உண்டு. அதில் அறை இரவுகள் (இரவுத் தணிக்கையின்போது), அறை சேவை, உணவகக் கட்டணங்கள், சலவை, ஸ்பா, போக்குவரத்து போன்ற கட்டணங்களும், முற்பணம்/கொடுப்பனவுகளும் பதிவாகும். முன்பதிவுப் பக்கத்தில் (<span class="ui">Bookings</span> → முன்பதிவு எண்) folio உள்ளது.</p>
+
+<h2 id="ch8-1"><span class="num">8.1</span>கூடுதல் கட்டணம் சேர்த்தல் — சலவை</h2>
+<ol class="steps">
+<li>Folio-வின் கீழே <span class="ui">Post charge</span> அழுத்துங்கள்.</li>
+<li><span class="ui">Service</span> பட்டியலில் "Laundry — pressing (per item) — LKR 400" தேர்வு செய்யுங்கள். விலை, விளக்கம், துறை தானாக நிரம்பும்.</li>
+<li><span class="ui">Quantity</span> = 5 (5 உடைகள் × 400 = LKR 2,000). சேவைக் கட்டணம் தேவையெனில் "Add service charge" டிக் செய்யுங்கள் (இங்கு இல்லை).</li>
+<li><span class="ui">Post charge</span>. வரி தானாகச் சேரும் (taxable சேவைகளுக்கு 8%).</li>
+</ol>
+<figure class="shot" id="fig-29_laundry_charge"><img src="img/29_laundry_charge-1.jpg" alt="Folio-வில் சலவைக் கட்டணம்: pressing 5 × LKR 400 = LKR 2,000."><figcaption><b>படம் 17 · Figure 17 —</b> Folio-வில் சலவைக் கட்டணம்: pressing 5 × LKR 400 = LKR 2,000. <span class="file">screenshots/29_laundry_charge.png · 1440×900 px</span></figcaption></figure>
+<figure class="shot" id="fig-09_guest_folio"><img src="img/09_guest_folio-1.jpg" alt="விருந்தினர் folio: அறை சேவை 10,098.00, சலவை 2,160.00 (2,000 + வரி 160), முற்பணம் −20,000.00."><figcaption><b>படம் 18 · Figure 18 —</b> விருந்தினர் folio: அறை சேவை 10,098.00, சலவை 2,160.00 (2,000 + வரி 160), முற்பணம் −20,000.00. <span class="file">screenshots/09_guest_folio.png · 1440×1530 px</span></figcaption></figure>
+<div class="callout rule"><span class="t">Folio விதிகள்</span>
+<ul><li>பதிவான கட்டணத்தை நீக்க முடியாது; அனுமதியுள்ளவர் (<code>folio.adjust</code>) மட்டுமே எதிர்ப் பதிவு (reverse) செய்ய முடியும் — இரண்டுமே பதிவில் இருக்கும்.</li>
+<li>தொகை 0.01-க்குக் குறைவாக இருக்க முடியாது; செலுத்த வேண்டியதைவிட அதிகமாக வாங்க முடியாது.</li>
+<li>திருப்பிச் செலுத்துதல் (Refund) அனுமதி உள்ளவருக்கு மட்டும்.</li>
+<li><span class="ui">Print folio</span> மூலம் அச்சிடலாம்; <span class="ui">Take payment</span> மூலம் இடையில் பணம் பெறலாம்.</li></ul></div>
+
+<h1 id="ch9"><span class="num">9</span>வெளியேறுதல் (Checkout) — உதாரணம் D<span class="sub">Checkout with an open restaurant check, settlement and final invoice</span></h1>
+<p>இந்த அத்தியாயம் G1-இல் இருந்த Oliver Jensen-இன் உண்மையான checkout-ஐக் காட்டுகிறது (27 → 29 செப், 2 இரவுகள்). அவருக்கு ஒரு அறை சேவை check (ORD-26-000096, LKR 3,207.60) இன்னும் திறந்திருந்தது.</p>
+
+<h2 id="ch9-1"><span class="num">9.1</span>திறந்த உணவகக் கணக்கு checkout-ஐத் தடுக்கிறது</h2>
+<ol class="steps">
+<li><span class="ui">Front desk → Departures</span> அல்லது முன்பதிவுப் பக்கத்தில் <span class="ui">Check out</span>.</li>
+<li>திறந்த உணவக check இருந்தால் சிவப்புப் பெட்டியில் எச்சரிக்கை வரும்; <span class="ui">Complete checkout</span> பொத்தான் முடக்கப்படும்.</li>
+<li><span class="ui">Request restaurant settlement</span> அழுத்தினால் காசாளர்களுக்கு அறிவிப்பு செல்லும்.</li>
+</ol>
+<figure class="shot" id="fig-16_checkout_blocked"><img src="img/16_checkout_blocked-1.jpg" alt="Checkout தடுக்கப்பட்டது: &quot;1 restaurant check(s) still open for this stay&quot; — Complete checkout முடக்கப்பட்டுள்ளது."><figcaption><b>படம் 19 · Figure 19 —</b> Checkout தடுக்கப்பட்டது: &quot;1 restaurant check(s) still open for this stay&quot; — Complete checkout முடக்கப்பட்டுள்ளது. <span class="file">screenshots/16_checkout_blocked.png · 1440×1058 px</span></figcaption></figure>
+<figure class="shot" id="fig-17_settlement_requested"><img src="img/17_settlement_requested-1.jpg" alt="உணவகத் தீர்வுக்கான கோரிக்கை அனுப்பப்பட்டது."><figcaption><b>படம் 20 · Figure 20 —</b> உணவகத் தீர்வுக்கான கோரிக்கை அனுப்பப்பட்டது. <span class="file">screenshots/17_settlement_requested.png · 1440×999 px</span></figcaption></figure>
+<figure class="shot" id="fig-18_cashier_notification"><img src="img/18_cashier_notification-1.jpg" alt="காசாளரின் அறிவிப்புப் பட்டியலில் கோரிக்கை."><figcaption><b>படம் 21 · Figure 21 —</b> காசாளரின் அறிவிப்புப் பட்டியலில் கோரிக்கை. <span class="file">screenshots/18_cashier_notification.png · 1440×900 px</span></figcaption></figure>
+<p>காசாளர் அந்த check-ஐத் திறந்து <span class="ui">Pay</span> → <span class="ui">Charge to villa</span> மூலம் G1 folio-வில் சேர்க்கிறார் (அல்லது விருந்தினர் நேரடியாகப் பணம் கொடுக்கலாம்).</p>
+<figure class="shot" id="fig-19_pos_charge_to_villa"><img src="img/19_pos_charge_to_villa-1.jpg" alt="காசாளர்: Oliver Jensen-இன் check-ஐ G1 folio-வில் சேர்த்தல்."><figcaption><b>படம் 22 · Figure 22 —</b> காசாளர்: Oliver Jensen-இன் check-ஐ G1 folio-வில் சேர்த்தல். <span class="file">screenshots/19_pos_charge_to_villa.png · 1440×900 px</span></figcaption></figure>
+
+<h2 id="ch9-2"><span class="num">9.2</span>நிலுவையைச் செலுத்தி checkout முடித்தல்</h2>
+<ol class="steps">
+<li>Checkout பக்கத்தை மீண்டும் திறந்தால் எச்சரிக்கை மறைந்து, உணவகக் கட்டணம் folio-வில் சேர்ந்திருக்கும்.</li>
+<li>வலப்பக்கம் <b>Settle &amp; check out</b>: செலுத்தும் முறை (Card / Cash / Bank transfer …) மற்றும் தொகை (நிலுவை தானாக நிரம்பும்).</li>
+<li>புறப்படும் தேதிக்கு முன்பே வெளியேறினால் "Confirm early departure" டிக் செய்ய வேண்டும்.</li>
+<li><span class="ui">Complete checkout</span>. கணினி: இறுதி விலைப்பட்டியல் வழங்கும், folio-வை மூடும், சாவி அட்டைகளை ரத்து செய்யும், வில்லாவை <b>Vacant + Dirty</b> ஆக்கி வீட்டுப் பராமரிப்புப் பணியை உருவாக்கும்.</li>
+</ol>
+<figure class="shot" id="fig-10_checkout"><img src="img/10_checkout-1.jpg" alt="Checkout: அறை மற்றும் உணவகக் கட்டணங்கள் ஒரே folio-வில்; நிலுவை அட்டையால்; Complete checkout இயக்கத்தில்."><figcaption><b>படம் 23 · Figure 23 —</b> Checkout: அறை மற்றும் உணவகக் கட்டணங்கள் ஒரே folio-வில்; நிலுவை அட்டையால்; Complete checkout இயக்கத்தில். <span class="file">screenshots/10_checkout.png · 1440×992 px</span></figcaption></figure>
+<figure class="shot" id="fig-20_checkout_complete"><img src="img/20_checkout_complete-1.jpg" alt="Checkout முடிந்தது — G1 Dirty; departure clean பணி உருவானது."><figcaption><b>படம் 24 · Figure 24 —</b> Checkout முடிந்தது — G1 Dirty; departure clean பணி உருவானது. <span class="file">screenshots/20_checkout_complete.png · 1440×1856 px</span></figcaption></figure>
+<figure class="shot" id="fig-21_final_invoice"><img src="img/21_final_invoice-1.jpg" alt="இறுதி விலைப்பட்டியல் INV-26-000019 — மொத்தம் LKR 84,371.76, முழுமையாகச் செலுத்தப்பட்டது."><figcaption><b>படம் 25 · Figure 25 —</b> இறுதி விலைப்பட்டியல் INV-26-000019 — மொத்தம் LKR 84,371.76, முழுமையாகச் செலுத்தப்பட்டது. <span class="file">screenshots/21_final_invoice.png · 1440×1011 px</span></figcaption></figure>
+<div class="callout rule"><span class="t">Checkout விதிகள் (சோதிக்கப்பட்டவை)</span>
+<ul><li>நிலுவை இருந்தால் checkout நடக்காது ("Take payment before checkout") — எதுவும் பாதியாக மாறாது.</li>
+<li>திறந்த உணவக check இருந்தால் checkout நடக்காது.</li>
+<li>Tour operator முன்பதிவுகளில் அறைக் கட்டணம் operator-இன் city ledger-க்கு மாற்றப்படும்.</li></ul></div>
+
+<div class="callout example"><span class="t">உதாரணம் D — Oliver Jensen-இன் உண்மையான விலைப்பட்டியல் (INV-26-000019)</span>
+<table class="grid" style="margin:1mm 0 0">
+<tr><th>விவரம்</th><th class="num">நிகர</th><th class="num">சேவை + வரி</th><th class="num">மொத்தம்</th></tr>
+<tr><td>G1 இரவு 27 செப்</td><td class="num">34,160.00</td><td class="num">6,422.08</td><td class="num">40,582.08</td></tr>
+<tr><td>G1 இரவு 28 செப்</td><td class="num">34,160.00</td><td class="num">6,422.08</td><td class="num">40,582.08</td></tr>
+<tr><td>அறை சேவை ORD-26-000096</td><td class="num">2,700.00</td><td class="num">507.60</td><td class="num">3,207.60</td></tr>
+<tr class="total"><td>மொத்தம் (நிகர 71,020 + சேவை 7,102 + வரி 6,249.76)</td><td></td><td></td><td class="num">84,371.76</td></tr>
+<tr><td>முற்பணம் (வங்கிப் பரிமாற்றம்) + checkout-இல் அட்டை</td><td></td><td></td><td class="num">84,371.76</td></tr>
+<tr class="total"><td>நிலுவை</td><td></td><td></td><td class="num">0.00</td></tr>
+</table></div>
+
+<div class="callout example"><span class="t">உதாரணம் D — பயிற்சிக் கணக்கு: அறை 60,000 + உணவகம் 8,500 + சலவை 2,000</span>
+<p>இவை நிகரத் தொகைகள் (வரி சேர்க்கும் முன்) என்று எடுத்துக்கொண்டால், கணினியின் விதிகளின்படி:</p>
+<table class="grid" style="margin:1mm 0 0">
+<tr><th>கட்டணம்</th><th class="num">நிகர</th><th class="num">சேவை 10%</th><th class="num">வரி 8%</th><th class="num">மொத்தம்</th></tr>
+<tr><td>அறை</td><td class="num">60,000.00</td><td class="num">6,000.00</td><td class="num">5,280.00</td><td class="num">71,280.00</td></tr>
+<tr><td>உணவகம் / அறை சேவை</td><td class="num">8,500.00</td><td class="num">850.00</td><td class="num">748.00</td><td class="num">10,098.00</td></tr>
+<tr><td>சலவை (சேவைக் கட்டணம் இல்லை)</td><td class="num">2,000.00</td><td class="num">0.00</td><td class="num">160.00</td><td class="num">2,160.00</td></tr>
+<tr class="total"><td>மொத்தம்</td><td class="num">70,500.00</td><td class="num">6,850.00</td><td class="num">6,188.00</td><td class="num">83,538.00</td></tr>
+<tr><td>முற்பணம்</td><td></td><td></td><td></td><td class="num">− 20,000.00</td></tr>
+<tr class="total"><td>Checkout-இல் செலுத்த வேண்டியது</td><td></td><td></td><td></td><td class="num">63,538.00</td></tr>
+</table>
+<p class="small" style="margin-top:2mm">இது கணினியின் வரி விதிகளைக் கொண்டு கைமுறையாகக் கணக்கிட்ட பயிற்சி உதாரணம்; மேலே உள்ள Oliver Jensen விலைப்பட்டியல்தான் கணினி உண்மையாக உருவாக்கியது. Nuwan Perera 3 அக்டோபரில் வெளியேறும்போது: அறை 144,936.00 + அறை சேவை 10,098.00 + சலவை 2,160.00 = 157,194.00 − முற்பணம் 20,000 = <b>137,194.00</b> (வேறு கட்டணங்கள் இல்லையெனில் — இது எதிர்பார்ப்புக் கணக்கு).</p></div>
+
+<h1 id="ch10"><span class="num">10</span>வீட்டுப் பராமரிப்பு — உதாரணம் E<span class="sub">Housekeeping: departure clean of villa G1</span></h1>
+<div class="flow"><span class="s-dirty">Dirty</span><i>→ Accept + Start →</i><span class="s-cleaning">Cleaning</span><i>→ Checklist + Submit →</i><span class="s-insp">Inspection</span><i>→ Approve →</i><span class="s-ready">Ready</span></div>
+<p>Checkout நடந்தவுடன் வில்லா <b>Dirty</b> ஆகிறது; "Departure clean" பணி உருவாகிறது; வீட்டுப் பராமரிப்புக் குழுவுக்கு உடனடி அறிவிப்பு செல்கிறது. அன்றே புதிய விருந்தினர் வருவதாக இருந்தால் பணி தானாக <b>Urgent</b> ஆகும்.</p>
+
+<h2 id="ch10-1"><span class="num">10.1</span>அறைப் பணியாளர் (Room attendant)</h2>
+<ol class="steps">
+<li><span class="ui">My cleaning tasks</span> திறக்கவும். "Ready for cleaning" பகுதியில் G1 தெரியும் — <span class="ui">Accept</span>.</li>
+<li><span class="ui">Start</span> அழுத்தினால் வில்லா <b>Cleaning</b> ஆகும். தேவையெனில் காரணத்துடன் <span class="ui">Pause</span>.</li>
+<li><span class="ui">Checklist</span>-இல் ஒவ்வொரு வேலையையும் டிக் செய்யுங்கள் (G1-க்கு 11 உருப்படிகள்). Start செய்யாமல் டிக் செய்ய முடியாது.</li>
+<li>எல்லாம் முடிந்ததும் linen எண்ணிக்கையுடன் <span class="ui">Submit for inspection</span>. ஏதேனும் விடுபட்டால் "Complete the checklist first — N item(s) still open" என்று தடுக்கும்.</li>
+<li>பழுது கண்டால் <span class="ui">Report maintenance</span>; விருந்தினர் விட்டுச்சென்ற பொருளை <span class="ui">Lost &amp; found</span>-இல் பதியலாம்.</li>
+</ol>
+<figure class="shot" id="fig-22_my_cleaning_tasks"><img src="img/22_my_cleaning_tasks-1.jpg" alt="அறைப் பணியாளரின் &quot;My cleaning tasks&quot;: G1 சுத்தம் செய்யத் தயார்."><figcaption><b>படம் 26 · Figure 26 —</b> அறைப் பணியாளரின் &quot;My cleaning tasks&quot;: G1 சுத்தம் செய்யத் தயார். <span class="file">screenshots/22_my_cleaning_tasks.png · 1440×900 px</span></figcaption></figure>
+<figure class="shot" id="fig-23_cleaning_checklist"><img src="img/23_cleaning_checklist-1.jpg" alt="சுத்தம் நடைபெறுகிறது — சரிபார்ப்புப் பட்டியல் பாதி டிக் செய்யப்பட்டது."><figcaption><b>படம் 27 · Figure 27 —</b> சுத்தம் நடைபெறுகிறது — சரிபார்ப்புப் பட்டியல் பாதி டிக் செய்யப்பட்டது. <span class="file">screenshots/23_cleaning_checklist.png · 1440×1242 px</span></figcaption></figure>
+<figure class="shot mobile" id="fig-70_mobile_my_tasks"><img src="img/70_mobile_my_tasks-1.jpg" alt="அதே பக்கம் கைபேசியில் (390 px) — அறைப் பணியாளர்கள் கைபேசியிலேயே பயன்படுத்தலாம்."><figcaption><b>படம் 28 · Figure 28 —</b> அதே பக்கம் கைபேசியில் (390 px) — அறைப் பணியாளர்கள் கைபேசியிலேயே பயன்படுத்தலாம். <span class="file">screenshots/70_mobile_my_tasks.png · 390×1061 px</span></figcaption></figure>
+
+<h2 id="ch10-2"><span class="num">10.2</span>மேற்பார்வையாளர் (HK Supervisor)</h2>
+<ol class="steps">
+<li><span class="ui">Housekeeping</span> board-இல் எல்லா வில்லாக்களின் நிலையும், பணிகளும், யாருக்கு ஒதுக்கப்பட்டது என்பதும் தெரியும். பணியை ஒருவருக்கு ஒதுக்கலாம்.</li>
+<li>"Awaiting inspection" பணியைத் திறந்து சரிபார்க்கவும்.</li>
+<li>சரியெனில் <span class="ui">Approve</span> → வில்லா <b>Ready</b> (பழுது "Out of order" இருந்தால் Clean நிலையிலேயே இருக்கும்). குறையிருந்தால் காரணத்துடன் <span class="ui">Reject</span> → மீண்டும் Cleaning.</li>
+</ol>
+<figure class="shot" id="fig-11_housekeeping"><img src="img/11_housekeeping-1.jpg" alt="வீட்டுப் பராமரிப்பு board: G1 ஆய்வுக்காகக் காத்திருக்கிறது."><figcaption><b>படம் 29 · Figure 29 —</b> வீட்டுப் பராமரிப்பு board: G1 ஆய்வுக்காகக் காத்திருக்கிறது. <span class="file">screenshots/11_housekeeping.png · 1440×950 px</span></figcaption></figure>
+<figure class="shot" id="fig-24_inspection"><img src="img/24_inspection-1.jpg" alt="மேற்பார்வையாளர் ஆய்வு: Approve / Reject."><figcaption><b>படம் 30 · Figure 30 —</b> மேற்பார்வையாளர் ஆய்வு: Approve / Reject. <span class="file">screenshots/24_inspection.png · 1440×999 px</span></figcaption></figure>
+<figure class="shot" id="fig-25_villa_ready"><img src="img/25_villa_ready-1.jpg" alt="அங்கீகரிக்கப்பட்டது — G1 இப்போது Ready; அடுத்த விருந்தினருக்கு விற்கலாம்."><figcaption><b>படம் 31 · Figure 31 —</b> அங்கீகரிக்கப்பட்டது — G1 இப்போது Ready; அடுத்த விருந்தினருக்கு விற்கலாம். <span class="file">screenshots/25_villa_ready.png · 1440×950 px</span></figcaption></figure>
+<div class="callout issue"><span class="t">தெரிந்த குறைபாடு — பழைய stay-over பணி</span>
+<p>Oliver தங்கியிருந்தபோது தொடங்கிய "Stay-over service" பணி checkout-க்குப் பின்னும் "Cleaning" நிலையில் திறந்தே இருந்தது. Checkout அத்தகைய பணிகளைத் தானாக மூடுவதில்லை. மேற்பார்வையாளர் board-இல் அவற்றைக் கைமுறையாக மூட வேண்டும்.</p></div>
+
+<h1 id="ch11"><span class="num">11</span>உணவக POS — உதாரணம் B<span class="sub">Dine-in table T6, 4 guests — order, kitchen, bill, cash and change</span></h1>
+<h2 id="ch11-1"><span class="num">11.1</span>மேசை வரைபடம் (Floor plan)</h2>
+<p>POS Terminal-இல் outlet (Vaasal Kitchen / Pool Bar / In-villa dining) தேர்வு செய்யுங்கள். ஒவ்வொரு மேசையும் ஒரு அட்டை: காலி மேசையில் இருக்கைகளும் இடமும்; பயன்பாட்டில் உள்ளதில் தொகை, விருந்தினர் எண்ணிக்கை, பணியாளர், திறந்த நேரம்; முன்பதிவு செய்யப்பட்ட மேசையில் "Reserved" குறி. கீழே திறந்த Takeaway/Room-service checks.</p>
+<figure class="shot" id="fig-30_pos_floor_plan"><img src="img/30_pos_floor_plan-1.jpg" alt="பணியாளரின் மேசை வரைபடம் (Vaasal Kitchen)."><figcaption><b>படம் 32 · Figure 32 —</b> பணியாளரின் மேசை வரைபடம் (Vaasal Kitchen). <span class="file">screenshots/30_pos_floor_plan.png · 1440×900 px</span></figcaption></figure>
+
+<h2 id="ch11-2"><span class="num">11.2</span>ஆர்டர் எடுத்தல் (Waiter)</h2>
+<ol class="steps">
+<li>காலி மேசை <b>T6</b>-ஐ அழுத்தி விருந்தினர் எண்ணிக்கை (covers) = 4.</li>
+<li>வகைகள் (Breakfast, Starters, Mains, Desserts, Drinks …) மூலம் அல்லது தேடல் மூலம் உணவுகளைச் சேர்க்கவும். கட்டாய விருப்பத் தேர்வுகள் இல்லாமல் சேர்க்க முடியாது ("Choose at least 1 option(s) for Spice level").</li>
+<li>குறிப்புகள் தேவையெனில் <span class="ui">Notes</span>.</li>
+<li><span class="ui">Send</span> — ஒவ்வொரு நிலையத்துக்கும் தனி KOT (சமையலறை, bar) உருவாகும்.</li>
+</ol>
+<figure class="shot" id="fig-05_pos_table"><img src="img/05_pos_table-1.jpg" alt="மேசை T6, 4 விருந்தினர்கள்: சமையலறைக்கு அனுப்பும் முன் ஆர்டர்."><figcaption><b>படம் 33 · Figure 33 —</b> மேசை T6, 4 விருந்தினர்கள்: சமையலறைக்கு அனுப்பும் முன் ஆர்டர். <span class="file">screenshots/05_pos_table.png · 1440×900 px</span></figcaption></figure>
+<figure class="shot" id="fig-31_kitchen_kot_t6"><img src="img/31_kitchen_kot_t6-1.jpg" alt="T6-க்கான சமையலறை மற்றும் bar tickets."><figcaption><b>படம் 34 · Figure 34 —</b> T6-க்கான சமையலறை மற்றும் bar tickets. <span class="file">screenshots/31_kitchen_kot_t6.png · 1440×900 px</span></figcaption></figure>
+<div class="callout rule"><span class="t">பிற மேசைச் செயல்கள் (சோதிக்கப்பட்டவை)</span>
+<ul><li><span class="ui">Move</span> — check-ஐ வேறு மேசைக்கு மாற்றுதல் (T1 → T2).</li>
+<li><span class="ui">Merge</span> — இரண்டு மேசைகளின் checks-ஐ ஒன்றாக்குதல்.</li>
+<li><span class="ui">Split</span> — சில உணவுகளைப் புதிய check-க்கு மாற்றுதல்.</li>
+<li><span class="ui">Discount</span>, <span class="ui">Void</span> — அனுமதியுள்ளவர் மட்டும், காரணத்துடன்; பதிவில் இருக்கும்.</li>
+<li>மேசை முன்பதிவு நேரத்துக்கு முன்பின் மற்றொரு முன்பதிவு மோதினால் நிராகரிக்கப்படும் ("Table T1 is already reserved…").</li></ul></div>
+
+<h2 id="ch11-3"><span class="num">11.3</span>பில் மற்றும் பணம் செலுத்துதல் (Cashier)</h2>
+<ol class="steps">
+<li>check-ஐத் திறந்து <span class="ui">Bill</span> — 80 mm பில் அச்சிடப்படும்; நிலை "Bill printed".</li>
+<li><span class="ui">Pay</span> அழுத்தினால் "Take payment" சாளரம் திறக்கும்; நிலுவைத் தொகையுடன் ஒரு Cash வரி தானாக வரும்.</li>
+<li><span class="ui">Tendered</span>-இல் விருந்தினர் கொடுத்த தொகையை (30000) உள்ளிடுங்கள் அல்லது 1,000 / 5,000 / 10,000 / 20,000 / Exact பொத்தான்களைப் பயன்படுத்துங்கள். மீதி (Change) தானாகக் கணக்கிடப்படும்.</li>
+<li>பல முறைகளில் பிரித்துச் செலுத்த Card / Bank transfer / Digital-QR / Online / Charge to villa வரிகளைச் சேர்க்கலாம்.</li>
+<li><span class="ui">Complete payment</span> — பற்றுச்சீட்டு, மேசை மீண்டும் காலி.</li>
+</ol>
+<figure class="shot" id="fig-34_pos_bill"><img src="img/34_pos_bill-1.jpg" alt="விருந்தினர் பில் (80 mm)."><figcaption><b>படம் 35 · Figure 35 —</b> விருந்தினர் பில் (80 mm). <span class="file">screenshots/34_pos_bill.png · 1440×900 px</span></figcaption></figure>
+<figure class="shot" id="fig-06_pos_payment"><img src="img/06_pos_payment-1.jpg" alt="பணமாகச் செலுத்துதல்: நிலுவை LKR 27,086.40, கொடுத்தது 30,000, மீதி 2,913.60. (இரண்டாவது வெற்று &quot;Cash&quot; வரி படம் எடுத்த ஸ்கிரிப்ட் கூடுதலாக அழுத்தியதால் வந்தது — தேவையில்லை; தொகை 0 என்பதால் பாதிப்பில்லை.)"><figcaption><b>படம் 36 · Figure 36 —</b> பணமாகச் செலுத்துதல்: நிலுவை LKR 27,086.40, கொடுத்தது 30,000, மீதி 2,913.60. (இரண்டாவது வெற்று &quot;Cash&quot; வரி படம் எடுத்த ஸ்கிரிப்ட் கூடுதலாக அழுத்தியதால் வந்தது — தேவையில்லை; தொகை 0 என்பதால் பாதிப்பில்லை.) <span class="file">screenshots/06_pos_payment.png · 1440×900 px</span></figcaption></figure>
+<div class="callout example"><span class="t">உதாரணம் B — கணினி கணக்கிட்ட தொகை (ORD-26-000098, மேசை T6, 4 பேர்)</span>
+<table class="grid" style="margin:1mm 0 0">
+<tr><th>உணவு</th><th class="num">அளவு</th><th class="num">LKR</th></tr>
+<tr><td>Grilled catch of the day</td><td class="num">1</td><td class="num">6,500.00</td></tr>
+<tr><td>Seafood linguine</td><td class="num">1</td><td class="num">5,600.00</td></tr>
+<tr><td>Crab soup</td><td class="num">1</td><td class="num">2,900.00</td></tr>
+<tr><td>Mango &amp; cashew salad</td><td class="num">1</td><td class="num">2,600.00</td></tr>
+<tr><td>Buffalo curd &amp; kithul treacle</td><td class="num">1</td><td class="num">1,600.00</td></tr>
+<tr><td>Fresh lime soda</td><td class="num">4</td><td class="num">3,600.00</td></tr>
+<tr class="total"><td>உணவு மொத்தம்</td><td></td><td class="num">22,800.00</td></tr>
+<tr><td>சேவைக் கட்டணம் 10%</td><td></td><td class="num">2,280.00</td></tr>
+<tr><td>வரி 8% (22,800 + 2,280 மீது)</td><td></td><td class="num">2,006.40</td></tr>
+<tr class="total"><td>பில் மொத்தம்</td><td></td><td class="num">27,086.40</td></tr>
+<tr><td>விருந்தினர் கொடுத்த பணம்</td><td></td><td class="num">30,000.00</td></tr>
+<tr class="total"><td>மீதி (Change) = 30,000 − 27,086.40</td><td></td><td class="num">2,913.60</td></tr>
+</table></div>
+<figure class="shot" id="fig-35_pos_receipt"><img src="img/35_pos_receipt-1.jpg" alt="பற்றுச்சீட்டு (Receipt)."><figcaption><b>படம் 37 · Figure 37 —</b> பற்றுச்சீட்டு (Receipt). <span class="file">screenshots/35_pos_receipt.png · 1440×900 px</span></figcaption></figure>
+<figure class="shot" id="fig-36_table_released"><img src="img/36_table_released-1.jpg" alt="பணம் செலுத்திய பின் T6 மீண்டும் காலி."><figcaption><b>படம் 38 · Figure 38 —</b> பணம் செலுத்திய பின் T6 மீண்டும் காலி. <span class="file">screenshots/36_table_released.png · 1440×900 px</span></figcaption></figure>
+<div class="callout rule"><span class="t">பணம் செலுத்தும் விதிகள் (சோதிக்கப்பட்டவை)</span>
+<ul><li>வெற்று check-க்கு பணம் வாங்க முடியாது ("This check is empty…") — இந்த QA-இல் சரிசெய்யப்பட்டது.</li>
+<li>நிலுவையைவிட அதிகமான கொடுப்பனவுகள் நிராகரிக்கப்படும் (பணத்தில் மட்டும் "Tendered" மூலம் மீதி தரலாம்).</li>
+<li>பகுதிப் பணம் செலுத்தினால் மேசை "occupied" ஆகவே இருக்கும்.</li>
+<li>மூடிய check-க்கு மீண்டும் பணம் வாங்க முடியாது.</li>
+<li>Cash, Card, Bank transfer, Digital முறைகளுக்கு அந்த outlet-இல் உங்கள் ஷிப்ட் திறந்திருக்க வேண்டும் (அத்தியாயம் 12). "Charge to villa"-க்கு ஷிப்ட் தேவையில்லை.</li></ul></div>
+
+<h1 id="ch12"><span class="num">12</span>காசாளர் ஷிப்ட் மற்றும் நாள் முடிவு<span class="sub">Cashier shift, drawer and day-end closing</span></h1>
+<p>ஒவ்வொரு காசாளரும் ஒவ்வொரு outlet-க்கும் தனி ஷிப்ட் திறக்க வேண்டும். ஷிப்ட் திறக்கும்போது drawer-இல் உள்ள float தொகையைப் பதிய வேண்டும்; நாள் முடிவில் பணத்தை எண்ணி ஷிப்டை மூட வேண்டும்.</p>
+<div class="callout issue"><span class="t">தெரிந்த குறைபாடு — இரண்டாவது outlet ஷிப்ட்</span>
+<p>கணினி ஒவ்வொரு outlet-க்கும் தனி ஷிப்டை அனுமதிக்கிறது; ஆனால் <span class="ui">Shifts &amp; drawer</span> பக்கம் உங்களுக்கு ஏதாவது ஒரு ஷிப்ட் திறந்திருந்தால் "Open a shift" படிவத்தைக் காட்டாது. இந்தச் சோதனையில் காசாளருக்கு முந்தைய நாளின் In-villa dining ஷிப்ட் திறந்திருந்ததால், Vaasal Kitchen-இல் பணம் வாங்க முதலில் அதை Day-end மூலம் மூட வேண்டியிருந்தது ("Open a cashier shift before taking card payments").</p></div>
+
+<h2 id="ch12-1"><span class="num">12.1</span>நாள் முடிவு (Day-end closing)</h2>
+<ol class="steps">
+<li><span class="ui">Shifts &amp; drawer</span> → <span class="ui">Day-end closing</span>.</li>
+<li>கணினி எதிர்பார்க்கும் தொகைகள்: float + பண விற்பனை + cash in − cash out − refund = <b>Expected cash</b>; அட்டை, வங்கி, digital, அறைக் கணக்கு மொத்தங்கள்.</li>
+<li>நோட்டுகள்/நாணயங்களை வகைவாரியாக எண்ணலாம் (5,000 … 1) அல்லது <span class="ui">Counted cash</span>-இல் நேரடியாக உள்ளிடலாம். வேறுபாடு (Variance) தானாகத் தெரியும்.</li>
+<li>வேறுபாட்டுக்கான விளக்கத்தை மேலாளருக்குக் குறிப்பாக எழுதுங்கள்.</li>
+<li>உறுதிப்படுத்தல் பெட்டியை டிக் செய்து <span class="ui">Close shift</span>. ஷிப்ட் பூட்டப்படும்; A4 அல்லது thermal அறிக்கை அச்சிடலாம்; உணவக மேலாளர் அதை அங்கீகரிப்பார் அல்லது flag செய்வார்.</li>
+</ol>
+<figure class="shot" id="fig-81_day_end_count"><img src="img/81_day_end_count-1.jpg" alt="நாள் முடிவு: In-villa dining ஷிப்ட் — எதிர்பார்த்த பணம் 0.00, எண்ணியது 0.00, வேறுபாடு 0.00; அறைக் கணக்குகள் LKR 13,305.60 (3,207.60 + 10,098.00)."><figcaption><b>படம் 39 · Figure 39 —</b> நாள் முடிவு: In-villa dining ஷிப்ட் — எதிர்பார்த்த பணம் 0.00, எண்ணியது 0.00, வேறுபாடு 0.00; அறைக் கணக்குகள் LKR 13,305.60 (3,207.60 + 10,098.00). <span class="file">screenshots/81_day_end_count.png · 1440×1751 px</span></figcaption></figure>
+<figure class="shot" id="fig-82_shift_closed"><img src="img/82_shift_closed-1.jpg" alt="ஷிப்ட் மூடப்பட்டு பூட்டப்பட்டது; மேலாளர் மீளாய்வுக்குக் காத்திருக்கிறது."><figcaption><b>படம் 40 · Figure 40 —</b> ஷிப்ட் மூடப்பட்டு பூட்டப்பட்டது; மேலாளர் மீளாய்வுக்குக் காத்திருக்கிறது. <span class="file">screenshots/82_shift_closed.png · 1440×900 px</span></figcaption></figure>
+
+<h2 id="ch12-2"><span class="num">12.2</span>புதிய ஷிப்ட் திறத்தல்</h2>
+<ol class="steps"><li><span class="ui">Shifts &amp; drawer</span> → <b>Open a shift</b>: Outlet = Vaasal Kitchen, Opening float = 10,000.</li><li><span class="ui">Open shift</span>. மேல் பட்டியில் "Shift open · Vaasal Kitchen · since HH:MM" என்ற பச்சைக் குறி தெரியும்.</li><li>ஷிப்டின்போது பணம் வெளியே/உள்ளே சென்றால் (ice வாங்குதல், safe drop) <span class="ui">Record movement</span> மூலம் காரணத்துடன் பதியுங்கள்.</li></ol>
+<figure class="shot" id="fig-32_open_shift"><img src="img/32_open_shift-1.jpg" alt="Vaasal Kitchen-இல் LKR 10,000 float உடன் ஷிப்ட் திறத்தல்."><figcaption><b>படம் 41 · Figure 41 —</b> Vaasal Kitchen-இல் LKR 10,000 float உடன் ஷிப்ட் திறத்தல். <span class="file">screenshots/32_open_shift.png · 1440×1796 px</span></figcaption></figure>
+<figure class="shot" id="fig-33_shift_open"><img src="img/33_shift_open-1.jpg" alt="ஷிப்ட் திறந்துள்ளது."><figcaption><b>படம் 42 · Figure 42 —</b> ஷிப்ட் திறந்துள்ளது. <span class="file">screenshots/33_shift_open.png · 1440×1943 px</span></figcaption></figure>
+<figure class="shot" id="fig-37_cashier_today"><img src="img/37_cashier_today-1.jpg" alt="காசாளரின் &quot;Today&quot; சுருக்கம்."><figcaption><b>படம் 43 · Figure 43 —</b> காசாளரின் &quot;Today&quot; சுருக்கம். <span class="file">screenshots/37_cashier_today.png · 1440×1135 px</span></figcaption></figure>
+<figure class="shot" id="fig-40_cashier_shifts"><img src="img/40_cashier_shifts-1.jpg" alt="உணவக மேலாளர் பார்வை: எல்லா ஷிப்டுகளும் மீளாய்வுக்காக."><figcaption><b>படம் 44 · Figure 44 —</b> உணவக மேலாளர் பார்வை: எல்லா ஷிப்டுகளும் மீளாய்வுக்காக. <span class="file">screenshots/40_cashier_shifts.png · 1440×1796 px</span></figcaption></figure>
+<figure class="shot" id="fig-41_day_end"><img src="img/41_day_end-1.jpg" alt="மேலாளரின் Day-end பக்கம்."><figcaption><b>படம் 45 · Figure 45 —</b> மேலாளரின் Day-end பக்கம். <span class="file">screenshots/41_day_end.png · 1440×1751 px</span></figcaption></figure>
+
+<h1 id="ch13"><span class="num">13</span>உணவக மேலாளர் பகுதி<span class="sub">Restaurant back office: dashboard, reservations, menu, sales, inventory</span></h1>
+<p>உணவக மேலாளர் (Restaurant Manager) உள்நுழைந்ததும் <span class="ui">POS dashboard</span> திறக்கும். இதில் இன்றைய விற்பனை, திறந்த checks, மேசைப் பயன்பாடு, அதிகம் விற்ற உணவுகள், ஷிப்ட் நிலை போன்றவை தரவுத்தளத்திலிருந்து நேரடியாகக் கணக்கிடப்படுகின்றன.</p>
+<figure class="shot" id="fig-38_pos_dashboard"><img src="img/38_pos_dashboard-1.jpg" alt="POS dashboard (உணவக மேலாளர்)."><figcaption><b>படம் 46 · Figure 46 —</b> POS dashboard (உணவக மேலாளர்). <span class="file">screenshots/38_pos_dashboard.png · 1440×1613 px</span></figcaption></figure>
+<figure class="shot mobile" id="fig-71_mobile_pos_dashboard"><img src="img/71_mobile_pos_dashboard-1.jpg" alt="அதே dashboard கைபேசியில்."><figcaption><b>படம் 47 · Figure 47 —</b> அதே dashboard கைபேசியில். <span class="file">screenshots/71_mobile_pos_dashboard.png · 390×3277 px · மீதி 3 பகுதி முழு அளவுப் படத்தில்</span></figcaption></figure>
+<figure class="shot" id="fig-39_table_reservations"><img src="img/39_table_reservations-1.jpg" alt="மேசை முன்பதிவுகள் — இரட்டை முன்பதிவு தடுக்கப்படும்; வந்ததும் &quot;Seat&quot; மூலம் check திறக்கும்."><figcaption><b>படம் 48 · Figure 48 —</b> மேசை முன்பதிவுகள் — இரட்டை முன்பதிவு தடுக்கப்படும்; வந்ததும் &quot;Seat&quot; மூலம் check திறக்கும். <span class="file">screenshots/39_table_reservations.png · 1440×1112 px</span></figcaption></figure>
+<figure class="shot" id="fig-43_food_menu"><img src="img/43_food_menu-1.jpg" alt="உணவு மெனு: வகைகள், விலை, நிலையம் (kitchen/bar), படம், விருப்பத் தேர்வுகள், கிடைக்கும் நிலை."><figcaption><b>படம் 49 · Figure 49 —</b> உணவு மெனு: வகைகள், விலை, நிலையம் (kitchen/bar), படம், விருப்பத் தேர்வுகள், கிடைக்கும் நிலை. <span class="file">screenshots/43_food_menu.png · 1440×2155 px · மீதி 1 பகுதி முழு அளவுப் படத்தில்</span></figcaption></figure>
+<figure class="shot" id="fig-42_pos_sales"><img src="img/42_pos_sales-1.jpg" alt="உணவக விற்பனை அறிக்கை."><figcaption><b>படம் 50 · Figure 50 —</b> உணவக விற்பனை அறிக்கை. <span class="file">screenshots/42_pos_sales.png · 1440×1794 px</span></figcaption></figure>
+<figure class="shot" id="fig-44_orders_history"><img src="img/44_orders_history-1.jpg" alt="ஆர்டர் வரலாறு."><figcaption><b>படம் 51 · Figure 51 —</b> ஆர்டர் வரலாறு. <span class="file">screenshots/44_orders_history.png · 1440×1164 px</span></figcaption></figure>
+<figure class="shot" id="fig-45_pos_inventory"><img src="img/45_pos_inventory-1.jpg" alt="கையிருப்பு (Inventory): பொருட்கள், குறைந்த கையிருப்பு; விற்பனையின்போது recipe மூலம் தானாகக் கழிக்கப்படும் (regression test-இல் சோதிக்கப்பட்டது)."><figcaption><b>படம் 52 · Figure 52 —</b> கையிருப்பு (Inventory): பொருட்கள், குறைந்த கையிருப்பு; விற்பனையின்போது recipe மூலம் தானாகக் கழிக்கப்படும் (regression test-இல் சோதிக்கப்பட்டது). <span class="file">screenshots/45_pos_inventory.png · 1440×1437 px</span></figcaption></figure>
+<figure class="shot" id="fig-46_pos_outlets"><img src="img/46_pos_outlets-1.jpg" alt="Outlets: வரி 8%, சேவைக் கட்டணம் 10%, பற்றுச்சீட்டுத் தலைப்பு."><figcaption><b>படம் 53 · Figure 53 —</b> Outlets: வரி 8%, சேவைக் கட்டணம் 10%, பற்றுச்சீட்டுத் தலைப்பு. <span class="file">screenshots/46_pos_outlets.png · 1440×2577 px · மீதி 1 பகுதி முழு அளவுப் படத்தில்</span></figcaption></figure>
+
+<h1 id="ch14"><span class="num">14</span>சாவி அட்டைகள் மற்றும் அணுகல் கட்டுப்பாடு<span class="sub">Key cards &amp; RFID access — SIMULATION ONLY in this installation</span></h1>
+<div class="callout sim"><span class="t">முக்கியம்: இது சிமுலேஷன்</span>
+<p>இந்தக் கணினியில் <code>LOCK_DRIVER=simulator</code> மற்றும் <code>RFID_SIMULATOR=true</code>. எந்த உண்மையான கதவுப் பூட்டோ, RFID reader-ஓ, card encoder-ஓ இணைக்கப்படவில்லை; <code>lock-bridge/</code> கோப்புறையில் உள்ள vendor adapter ஒரு மாதிரி (stub) மட்டுமே. கீழே காட்டப்படும் "Access Granted / Denied" முடிவுகள் அனைத்தும் கணினியின் அனுமதி விதிகளைச் சோதிக்கும் சிமுலேஷன் முடிவுகள்; உண்மையான கதவுகள் திறக்கப்படவில்லை.</p></div>
+<p><span class="ui">Key cards</span> பக்கத்தில் விருந்தினர் அட்டைகள், பணியாளர் அட்டைகள் (badges), தொலைந்த அட்டைகள், ஒதுக்குதல்/ரத்து செய்தல், அணுகல் பதிவுகள், RFID சாதனங்கள், simulator, Lock bridge ஆகிய தாவல்கள் உள்ளன.</p>
+<figure class="shot" id="fig-12_key_cards"><img src="img/12_key_cards-1.jpg" alt="சாவி அட்டைகள் — எல்லா அட்டைகளும் நிலையுடன் (LOCK_DRIVER=simulator)."><figcaption><b>படம் 54 · Figure 54 (1/2) —</b> சாவி அட்டைகள் — எல்லா அட்டைகளும் நிலையுடன் (LOCK_DRIVER=simulator). </figcaption></figure><figure class="shot cont"><img src="img/12_key_cards-2.jpg" alt="சாவி அட்டைகள் — எல்லா அட்டைகளும் நிலையுடன் (LOCK_DRIVER=simulator)."><figcaption><b>படம் 54 · Figure 54 (தொடர்ச்சி 2/2) —</b> சாவி அட்டைகள் — எல்லா அட்டைகளும் நிலையுடன் (LOCK_DRIVER=simulator). <span class="file">screenshots/12_key_cards.png · 1440×2389 px</span></figcaption></figure>
+<div class="callout rule"><span class="t">அட்டை விதிகள் (சிமுலேஷனில் சோதிக்கப்பட்டவை)</span>
+<ul><li>விருந்தினர் அட்டை: தமது வில்லா + பொது இடங்கள் (Main gate, Lobby, Pool, Restaurant, Gym) மட்டும். வேறு வில்லா → மறுப்பு ("Not valid for villa G1").</li>
+<li>ஒரே UID-ஐ இரண்டு முறை பதிய முடியாது.</li>
+<li>Checkout அல்லது "Revoke" → அட்டை செல்லாது ("Card revoked"). "Lost" எனக் குறித்தால் உடனடியாக மறுக்கப்படும்; புதிய அட்டை வழங்கலாம்.</li>
+<li>செல்லுபடிக் காலம் முடிந்த அட்டை மறுக்கப்படும் ("Card expired"); தெரியாத அட்டை → "Unknown card".</li>
+<li>பணியாளர் badge அவர்களின் துறைக்குரிய பகுதிகளைத் திறக்கும்; time-clock சாதனத்தில் தட்டினால் வருகையும் பதிவாகும்.</li></ul></div>
+<figure class="shot" id="fig-47_rfid_simulator"><img src="img/47_rfid_simulator-1.jpg" alt="SIMULATION: Nuwan Perera-வின் அட்டை (04EE00000001) G1 கதவில் — &quot;Access Granted, Guest of villa G1&quot;."><figcaption><b>படம் 55 · Figure 55 —</b> SIMULATION: Nuwan Perera-வின் அட்டை (04EE00000001) G1 கதவில் — &quot;Access Granted, Guest of villa G1&quot;. <span class="file">screenshots/47_rfid_simulator.png · 1440×1655 px</span></figcaption></figure>
+<figure class="shot" id="fig-48_access_logs"><img src="img/48_access_logs-1.jpg" alt="அணுகல் பதிவுகள் (Access logs) — ஒவ்வொரு ஸ்கேனும், முடிவும், காரணமும்."><figcaption><b>படம் 56 · Figure 56 —</b> அணுகல் பதிவுகள் (Access logs) — ஒவ்வொரு ஸ்கேனும், முடிவும், காரணமும். <span class="file">screenshots/48_access_logs.png · 1440×2929 px · மீதி 1 பகுதி முழு அளவுப் படத்தில்</span></figcaption></figure>
+
+<h1 id="ch15"><span class="num">15</span>இரவுத் தணிக்கை (Night audit)<span class="sub">What it does, who runs it, and what to check</span></h1>
+<p>இரவுத் தணிக்கை அன்றைய வணிக நாளை (business date) முடிக்கிறது. இதை <b>Hotel Manager</b> அல்லது <b>Administrator</b> மட்டுமே இயக்க முடியும் (வரவேற்பாளருக்கு 403).</p>
+<div class="h3">இரவுத் தணிக்கை செய்யும் வேலைகள் (code மூலம் உறுதிப்படுத்தப்பட்டது)</div>
+<table class="grid">
+<tr><th style="width:8mm">#</th><th>செயல்</th><th>விவரம்</th></tr>
+<tr><td>1</td><td>அறை இரவுக் கட்டணங்கள்</td><td>தங்கியுள்ள ஒவ்வொரு விருந்தினருக்கும் வணிக நாள் வரையிலான (அது உட்பட) இரவுகளை 10% சேவை + 8% வரியுடன் folio-வில் பதிகிறது. ஏற்கனவே பதிந்த இரவை மீண்டும் பதியாது — இரண்டு முறை இயக்கினாலும் இரட்டைக் கட்டணம் இல்லை (சோதிக்கப்பட்டது).</td></tr>
+<tr><td>2</td><td>No-show</td><td>வருகைத் தேதி கடந்தும் check-in செய்யாத "confirmed" முன்பதிவுகளை No-show ஆக்குகிறது.</td></tr>
+<tr><td>3</td><td>Website holds</td><td>கட்டண நேரம் முடிந்த இணையதள holds-ஐ விடுவிக்கிறது.</td></tr>
+<tr><td>4</td><td>சாவி அட்டைகள்</td><td>செல்லுபடிக் காலம் முடிந்த அட்டைகளை expire செய்கிறது.</td></tr>
+<tr><td>5</td><td>Stay-over பணிகள்</td><td>அடுத்த நாளுக்கான தங்கியுள்ள வில்லாச் சுத்தப் பணிகளை உருவாக்குகிறது.</td></tr>
+<tr><td>6</td><td>பணியாளர் வருகை</td><td>முந்தைய நாளுக்கு வராதவர்களை "absent" எனக் குறிக்கிறது.</td></tr>
+</table>
+<ol class="steps">
+<li><span class="ui">Front desk</span> → <span class="ui">Run night audit</span>.</li>
+<li>"Run night audit now?" உறுதிப்படுத்தல் சாளரத்தில் <span class="ui">Confirm</span>.</li>
+<li>முடிவுச் செய்தி: எத்தனை இரவுகள் பதிந்தன, no-shows, expire ஆன holds/cards, stay-over பணிகள். மேலே "Last night audit: …" என்று நேரமும் தெரியும்.</li>
+<li>சில folios-ஐத் திறந்து அறைக் கட்டணம் சரியாகப் பதிந்ததா எனச் சரிபாருங்கள்.</li>
+</ol>
+<figure class="shot" id="fig-49_night_audit_confirm"><img src="img/49_night_audit_confirm-1.jpg" alt="&quot;Run night audit now?&quot; உறுதிப்படுத்தல்."><figcaption><b>படம் 57 · Figure 57 —</b> &quot;Run night audit now?&quot; உறுதிப்படுத்தல். <span class="file">screenshots/49_night_audit_confirm.png · 1440×900 px</span></figcaption></figure>
+<figure class="shot" id="fig-13_night_audit"><img src="img/13_night_audit-1.jpg" alt="இரவுத் தணிக்கை முடிவு (29.09.2026 23:49): 5 room nights posted, 3 no-shows, 0 holds, 1 card expired, 2 stay-over tasks."><figcaption><b>படம் 58 · Figure 58 —</b> இரவுத் தணிக்கை முடிவு (29.09.2026 23:49): 5 room nights posted, 3 no-shows, 0 holds, 1 card expired, 2 stay-over tasks. <span class="file">screenshots/13_night_audit.png · 1440×923 px</span></figcaption></figure>
+<figure class="shot" id="fig-50_folio_after_audit"><img src="img/50_folio_after_audit-1.jpg" alt="தணிக்கைக்குப் பின் Nuwan-இன் folio: 29 செப் இரவு 30,500 + சேவை 3,050 + வரி 2,684 = 36,234.00 சேர்ந்தது."><figcaption><b>படம் 59 · Figure 59 —</b> தணிக்கைக்குப் பின் Nuwan-இன் folio: 29 செப் இரவு 30,500 + சேவை 3,050 + வரி 2,684 = 36,234.00 சேர்ந்தது. <span class="file">screenshots/50_folio_after_audit.png · 1440×1696 px</span></figcaption></figure>
+<div class="callout warn"><span class="t">கவனிக்க வேண்டியவை</span>
+<ul><li><b>தானியங்கி இயக்கம்:</b> கணினி தினமும் 02:00-க்கு இரவுத் தணிக்கையை இயக்கும்படி அமைக்கப்பட்டுள்ளது. ஆனால் அதற்கு Windows Task Scheduler-இல் ஒவ்வொரு நிமிடமும் <code>php artisan schedule:run</code> இயங்க வேண்டும். இந்தக் கணினியில் அப்படி ஒரு task இல்லை — அதனால் இப்போது கைமுறையாக மட்டுமே இயங்கும் (holds, அட்டை expiry-யும் அப்படியே).</li>
+<li>02:00-க்கு இயங்கும்போது வணிக நாள் = அந்த நாளின் தேதி. அதனால் அந்த இரவின் கட்டணம் விருந்தினர் தங்குவதற்கு முன்பே பதியும். நள்ளிரவுக்கு முன் கைமுறையாக இயக்குவது பாதுகாப்பானது (இந்த QA-இல் 23:49-க்கு இயக்கப்பட்டது).</li>
+<li>கடைசி இயக்கத்தின் சுருக்கம் மட்டுமே சேமிக்கப்படுகிறது; ஒவ்வொரு இயக்கத்துக்கும் audit log பதிவு இல்லை; வணிக நாள் பூட்டப்படுவதில்லை.</li></ul></div>
+
+<h1 id="ch16"><span class="num">16</span>அறிக்கைகள்<span class="sub">Reports — 15 report types, date range, CSV export</span></h1>
+<p><span class="ui">Reports</span> பக்கத்தில் அறிக்கையைத் தேர்வு செய்து, தேதி வரம்பைக் கொடுத்து பார்க்கலாம்; <span class="ui">Export CSV</span> மூலம் Excel-க்கு எடுக்கலாம். ஒவ்வொரு அறிக்கையும் அனுமதிக்கு உட்பட்டது.</p>
+<table class="grid">
+<tr><th>அறிக்கை</th><th>உள்ளடக்கம்</th><th>அனுமதி</th></tr>
+<tr><td>Bookings</td><td>காலப்பகுதியின் முன்பதிவுகள்</td><td>Operational</td></tr>
+<tr><td>Occupancy, ADR &amp; RevPAR</td><td>நிரம்பல் %, சராசரி அறை விலை, கிடைக்கும் அறைக்கு வருமானம்</td><td>Operational</td></tr>
+<tr><td>Revenue by department</td><td>அறை, அறை சேவை, உணவகம், சலவை … வாரியாக வருமானம்</td><td>Financial</td></tr>
+<tr><td>Payments received / Outstanding balances</td><td>பெற்ற கொடுப்பனவுகள் / நிலுவைகள்</td><td>Financial</td></tr>
+<tr><td>Guest statistics</td><td>நாடு, திரும்பி வரும் விருந்தினர்</td><td>Operational</td></tr>
+<tr><td>OTA &amp; channel production / Tour operators &amp; commission</td><td>மூலம் வாரியான வருமானம், commission</td><td>Financial</td></tr>
+<tr><td>POS sales / POS item sales mix</td><td>உணவக விற்பனை, அதிகம் விற்ற உணவுகள்</td><td>Financial அல்லது POS reports</td></tr>
+<tr><td>Inventory valuation &amp; wastage</td><td>கையிருப்பு மதிப்பு, வீணானவை</td><td>Operational / Inventory</td></tr>
+<tr><td>Housekeeping performance / Maintenance / Key card activity / Staff attendance</td><td>செயல்பாட்டு அறிக்கைகள்</td><td>Operational</td></tr>
+</table>
+<figure class="shot" id="fig-60_reports"><img src="img/60_reports-1.jpg" alt="அறிக்கைகள் முகப்பு."><figcaption><b>படம் 60 · Figure 60 —</b> அறிக்கைகள் முகப்பு. <span class="file">screenshots/60_reports.png · 1440×900 px</span></figcaption></figure>
+<figure class="shot" id="fig-61_report_occupancy"><img src="img/61_report_occupancy-1.jpg" alt="Occupancy, ADR &amp;amp; RevPAR அறிக்கை."><figcaption><b>படம் 61 · Figure 61 —</b> Occupancy, ADR &amp;amp; RevPAR அறிக்கை. <span class="file">screenshots/61_report_occupancy.png · 1440×2112 px · மீதி 1 பகுதி முழு அளவுப் படத்தில்</span></figcaption></figure>
+<div class="callout rule"><span class="t">பிரிப்பு</span><p>உணவக ஊழியர்கள் ஹோட்டல் அறிக்கைகளைத் திறக்க முடியாது; அவர்களுக்கு POS-இன் <span class="ui">Restaurant sales</span> பக்கம் மட்டும் (இந்த QA-இல் கண்டுபிடிக்கப்பட்டு சரிசெய்யப்பட்ட கசிவு).</p></div>
+
+<h1 id="ch17"><span class="num">17</span>பிற ஹோட்டல் பக்கங்கள்<span class="sub">Villas, guests, website requests, tour operators, maintenance, invoices, payments</span></h1>
+<table class="grid">
+<tr><th>பக்கம்</th><th>பயன்</th></tr>
+<tr><td><span class="ui">Villas / Rooms</span></td><td>8 வில்லாக்கள்: வகை, கொள்ளளவு, பூட்டு எண், வீட்டுப் பராமரிப்பு மற்றும் பழுது நிலை.</td></tr>
+<tr><td><span class="ui">Guests</span></td><td>விருந்தினர் விவரங்கள், தங்கல் வரலாறு; அடையாள எண் மறைக்கப்பட்டு காட்டப்படும்.</td></tr>
+<tr><td><span class="ui">Website requests</span></td><td>இணையதள விசாரணைகள் (enquiries) — பார்த்து, நிலையை மாற்றலாம் (உ-ம்: பதில் அளிக்கப்பட்டது). முன்பதிவாக்க வேண்டுமெனில் <span class="ui">New booking</span> மூலம் தனியாக உருவாக்க வேண்டும் (தானியங்கி மாற்றம் இல்லை).</td></tr>
+<tr><td><span class="ui">Tour operators</span></td><td>Tour operator நிறுவனங்கள், ஒப்பந்த விலைகள், credit limit, கட்டணக் காலம் (30 நாள்); partner portal கணக்குகள்; operator முன்பதிவுகளின் அறைக் கட்டணம் city ledger-க்குச் செல்லும்.</td></tr>
+<tr><td><span class="ui">Maintenance</span></td><td>பழுதுப் பணிகள்; "Out of order" ஆன வில்லா விற்பனையிலிருந்து நீக்கப்படும்.</td></tr>
+<tr><td><span class="ui">Invoices / Payments</span></td><td>விலைப்பட்டியல்கள், கொடுப்பனவுகள், பற்றுச்சீட்டுகள்.</td></tr>
+</table>
+<figure class="shot" id="fig-53_villas"><img src="img/53_villas-1.jpg" alt="வில்லாக்கள்."><figcaption><b>படம் 62 · Figure 62 —</b> வில்லாக்கள். <span class="file">screenshots/53_villas.png · 1440×900 px</span></figcaption></figure>
+<figure class="shot" id="fig-54_guests"><img src="img/54_guests-1.jpg" alt="விருந்தினர்கள்."><figcaption><b>படம் 63 · Figure 63 —</b> விருந்தினர்கள். <span class="file">screenshots/54_guests.png · 1440×1586 px</span></figcaption></figure>
+<figure class="shot" id="fig-55_website_requests"><img src="img/55_website_requests-1.jpg" alt="இணையதளக் கோரிக்கைகள்."><figcaption><b>படம் 64 · Figure 64 —</b> இணையதளக் கோரிக்கைகள். <span class="file">screenshots/55_website_requests.png · 1440×900 px</span></figcaption></figure>
+<figure class="shot" id="fig-56_tour_operators"><img src="img/56_tour_operators-1.jpg" alt="Tour operators."><figcaption><b>படம் 65 · Figure 65 —</b> Tour operators. <span class="file">screenshots/56_tour_operators.png · 1440×900 px</span></figcaption></figure>
+<figure class="shot" id="fig-57_maintenance"><img src="img/57_maintenance-1.jpg" alt="பழுதுப் பணிகள்."><figcaption><b>படம் 66 · Figure 66 —</b> பழுதுப் பணிகள். <span class="file">screenshots/57_maintenance.png · 1440×900 px</span></figcaption></figure>
+<figure class="shot" id="fig-58_invoices"><img src="img/58_invoices-1.jpg" alt="விலைப்பட்டியல்கள்."><figcaption><b>படம் 67 · Figure 67 —</b> விலைப்பட்டியல்கள். <span class="file">screenshots/58_invoices.png · 1440×1458 px</span></figcaption></figure>
+<figure class="shot" id="fig-59_payments"><img src="img/59_payments-1.jpg" alt="கொடுப்பனவுகள்."><figcaption><b>படம் 68 · Figure 68 —</b> கொடுப்பனவுகள். <span class="file">screenshots/59_payments.png · 1440×2163 px · மீதி 1 பகுதி முழு அளவுப் படத்தில்</span></figcaption></figure>
+
+<h1 id="ch18"><span class="num">18</span>நிர்வாக அமைப்புகள்<span class="sub">Administrator: users, roles, settings, social media, website, audit, staff</span></h1>
+<ul>
+<li><span class="ui">Users</span> — பயனர்களைச் சேர்த்தல், பாத்திரம் ஒதுக்குதல், செயலிழக்கச் செய்தல், பூட்டை நீக்குதல். நிர்வாகி அல்லாதவர் Administrator பாத்திரத்தை வழங்க முடியாது (சோதிக்கப்பட்டது).</li>
+<li><span class="ui">Roles</span> — ஒவ்வொரு பாத்திரத்துக்குமான அனுமதிகள் (62 அனுமதிகள்).</li>
+<li><span class="ui">Settings</span> — பெயர், தொடர்பு, வரி 8%, சேவைக் கட்டணம் 10%, check-in 14:00, check-out 11:00, இணையதளத்தில் காட்டும் நாணய மாற்று விகிதங்கள். API keys, கடவுச்சொற்கள் <code>.env</code> கோப்பில் மட்டுமே — திரையில் இல்லை.</li>
+<li><span class="ui">Social media</span> — Facebook, Instagram, WhatsApp, YouTube, TikTok இணைப்புகள் (இணையதள footer).</li>
+<li><span class="ui">Website</span> — இணையதள உள்ளடக்கம், படங்கள் (media library).</li>
+<li><span class="ui">Audit log</span> — யார், எப்போது, என்ன மாற்றினார்கள்; உள்நுழைவுப் பதிவுகள்.</li>
+<li><span class="ui">Staff</span> — பணியாளர்கள், roster, வருகை, விடுப்பு.</li>
+</ul>
+<figure class="shot" id="fig-62_users"><img src="img/62_users-1.jpg" alt="பயனர்கள்."><figcaption><b>படம் 69 · Figure 69 —</b> பயனர்கள். <span class="file">screenshots/62_users.png · 1440×1271 px</span></figcaption></figure>
+<figure class="shot" id="fig-63_roles"><img src="img/63_roles-1.jpg" alt="பாத்திரங்கள்."><figcaption><b>படம் 70 · Figure 70 —</b> பாத்திரங்கள். <span class="file">screenshots/63_roles.png · 1440×4907 px · மீதி 2 பகுதி முழு அளவுப் படத்தில்</span></figcaption></figure>
+<figure class="shot" id="fig-64_settings"><img src="img/64_settings-1.jpg" alt="சொத்து அமைப்புகள் — ரகசியத் தகவல் எதுவும் திரையில் இல்லை."><figcaption><b>படம் 71 · Figure 71 —</b> சொத்து அமைப்புகள் — ரகசியத் தகவல் எதுவும் திரையில் இல்லை. <span class="file">screenshots/64_settings.png · 1440×1315 px</span></figcaption></figure>
+<figure class="shot" id="fig-65_social_media"><img src="img/65_social_media-1.jpg" alt="சமூக ஊடக இணைப்புகள்."><figcaption><b>படம் 72 · Figure 72 —</b> சமூக ஊடக இணைப்புகள். <span class="file">screenshots/65_social_media.png · 1440×951 px</span></figcaption></figure>
+<figure class="shot" id="fig-66_website_content"><img src="img/66_website_content-1.jpg" alt="இணையதள உள்ளடக்கம்."><figcaption><b>படம் 73 · Figure 73 —</b> இணையதள உள்ளடக்கம். <span class="file">screenshots/66_website_content.png · 1440×1461 px</span></figcaption></figure>
+<figure class="shot" id="fig-67_audit_log"><img src="img/67_audit_log-1.jpg" alt="Audit log."><figcaption><b>படம் 74 · Figure 74 —</b> Audit log. <span class="file">screenshots/67_audit_log.png · 1440×2827 px · மீதி 1 பகுதி முழு அளவுப் படத்தில்</span></figcaption></figure>
+<figure class="shot" id="fig-68_staff_attendance"><img src="img/68_staff_attendance-1.jpg" alt="பணியாளர் வருகை."><figcaption><b>படம் 75 · Figure 75 —</b> பணியாளர் வருகை. <span class="file">screenshots/68_staff_attendance.png · 1440×2975 px · மீதி 1 பகுதி முழு அளவுப் படத்தில்</span></figcaption></figure>
+<figure class="shot" id="fig-69_staff_roster"><img src="img/69_staff_roster-1.jpg" alt="Roster / shifts."><figcaption><b>படம் 76 · Figure 76 —</b> Roster / shifts. <span class="file">screenshots/69_staff_roster.png · 1440×1434 px</span></figcaption></figure>
+<div class="callout warn"><span class="t">Settings — சிறு குறை</span><p>"Integrations" பகுதியில் Channel manager வரிக்கு மதிப்பு எதுவும் காட்டப்படவில்லை (வெற்று). உண்மையில் அது இணைக்கப்படவில்லை (CHANNEL_DRIVER=null).</p></div>
+
+<h1 id="ch19"><span class="num">19</span>கைபேசி மற்றும் டேப்லெட்<span class="sub">Responsive use on phones and tablets</span></h1>
+<p>எல்லாப் பக்கங்களும் கைபேசி (390 px) மற்றும் டேப்லெட் (768 px) அகலத்தில் சோதிக்கப்பட்டன. பக்கப்பட்டி ☰ பொத்தானின் கீழ் மறைகிறது. அறைப் பணியாளர்கள் கைபேசியில் பணிகளை ஏற்று, சரிபார்ப்புப் பட்டியலை டிக் செய்யலாம் (அத்தியாயம் 10); மேலாளர்கள் dashboard-ஐப் பார்க்கலாம் (அத்தியாயம் 13).</p>
+<figure class="shot mobile" id="fig-72_tablet_frontdesk"><img src="img/72_tablet_frontdesk-1.jpg" alt="முன் மேசை டேப்லெட்டில் (768 px)."><figcaption><b>படம் 77 · Figure 77 —</b> முன் மேசை டேப்லெட்டில் (768 px). <span class="file">screenshots/72_tablet_frontdesk.png · 768×1024 px</span></figcaption></figure>
+
+<h1 id="ch20"><span class="num">20</span>பிழைச் செய்திகள் மற்றும் தீர்வுகள்<span class="sub">Troubleshooting</span></h1>
+<table class="grid">
+<tr><th style="width:62mm">செய்தி / நிலை</th><th>காரணம்</th><th>என்ன செய்வது</th></tr>
+<tr><td>403 — Forbidden</td><td>உங்கள் பாத்திரத்துக்கு அந்தப் பக்கத்துக்கு அனுமதி இல்லை</td><td>சரியான கணக்கில் உள்நுழையுங்கள் அல்லது நிர்வாகியிடம் கேளுங்கள்</td></tr>
+<tr><td>404 — Not found</td><td>பதிவு இல்லை/நீக்கப்பட்டது, தவறான முகவரி</td><td>பட்டியலிலிருந்து மீண்டும் திறக்கவும்</td></tr>
+<tr><td>Your session has ended …</td><td>30 நிமிடச் செயலின்மை, வேறு கணக்கு உள்நுழைவு, வேறு tab-இல் logout</td><td>மீண்டும் உள்நுழையுங்கள் — அதே பக்கத்துக்குத் திரும்புவீர்கள்</td></tr>
+<tr><td>419 — Page expired</td><td>படிவம் நீண்ட நேரம் திறந்திருந்தது (CSRF token காலாவதி)</td><td>பக்கத்தைப் புதுப்பித்து மீண்டும் சமர்ப்பிக்கவும்</td></tr>
+<tr><td>The username/email or password is incorrect.</td><td>தவறான பெயர்/கடவுச்சொல்</td><td>கவனமாக மீண்டும்; 5 தவறுகளுக்குப் பின் 15 நிமிடப் பூட்டு</td></tr>
+<tr><td>This account is temporarily locked …</td><td>5 தவறான முயற்சிகள்</td><td>காட்டிய நேரம் வரை காத்திருங்கள் அல்லது நிர்வாகி பூட்டை நீக்கலாம்</td></tr>
+<tr><td>Villa … is not ready (housekeeping: Dirty)</td><td>வில்லா சுத்தம் செய்யப்படவில்லை</td><td>வீட்டுப் பராமரிப்பை அழைக்கவும் (அத்தியாயம் 10)</td></tr>
+<tr><td>1 restaurant check(s) are still open …</td><td>திறந்த உணவக check</td><td>Request restaurant settlement (அத்தியாயம் 9)</td></tr>
+<tr><td>Folio … has an outstanding balance …</td><td>நிலுவை உள்ளது</td><td>Checkout-இல் பணம் பெறவும்</td></tr>
+<tr><td>Open a cashier shift before taking … payments</td><td>அந்த outlet-இல் ஷிப்ட் இல்லை</td><td>ஷிப்ட் திறக்கவும் (அத்தியாயம் 12)</td></tr>
+<tr><td>This check is empty …</td><td>உணவு இல்லாத check</td><td>உணவு சேர்க்கவும் அல்லது check-ஐ void செய்யவும்</td></tr>
+<tr><td>Payments exceed the balance due</td><td>நிலுவையைவிட அதிகம்</td><td>தொகையைச் சரிசெய்யவும்; பணமெனில் "Tendered" பயன்படுத்தவும்</td></tr>
+<tr><td>Choose at least 1 option(s) for …</td><td>கட்டாய விருப்பத் தேர்வு</td><td>விருப்பத்தைத் தேர்வு செய்யவும்</td></tr>
+<tr><td>Complete the checklist first …</td><td>சரிபார்ப்புப் பட்டியல் முடியவில்லை</td><td>எல்லா உருப்படிகளையும் டிக் செய்யவும்</td></tr>
+<tr><td>A minimum stay of N nights applies</td><td>பருவ/சலுகை விதி</td><td>இரவுகளை அதிகரிக்கவும் அல்லது வேறு rate plan</td></tr>
+<tr><td>Arrival cannot be in the past</td><td>கடந்த தேதி</td><td>இன்றைய அல்லது எதிர்காலத் தேதி</td></tr>
+<tr><td>இணையதளத்தில் வானிலை தெரியவில்லை</td><td>Open-Meteo சேவை தாமதம்; தோல்வி 20 நிமிடம் cache ஆகிறது</td><td>20 நிமிடம் கழித்துப் பாருங்கள் (QA குறைபாடு பட்டியலில் உள்ளது)</td></tr>
+<tr><td>திடீர் "500 Server Error" (XAMPP)</td><td>Windows Apache-இல் ஒரே நேரக் கோரிக்கைகளில் .env படிப்பதில் சிக்கல்</td><td>நிர்வாகி <code>php artisan config:cache</code> இயக்க வேண்டும் (QA அறிக்கை பார்க்கவும்)</td></tr>
+</table>
+<figure class="shot" id="fig-73_forbidden_403"><img src="img/73_forbidden_403-1.jpg" alt="வரவேற்பாளர் POS-ஐத் திறக்க முயன்றார்: 403 Forbidden."><figcaption><b>படம் 78 · Figure 78 —</b> வரவேற்பாளர் POS-ஐத் திறக்க முயன்றார்: 403 Forbidden. <span class="file">screenshots/73_forbidden_403.png · 1440×900 px</span></figcaption></figure>
+<figure class="shot" id="fig-74_not_found_404"><img src="img/74_not_found_404-1.jpg" alt="இல்லாத முன்பதிவு: 404."><figcaption><b>படம் 79 · Figure 79 —</b> இல்லாத முன்பதிவு: 404. <span class="file">screenshots/74_not_found_404.png · 1440×900 px</span></figcaption></figure>
+
+<h1 id="ch21"><span class="num">21</span>பொது இணையதளம்<span class="sub">Public website, online booking, currency and weather</span></h1>
+<p>விருந்தினர்கள் இணையதளத்தில் வில்லாக்கள், சேவைகள், சலுகைகள், படங்களைப் பார்த்து, தேதிகளைக் கொடுத்து முன்பதிவு செய்யலாம். விலைகள் LKR-இல் சேமிக்கப்படுகின்றன; நாணயத் தேர்வு (USD, EUR, GBP, INR, AUD, AED) காட்சிக்கு மட்டுமே. யாழ்ப்பாணத்தின் நேரடி வானிலை SVG குறிகளுடன் காட்டப்படுகிறது.</p>
+<figure class="shot" id="fig-78_website_home"><img src="img/78_website_home-1.jpg" alt="இணையதள முகப்பு — யாழ்ப்பாண வானிலையுடன்."><figcaption><b>படம் 80 · Figure 80 (1/2) —</b> இணையதள முகப்பு — யாழ்ப்பாண வானிலையுடன். </figcaption></figure><figure class="shot cont"><img src="img/78_website_home-2.jpg" alt="இணையதள முகப்பு — யாழ்ப்பாண வானிலையுடன்."><figcaption><b>படம் 80 · Figure 80 (தொடர்ச்சி 2/2) —</b> இணையதள முகப்பு — யாழ்ப்பாண வானிலையுடன். <span class="file">screenshots/78_website_home.png · 1440×7000 px · மீதி 3 பகுதி முழு அளவுப் படத்தில்</span></figcaption></figure>
+<figure class="shot" id="fig-79_website_booking"><img src="img/79_website_booking-1.jpg" alt="இணையதள முன்பதிவுப் பக்கம் (20–23 அக், 2 பெரியவர்கள்)."><figcaption><b>படம் 81 · Figure 81 —</b> இணையதள முன்பதிவுப் பக்கம் (20–23 அக், 2 பெரியவர்கள்). <span class="file">screenshots/79_website_booking.png · 1440×2878 px · மீதி 1 பகுதி முழு அளவுப் படத்தில்</span></figcaption></figure>
+<figure class="shot mobile" id="fig-80_website_mobile"><img src="img/80_website_mobile-1.jpg" alt="இணையதளம் கைபேசியில்."><figcaption><b>படம் 82 · Figure 82 —</b> இணையதளம் கைபேசியில். <span class="file">screenshots/80_website_mobile.png · 390×7000 px · மீதி 7 பகுதி முழு அளவுப் படத்தில்</span></figcaption></figure>
+<div class="callout sim"><span class="t">இணையதளக் கட்டணம்</span><p>இணையதள முன்பதிவு கட்டணம் செலுத்தும் வரை "hold" ஆக இருக்கும். கட்டணம் <b>sandbox</b> (சோதனை) gateway மூலம் மட்டுமே சோதிக்கப்பட்டது — உண்மையான அட்டைப் பணம் பெறப்படவில்லை. Stripe போன்ற உண்மையான gateway-க்கு keys தேவை.</p></div>
+
+<h1 id="ch22"><span class="num">22</span>நாள்தோறும் சரிபார்ப்புப் பட்டியல்கள்<span class="sub">Daily checklists by role</span></h1>
+<div class="two">
+<div class="box"><div class="h">வரவேற்பாளர்</div><ul>
+<li>காலை: Front desk → Arrivals; வில்லாக்கள் Ready-ஆ?</li>
+<li>Departures: திறந்த உணவக checks உண்டா?</li>
+<li>Check-in: ID, சாவி அட்டை, முற்பணம்</li>
+<li>Checkout: நிலுவை 0, விலைப்பட்டியல் அனுப்புதல்</li>
+<li>தொலைந்த அட்டை → உடனே "Lost"</li></ul></div>
+<div class="box"><div class="h">Hotel Manager</div><ul>
+<li>Dashboard: நிரம்பல், நிலுவைகள், conflicts</li>
+<li>விலை override காரணங்களை History-இல் சரிபாருங்கள்</li>
+<li>நள்ளிரவுக்கு முன் இரவுத் தணிக்கை</li>
+<li>No-shows, outstanding அறிக்கை</li></ul></div>
+<div class="box"><div class="h">காசாளர்</div><ul>
+<li>ஷிப்ட் திறத்தல் (float எண்ணி)</li>
+<li>Room service → Charge to villa</li>
+<li>Settlement அறிவிப்புகளுக்கு உடனடிப் பதில்</li>
+<li>நாள் முடிவில் பணம் எண்ணி Day-end</li></ul></div>
+<div class="box"><div class="h">பணியாளர் (Waiter) / சமையலறை</div><ul>
+<li>சரியான covers, கட்டாய விருப்பத் தேர்வுகள்</li>
+<li>Send-க்கு முன் ஆர்டரைச் சரிபாருங்கள்</li>
+<li>சமையலறை: Start → Ready → Served — ஒவ்வொன்றையும் குறிக்கவும்</li></ul></div>
+<div class="box"><div class="h">அறைப் பணியாளர்</div><ul>
+<li>My cleaning tasks: Accept → Start</li>
+<li>சரிபார்ப்புப் பட்டியல் முழுதும்; linen எண்ணிக்கை</li>
+<li>பழுது / தொலைந்த பொருள் பதிவு</li></ul></div>
+<div class="box"><div class="h">HK Supervisor / Restaurant Manager</div><ul>
+<li>Inspection காத்திருப்பவை → Approve/Reject</li>
+<li>பழைய stay-over பணிகளை மூடுதல்</li>
+<li>உணவகம்: மூடிய ஷிப்டுகளை மீளாய்வு, variance</li>
+<li>குறைந்த கையிருப்பு, மேசை முன்பதிவுகள்</li></ul></div>
+</div>
+
+<h1 id="ch23"><span class="num">23</span>QA சோதனைச் சுருக்கம்<span class="sub">QA summary in Tamil — full details in VAASAL_VILLA_QA_TEST_REPORT.pdf</span></h1>
+<div class="kpis">
+<div class="kpi k1"><div class="v">257</div><div class="l">மொத்த சோதனை வழக்குகள்</div></div>
+<div class="kpi k2"><div class="v">254</div><div class="l">வெற்றி (PASS)</div></div>
+<div class="kpi k3"><div class="v">3</div><div class="l">தடைப்பட்டவை (BLOCKED — வெளிச் சேவை இல்லை)</div></div>
+<div class="kpi k4"><div class="v">0</div><div class="l">தோல்வி (FAIL) — இறுதி ஓட்டத்தில்</div></div>
+</div>
+<table class="grid">
+<tr><th>சோதனை வகை</th><th class="num">எண்ணிக்கை</th><th>முடிவு</th></tr>
+<tr><td>தானியங்கி QA சோதனைகள் (tests/QA/QaAuditTest.php)</td><td class="num">155</td><td>153 PASS, 2 BLOCKED</td></tr>
+<tr><td>நேரடி HTTP சோதனைகள் (XAMPP)</td><td class="num">20</td><td>19 PASS, 1 BLOCKED</td></tr>
+<tr><td>உலாவி நடைப்பயணம் (82 திரைப்படங்கள்)</td><td class="num">82</td><td>82 PASS</td></tr>
+<tr><td>Regression test suite</td><td class="num">51</td><td>51 PASS (1,668 assertions)</td></tr>
+</table>
+<div class="h3">இந்த QA-இல் கண்டுபிடித்துச் சரிசெய்யப்பட்டவை</div>
+<ul>
+<li><b>நேர மண்டலம்</b> — கணினி UTC-யில் ஓடியது (.env-இல் Asia/Colombo இருந்தும்). இலங்கை நேரம் 00:00–05:30 இடையே "இன்று" தவறாக இருந்தது. சரிசெய்யப்பட்டது.</li>
+<li><b>"Unauthenticated"</b> — POS-இல் அமர்வு முடிந்தால் வெறும் சொல். இப்போது தெளிவான செய்தி + மீண்டும் உள்நுழைந்து அதே பக்கம்.</li>
+<li><b>பிரிப்புக் கசிவு</b> — உணவக ஊழியர்கள் ஹோட்டல் அறிக்கைப் பக்கத்தைத் திறக்க முடிந்தது. மூடப்பட்டது.</li>
+<li><b>வெற்று check-க்குப் பணம்</b> — தடுக்கப்பட்டது.</li>
+<li><b>உணவக விற்பனைப் பக்கம்</b> — சில பாத்திரங்களுக்கு 403; இப்போது அனுமதியுள்ள முதல் அறிக்கை திறக்கும்.</li>
+<li><b>இணையதள வானிலை emoji</b> → SVG குறிகள்.</li>
+<li><b>இரவுத் தணிக்கை stay-over எண்ணிக்கை</b> — ஏற்கனவே உள்ள பணிகளையும் எண்ணியது; சரிசெய்யப்பட்டது.</li>
+</ul>
+<div class="h3">இன்னும் திறந்திருப்பவை (பரிந்துரைகள்)</div>
+<ul>
+<li>Laravel scheduler இந்தக் கணினியில் பதியப்படவில்லை — தானியங்கி இரவுத் தணிக்கை/expiry இயங்காது.</li>
+<li>XAMPP-இல் ஒரே நேரக் கோரிக்கைகளில் இடையிடையே 500 பிழை — <code>config:cache</code> தேவை.</li>
+<li>Walk-in படிவ Summary override விலையைக் காட்டவில்லை; இரண்டாவது outlet ஷிப்ட் படிவம் மறைகிறது; பழைய stay-over பணி மூடப்படுவதில்லை; folio நிலுவை எண் வலது ஓரத்தில் வெட்டப்படுகிறது; வானிலைத் தோல்வி 20 நிமிடம் cache ஆகிறது; இரவுத் தணிக்கைக்கு audit log இல்லை.</li>
+</ul>
+<div class="h3">சோதிக்க முடியாதவை (வெளிச் சேவை/கருவி இல்லை)</div>
+<p>உண்மையான RFID/கதவுப் பூட்டுகள் (simulator மட்டும்), OTA/Channex நேரடி இணைப்பு, உண்மையான கட்டண gateway (sandbox மட்டும்), WhatsApp Cloud API, SMS (கணினியில் இல்லை), நாணய மாற்று API, Unsplash/Pexels keys, இணையதள hero வீடியோ (அமைக்கப்படவில்லை), MP4 பயிற்சி வீடியோ (ffmpeg இல்லை — ஸ்கிரிப்ட் மட்டும்).</p>
+
+<h1 id="ch24"><span class="num">24</span>சொற்களஞ்சியம்<span class="sub">Glossary</span></h1>
+<table class="grid">
+<tr><th style="width:44mm">சொல்</th><th>பொருள்</th></tr>
+<tr><td>PMS</td><td>Property Management System — ஹோட்டல்/வில்லா மேலாண்மை அமைப்பு</td></tr>
+<tr><td>POS</td><td>Point of Sale — உணவக விற்பனை முனையம்</td></tr>
+<tr><td>Walk-in</td><td>முன்பதிவின்றி நேரடியாக வரும் விருந்தினர்</td></tr>
+<tr><td>Check-in / Check-out</td><td>வருகைப் பதிவு / வெளியேறுதல்</td></tr>
+<tr><td>Folio</td><td>விருந்தினரின் தங்கல் கணக்கு — எல்லாக் கட்டணங்களும் கொடுப்பனவுகளும்</td></tr>
+<tr><td>Invoice / Receipt</td><td>விலைப்பட்டியல் / பற்றுச்சீட்டு</td></tr>
+<tr><td>Deposit</td><td>முற்பணம்</td></tr>
+<tr><td>Balance</td><td>நிலுவை (செலுத்த வேண்டிய மீதி)</td></tr>
+<tr><td>Change</td><td>மீதிப் பணம் (கொடுத்தது − பில்)</td></tr>
+<tr><td>Service charge / Tax</td><td>சேவைக் கட்டணம் 10% / வரி 8%</td></tr>
+<tr><td>Rate override</td><td>மேலாளர் அனுமதியுடன் இரவு விலையை மாற்றுதல்</td></tr>
+<tr><td>No-show</td><td>முன்பதிவு செய்தும் வராதவர்</td></tr>
+<tr><td>Hold</td><td>கட்டணம் செலுத்தும் வரை தற்காலிகமாக ஒதுக்கிய இணையதள முன்பதிவு</td></tr>
+<tr><td>OTA</td><td>Online Travel Agency (Booking.com போன்றவை)</td></tr>
+<tr><td>Check (POS)</td><td>ஒரு மேசை/அறை/டேக்அவேக்கான உணவக ஆர்டர் கணக்கு</td></tr>
+<tr><td>Covers</td><td>மேசையில் உள்ள விருந்தினர் எண்ணிக்கை</td></tr>
+<tr><td>KOT / KDS</td><td>Kitchen Order Ticket / Kitchen Display System — சமையலறை ஆர்டர் சீட்டு / திரை</td></tr>
+<tr><td>Modifier</td><td>உணவின் விருப்பத் தேர்வு (காரம், பால் வகை …)</td></tr>
+<tr><td>Charge to villa</td><td>உணவகக் கட்டணத்தை விருந்தினரின் வில்லா folio-வில் சேர்த்தல்</td></tr>
+<tr><td>Shift / Float</td><td>காசாளர் பணி நேரம் / தொடக்கப் பணம்</td></tr>
+<tr><td>Day-end / Variance</td><td>நாள் முடிவு மூடல் / எதிர்பார்த்ததற்கும் எண்ணியதற்கும் உள்ள வேறுபாடு</td></tr>
+<tr><td>Dirty → Cleaning → Inspection → Ready</td><td>வில்லா சுத்த நிலைகள்</td></tr>
+<tr><td>Stay-over / Departure clean</td><td>தங்கியிருக்கும்போது தினசரிச் சுத்தம் / வெளியேறிய பின் முழுச் சுத்தம்</td></tr>
+<tr><td>Out of order</td><td>பழுதினால் விற்க முடியாத வில்லா</td></tr>
+<tr><td>Key card UID</td><td>சாவி அட்டையின் தனித்துவ எண்</td></tr>
+<tr><td>Night audit / Business date</td><td>இரவுத் தணிக்கை / கணக்கு முடிக்கப்படும் வணிக நாள்</td></tr>
+<tr><td>ADR / RevPAR</td><td>சராசரி அறை விலை / கிடைக்கும் அறைக்கு வருமானம்</td></tr>
+<tr><td>Session</td><td>உள்நுழைந்த அமர்வு (30 நிமிடச் செயலின்மையில் முடியும்)</td></tr>
+<tr><td>Simulator / Sandbox</td><td>உண்மையான கருவி/சேவைக்குப் பதிலான சோதனை மாற்று</td></tr>
+</table>
+
+<h1 id="ch25"><span class="num">25</span>உதவி மற்றும் தொடர்பு<span class="sub">Support</span></h1>
+<div class="two">
+<div class="box"><div class="h">Vaasal Villa</div><p>யாழ்ப்பாணம், இலங்கை<br>தொலைபேசி / WhatsApp: 0764413420 (+94 76 441 3420)<br>மின்னஞ்சல்: aflalal2004@gmail.com</p></div>
+<div class="box"><div class="h">தொழில்நுட்ப ஆவணங்கள்</div><p><code>README.md</code> — நிறுவல், டெமோ கணக்குகள்<br><code>docs/SETUP.md</code> — scheduler, integrations<br><code>docs/INTEGRATION.md</code> — PMS ↔ POS இணைப்பு<br><code>VAASAL_VILLA_QA_TEST_REPORT.pdf</code> — முழு QA அறிக்கை</p></div>
+</div>
+<div class="sig"><div>தயாரித்தவர் (QA)</div><div>சரிபார்த்தவர் (Hotel Manager)</div><div>அங்கீகரித்தவர் (Owner)</div></div>
+
+
+</body>
+</html>

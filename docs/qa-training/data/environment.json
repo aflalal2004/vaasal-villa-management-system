@@ -1,0 +1,22 @@
+{
+    "APP_ENV": "local",
+    "APP_DEBUG": true,
+    "APP_URL": "http://localhost/vaasal_villa_hospitality_management_system28/public",
+    "DB": "mysql / vaasal_villa_hms28",
+    "SESSION_DRIVER": "database",
+    "SESSION_LIFETIME": 30,
+    "CACHE": "database",
+    "QUEUE": "sync",
+    "MAIL": "log",
+    "PAYMENT_DRIVER": "sandbox",
+    "CHANNEL_DRIVER": null,
+    "LOCK_DRIVER": "simulator",
+    "RFID_SIMULATOR": true,
+    "EXCHANGE_API": false,
+    "UNSPLASH": false,
+    "PEXELS": false,
+    "WHATSAPP_CLOUD": false,
+    "STRIPE": false,
+    "storage_link": false,
+    "upload_dirs": []
+}

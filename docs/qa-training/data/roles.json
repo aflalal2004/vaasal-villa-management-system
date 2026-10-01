@@ -1,0 +1,598 @@
+{
+    "roles": [
+        {
+            "slug": "admin",
+            "name": "Administrator",
+            "home": "admin.dashboard",
+            "users": 1,
+            "permissions": [
+                "* (all)"
+            ]
+        },
+        {
+            "slug": "owner",
+            "name": "Owner",
+            "home": "admin.dashboard",
+            "users": 1,
+            "permissions": [
+                "audit.view",
+                "bookings.view",
+                "calendar.view",
+                "dashboard.view",
+                "guests.view",
+                "housekeeping.view",
+                "inventory.view",
+                "invoices.view",
+                "keycards.view",
+                "maintenance.view",
+                "operators.view",
+                "pos.reports",
+                "reports.financial",
+                "reports.operational",
+                "staff.view",
+                "villas.view"
+            ]
+        },
+        {
+            "slug": "manager",
+            "name": "Hotel Manager",
+            "home": "admin.dashboard",
+            "users": 1,
+            "permissions": [
+                "attendance.manage",
+                "attendance.self",
+                "bookings.cancel",
+                "bookings.manage",
+                "bookings.override_rate",
+                "bookings.view",
+                "calendar.view",
+                "channels.manage",
+                "conflicts.manage",
+                "dashboard.view",
+                "folio.adjust",
+                "folio.post",
+                "frontdesk.checkin",
+                "frontdesk.checkout",
+                "frontdesk.night_audit",
+                "guests.manage",
+                "guests.view",
+                "housekeeping.inspect",
+                "housekeeping.manage",
+                "housekeeping.view",
+                "inventory.view",
+                "invoices.view",
+                "keycards.issue",
+                "keycards.manage",
+                "keycards.view",
+                "leave.approve",
+                "leave.self",
+                "lostfound.manage",
+                "maintenance.manage",
+                "maintenance.report",
+                "maintenance.view",
+                "operators.manage",
+                "operators.view",
+                "payments.receive",
+                "payments.refund",
+                "rates.manage",
+                "reports.financial",
+                "reports.operational",
+                "staff.manage",
+                "staff.view",
+                "villas.manage",
+                "villas.view",
+                "website.manage"
+            ]
+        },
+        {
+            "slug": "receptionist",
+            "name": "Receptionist",
+            "home": "admin.frontdesk.index",
+            "users": 1,
+            "permissions": [
+                "attendance.self",
+                "bookings.manage",
+                "bookings.view",
+                "calendar.view",
+                "folio.post",
+                "frontdesk.checkin",
+                "frontdesk.checkout",
+                "guests.manage",
+                "guests.view",
+                "housekeeping.view",
+                "invoices.view",
+                "keycards.issue",
+                "keycards.view",
+                "leave.self",
+                "lostfound.manage",
+                "maintenance.report",
+                "maintenance.view",
+                "operators.view",
+                "payments.receive",
+                "reports.operational",
+                "villas.view"
+            ]
+        },
+        {
+            "slug": "accountant",
+            "name": "Accountant",
+            "home": "admin.payments.index",
+            "users": 1,
+            "permissions": [
+                "attendance.self",
+                "bookings.view",
+                "dashboard.view",
+                "folio.adjust",
+                "folio.post",
+                "guests.view",
+                "inventory.view",
+                "invoices.view",
+                "leave.self",
+                "operators.finance",
+                "operators.view",
+                "payments.receive",
+                "payments.refund",
+                "pos.reports",
+                "reports.financial",
+                "reports.operational"
+            ]
+        },
+        {
+            "slug": "pos_manager",
+            "name": "Restaurant Manager",
+            "home": "pos.dashboard",
+            "users": 1,
+            "permissions": [
+                "attendance.self",
+                "inventory.manage",
+                "inventory.view",
+                "leave.self",
+                "pos.access",
+                "pos.bill",
+                "pos.discount",
+                "pos.kds",
+                "pos.menu",
+                "pos.order",
+                "pos.refund",
+                "pos.reports",
+                "pos.reservations",
+                "pos.shift",
+                "pos.shift_review",
+                "pos.void"
+            ]
+        },
+        {
+            "slug": "cashier",
+            "name": "Cashier",
+            "home": "pos.terminal",
+            "users": 1,
+            "permissions": [
+                "attendance.self",
+                "leave.self",
+                "pos.access",
+                "pos.bill",
+                "pos.order",
+                "pos.reservations",
+                "pos.shift"
+            ]
+        },
+        {
+            "slug": "waiter",
+            "name": "Waiter",
+            "home": "pos.terminal",
+            "users": 1,
+            "permissions": [
+                "attendance.self",
+                "leave.self",
+                "pos.access",
+                "pos.order",
+                "pos.reservations"
+            ]
+        },
+        {
+            "slug": "kitchen",
+            "name": "Kitchen Staff",
+            "home": "pos.kds",
+            "users": 1,
+            "permissions": [
+                "attendance.self",
+                "inventory.view",
+                "leave.self",
+                "pos.access",
+                "pos.kds"
+            ]
+        },
+        {
+            "slug": "inventory",
+            "name": "Inventory Staff",
+            "home": "pos.inventory.items.index",
+            "users": 1,
+            "permissions": [
+                "attendance.self",
+                "inventory.manage",
+                "inventory.view",
+                "leave.self",
+                "pos.access"
+            ]
+        },
+        {
+            "slug": "hk_supervisor",
+            "name": "Housekeeping Supervisor",
+            "home": "admin.housekeeping.index",
+            "users": 1,
+            "permissions": [
+                "attendance.self",
+                "housekeeping.inspect",
+                "housekeeping.manage",
+                "housekeeping.view",
+                "housekeeping.work",
+                "leave.self",
+                "lostfound.manage",
+                "maintenance.report",
+                "maintenance.view",
+                "reports.operational",
+                "staff.view",
+                "villas.view"
+            ]
+        },
+        {
+            "slug": "housekeeper",
+            "name": "Housekeeping Staff",
+            "home": "admin.housekeeping.my",
+            "users": 2,
+            "permissions": [
+                "attendance.self",
+                "housekeeping.work",
+                "leave.self",
+                "lostfound.manage",
+                "maintenance.report"
+            ]
+        },
+        {
+            "slug": "maintenance",
+            "name": "Maintenance Technician",
+            "home": "admin.maintenance.index",
+            "users": 1,
+            "permissions": [
+                "attendance.self",
+                "leave.self",
+                "maintenance.manage",
+                "maintenance.report",
+                "maintenance.view",
+                "villas.view"
+            ]
+        },
+        {
+            "slug": "tour_operator",
+            "name": "Tour Operator",
+            "home": "operator.dashboard",
+            "users": 2,
+            "permissions": [
+                "portal.access"
+            ]
+        },
+        {
+            "slug": "staff",
+            "name": "General Staff",
+            "home": "admin.staff.my-timecard",
+            "users": 1,
+            "permissions": [
+                "attendance.self",
+                "leave.self",
+                "maintenance.report"
+            ]
+        }
+    ],
+    "permissions": [
+        {
+            "slug": "audit.view",
+            "module": "admin",
+            "name": "Audit & login logs"
+        },
+        {
+            "slug": "settings.manage",
+            "module": "admin",
+            "name": "System settings"
+        },
+        {
+            "slug": "users.manage",
+            "module": "admin",
+            "name": "Manage users & roles"
+        },
+        {
+            "slug": "website.manage",
+            "module": "admin",
+            "name": "Manage website content"
+        },
+        {
+            "slug": "folio.adjust",
+            "module": "billing",
+            "name": "Reverse / adjust folio lines"
+        },
+        {
+            "slug": "folio.post",
+            "module": "billing",
+            "name": "Post charges to folios"
+        },
+        {
+            "slug": "invoices.view",
+            "module": "billing",
+            "name": "View invoices & receipts"
+        },
+        {
+            "slug": "payments.receive",
+            "module": "billing",
+            "name": "Receive payments"
+        },
+        {
+            "slug": "payments.refund",
+            "module": "billing",
+            "name": "Issue refunds"
+        },
+        {
+            "slug": "bookings.cancel",
+            "module": "bookings",
+            "name": "Cancel bookings"
+        },
+        {
+            "slug": "bookings.manage",
+            "module": "bookings",
+            "name": "Create / modify bookings"
+        },
+        {
+            "slug": "bookings.override_rate",
+            "module": "bookings",
+            "name": "Override room rates"
+        },
+        {
+            "slug": "bookings.view",
+            "module": "bookings",
+            "name": "View bookings & enquiries"
+        },
+        {
+            "slug": "calendar.view",
+            "module": "bookings",
+            "name": "View availability calendar"
+        },
+        {
+            "slug": "conflicts.manage",
+            "module": "bookings",
+            "name": "Resolve OTA conflict queue"
+        },
+        {
+            "slug": "channels.manage",
+            "module": "channels",
+            "name": "Channel manager & OTA mappings"
+        },
+        {
+            "slug": "dashboard.view",
+            "module": "dashboard",
+            "name": "View management dashboard"
+        },
+        {
+            "slug": "frontdesk.checkin",
+            "module": "frontdesk",
+            "name": "Check guests in"
+        },
+        {
+            "slug": "frontdesk.checkout",
+            "module": "frontdesk",
+            "name": "Check guests out"
+        },
+        {
+            "slug": "frontdesk.night_audit",
+            "module": "frontdesk",
+            "name": "Run night audit"
+        },
+        {
+            "slug": "guests.manage",
+            "module": "guests",
+            "name": "Edit guests, blacklist, ID documents"
+        },
+        {
+            "slug": "guests.view",
+            "module": "guests",
+            "name": "View guests"
+        },
+        {
+            "slug": "housekeeping.inspect",
+            "module": "housekeeping",
+            "name": "Approve / reject inspections"
+        },
+        {
+            "slug": "housekeeping.manage",
+            "module": "housekeeping",
+            "name": "Assign tasks & override villa status"
+        },
+        {
+            "slug": "housekeeping.view",
+            "module": "housekeeping",
+            "name": "View housekeeping board"
+        },
+        {
+            "slug": "housekeeping.work",
+            "module": "housekeeping",
+            "name": "Perform assigned cleaning tasks"
+        },
+        {
+            "slug": "lostfound.manage",
+            "module": "housekeeping",
+            "name": "Lost & found"
+        },
+        {
+            "slug": "inventory.manage",
+            "module": "inventory",
+            "name": "Stock in/out, wastage, suppliers, recipes"
+        },
+        {
+            "slug": "inventory.view",
+            "module": "inventory",
+            "name": "View stock"
+        },
+        {
+            "slug": "keycards.issue",
+            "module": "keycards",
+            "name": "Issue / revoke guest cards"
+        },
+        {
+            "slug": "keycards.manage",
+            "module": "keycards",
+            "name": "Manage card stock, staff & master cards"
+        },
+        {
+            "slug": "keycards.view",
+            "module": "keycards",
+            "name": "View key cards & access logs"
+        },
+        {
+            "slug": "maintenance.manage",
+            "module": "maintenance",
+            "name": "Manage & resolve tickets"
+        },
+        {
+            "slug": "maintenance.report",
+            "module": "maintenance",
+            "name": "Report maintenance issues"
+        },
+        {
+            "slug": "maintenance.view",
+            "module": "maintenance",
+            "name": "View maintenance tickets"
+        },
+        {
+            "slug": "portal.access",
+            "module": "operator_portal",
+            "name": "Tour operator portal"
+        },
+        {
+            "slug": "operators.finance",
+            "module": "operators",
+            "name": "Operator invoices, payments & commission"
+        },
+        {
+            "slug": "operators.manage",
+            "module": "operators",
+            "name": "Manage operators & contracts"
+        },
+        {
+            "slug": "operators.view",
+            "module": "operators",
+            "name": "View tour operators"
+        },
+        {
+            "slug": "pos.access",
+            "module": "pos",
+            "name": "Access POS"
+        },
+        {
+            "slug": "pos.bill",
+            "module": "pos",
+            "name": "Bill & take payments"
+        },
+        {
+            "slug": "pos.discount",
+            "module": "pos",
+            "name": "Apply discounts"
+        },
+        {
+            "slug": "pos.kds",
+            "module": "pos",
+            "name": "Kitchen display"
+        },
+        {
+            "slug": "pos.menu",
+            "module": "pos",
+            "name": "Manage menu, tables & outlets"
+        },
+        {
+            "slug": "pos.order",
+            "module": "pos",
+            "name": "Take orders"
+        },
+        {
+            "slug": "pos.refund",
+            "module": "pos",
+            "name": "Refund POS payments"
+        },
+        {
+            "slug": "pos.reports",
+            "module": "pos",
+            "name": "POS reports"
+        },
+        {
+            "slug": "pos.reservations",
+            "module": "pos",
+            "name": "Table reservations"
+        },
+        {
+            "slug": "pos.shift",
+            "module": "pos",
+            "name": "Cashier shift & drawer"
+        },
+        {
+            "slug": "pos.shift_review",
+            "module": "pos",
+            "name": "Review, approve & reopen closed cashier shifts"
+        },
+        {
+            "slug": "pos.void",
+            "module": "pos",
+            "name": "Void fired items / checks"
+        },
+        {
+            "slug": "reports.financial",
+            "module": "reports",
+            "name": "Financial reports"
+        },
+        {
+            "slug": "reports.operational",
+            "module": "reports",
+            "name": "Operational reports"
+        },
+        {
+            "slug": "attendance.manage",
+            "module": "staff",
+            "name": "View & correct attendance"
+        },
+        {
+            "slug": "attendance.self",
+            "module": "staff",
+            "name": "Own time card (clock in/out)"
+        },
+        {
+            "slug": "leave.approve",
+            "module": "staff",
+            "name": "Approve leave"
+        },
+        {
+            "slug": "leave.self",
+            "module": "staff",
+            "name": "Request leave"
+        },
+        {
+            "slug": "staff.manage",
+            "module": "staff",
+            "name": "Manage employees, departments, shifts & rosters"
+        },
+        {
+            "slug": "staff.view",
+            "module": "staff",
+            "name": "View employees"
+        },
+        {
+            "slug": "rates.manage",
+            "module": "villas",
+            "name": "Manage rates, seasons & offers"
+        },
+        {
+            "slug": "villas.manage",
+            "module": "villas",
+            "name": "Manage villas, types & facilities"
+        },
+        {
+            "slug": "villas.view",
+            "module": "villas",
+            "name": "View villas"
+        }
+    ]
+}

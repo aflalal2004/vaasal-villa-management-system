@@ -1,0 +1,985 @@
+<title>Vaasal Villa Platform Specification</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F6F7F4; --paper:#FFFFFF; --ink:#1A2320; --ink-2:#4A5752; --muted:#6E7B76;
+  --rule:#D8DED9; --rule-2:#E9EDEA; --accent:#0E6B63; --accent-soft:#E2F0EE;
+  --brass:#8F6420; --brass-soft:#F4ECDD; --code:#EEF2EF;
+  --ok:#2F7D4A; --warn:#A5680F; --crit:#B23A32;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#0F1513; --paper:#151D1A; --ink:#E3E9E5; --ink-2:#B4C0BB; --muted:#8C9994;
+    --rule:#2A3531; --rule-2:#1F2825; --accent:#5DBEB2; --accent-soft:#16312D;
+    --brass:#D6A961; --brass-soft:#2D2618; --code:#1B2522;
+    --ok:#6CC08A; --warn:#E0A64A; --crit:#E47B72;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#0F1513; --paper:#151D1A; --ink:#E3E9E5; --ink-2:#B4C0BB; --muted:#8C9994;
+  --rule:#2A3531; --rule-2:#1F2825; --accent:#5DBEB2; --accent-soft:#16312D;
+  --brass:#D6A961; --brass-soft:#2D2618; --code:#1B2522;
+  --ok:#6CC08A; --warn:#E0A64A; --crit:#E47B72;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.62;padding-inline:16px;padding-block:0 64px}
+.shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:240px minmax(0,1fr);gap:56px}
+@media (max-width:920px){.shell{grid-template-columns:minmax(0,1fr);gap:0}.toc{display:none}}
+.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;max-height:100vh;overflow:auto;padding-block:40px 24px;font-size:13px}
+.toc .t{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:2px;counter-reset:s}
+.toc a{display:grid;grid-template-columns:24px 1fr;padding:4px 8px;border-radius:4px;color:var(--ink-2);text-decoration:none}
+.toc a:hover{background:var(--rule-2);color:var(--ink)}
+.toc a span{font-family:var(--mono);color:var(--muted);font-size:11.5px;padding-top:1px}
+main{min-width:0;padding-top:40px}
+header.doc{border-bottom:1px solid var(--rule);padding-bottom:28px;margin-bottom:8px}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(30px,4.4vw,44px);line-height:1.1;margin:10px 0 14px;text-wrap:balance;letter-spacing:-.01em}
+.lede{font-size:17px;color:var(--ink-2);max-width:68ch;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:20px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:500}
+section.s{padding-top:44px;scroll-margin-top:12px}
+h2{font-family:var(--serif);font-weight:600;font-size:28px;line-height:1.2;margin:0 0 6px;display:flex;gap:14px;align-items:baseline;text-wrap:balance}
+h2 .n{font-family:var(--mono);font-size:14px;font-weight:500;color:var(--brass);min-width:28px}
+h2 + .sub{color:var(--muted);margin:0 0 22px;max-width:70ch}
+h3{font-family:var(--serif);font-weight:600;font-size:20.5px;margin:34px 0 8px;scroll-margin-top:12px;text-wrap:balance}
+h3 .id{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:500;margin-right:8px;vertical-align:2px}
+h4{font-family:var(--sans);font-weight:600;font-size:12.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2);margin:20px 0 6px}
+p,li{max-width:74ch}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 12px;padding-left:22px}
+li{margin:3px 0}
+li::marker{color:var(--muted)}
+code,.m{font-family:var(--mono);font-size:.86em;background:var(--code);padding:1px 5px;border-radius:3px}
+a{color:var(--accent)}
+.term{border-left:2px solid var(--brass);background:var(--brass-soft);padding:10px 14px;margin:14px 0;max-width:74ch;font-size:14.5px}
+.term b{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--brass);margin-right:6px}
+.why{background:var(--accent-soft);padding:12px 16px;margin:14px 0;max-width:74ch;font-size:14.5px;border-radius:4px}
+.why b{color:var(--accent)}
+.tw{overflow-x:auto;margin:12px 0 18px;border:1px solid var(--rule);border-radius:6px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;vertical-align:top;padding:8px 12px;border-bottom:1px solid var(--rule-2)}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--rule-2);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td code{white-space:nowrap}
+table.rbac td,table.rbac th{text-align:center;padding:7px 8px}
+table.rbac td:first-child,table.rbac th:first-child{text-align:left;white-space:nowrap}
+.c{font-family:var(--mono);font-size:12px;font-weight:500;display:inline-block;min-width:22px;padding:1px 4px;border-radius:3px}
+.cF{background:var(--accent);color:var(--paper)}
+.cM{background:var(--accent-soft);color:var(--accent)}
+.cO{background:var(--brass-soft);color:var(--brass)}
+.cV{color:var(--ink-2);border:1px solid var(--rule)}
+.cX{color:var(--muted)}
+.flow{font-family:var(--mono);font-size:12.5px;background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:12px 14px;overflow-x:auto;white-space:pre;line-height:1.7;margin:12px 0 16px;color:var(--ink-2)}
+pre.mermaid{background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:14px;overflow-x:auto;margin:12px 0 18px}
+.states{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0 14px;font-family:var(--mono);font-size:12px}
+.st{padding:3px 9px;border-radius:999px;border:1px solid var(--rule);background:var(--paper)}
+.st.k{border-color:var(--accent);color:var(--accent)}
+.arr{color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px 28px}
+.phase{display:grid;grid-template-columns:92px minmax(0,1fr);gap:4px 18px;padding:16px 0;border-top:1px solid var(--rule)}
+.phase .w{font-family:var(--mono);font-size:12px;color:var(--brass)}
+.phase .w b{display:block;font-size:20px;color:var(--ink);font-family:var(--serif);font-weight:600}
+.phase h4{margin:0 0 4px;text-transform:none;letter-spacing:0;font-size:16px;color:var(--ink)}
+@media (max-width:520px){.phase{grid-template-columns:1fr}}
+.foot{margin-top:56px;padding-top:18px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+
+<div class="shell">
+<nav class="toc" aria-label="Contents">
+  <div class="t">Contents</div>
+  <ol>
+    <li><a href="#overview"><span>01</span>System overview</a></li>
+    <li><a href="#functional"><span>02</span>Functional requirements</a></li>
+    <li><a href="#nfr"><span>03</span>Non-functional requirements</a></li>
+    <li><a href="#data"><span>04</span>Data model</a></li>
+    <li><a href="#api"><span>05</span>API architecture</a></li>
+    <li><a href="#rbac"><span>06</span>Roles &amp; permissions</a></li>
+    <li><a href="#stack"><span>07</span>Technology stack</a></li>
+    <li><a href="#security"><span>08</span>Security</a></li>
+    <li><a href="#uiux"><span>09</span>UI/UX</a></li>
+    <li><a href="#integrations"><span>10</span>Integration points</a></li>
+    <li><a href="#reporting"><span>11</span>Reporting &amp; analytics</a></li>
+    <li><a href="#roadmap"><span>12</span>Scalability &amp; roadmap</a></li>
+    <li><a href="#phases"><span>13</span>Development phases</a></li>
+    <li><a href="#glossary"><span>A</span>Glossary</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="doc">
+  <div class="eyebrow">Technical specification · v1.1</div>
+  <h1>Vaasal Villa Management System</h1>
+  <p class="lede">Blueprint for one integrated hospitality platform: public booking website, property management, channel distribution, tour operator portal, restaurant POS, housekeeping, key-card access, staff time &amp; attendance, and analytics, all on one central database.</p>
+  <div class="meta"><span>Audience <b>architects, senior engineers, QA, PM</b></span><span>Status <b>baseline for estimation</b></span><span>Date <b>28 Sep 2026</b></span></div>
+</header>
+
+<!-- 01 -->
+<section class="s" id="overview">
+<h2><span class="n">01</span>System overview</h2>
+<p class="sub">What the platform is, who uses it, and the architectural stance everything else follows from.</p>
+
+<h4>Vision</h4>
+<p>Vaasal Villa runs one or more villa properties with an on-site restaurant and ancillary services. Today these functions typically live in disconnected tools: an OTA extranet, a spreadsheet calendar, a standalone POS, paper housekeeping sheets and a separate door-lock program. The platform replaces them with <strong>one system of record</strong> so that every guest, villa, booking, charge, card and staff action is captured once and visible everywhere it matters.</p>
+
+<h4>Core value proposition</h4>
+<ul>
+  <li><strong>Zero double bookings.</strong> A single availability ledger governs every channel: website, walk-in, phone, admin, tour operators and OTAs.</li>
+  <li><strong>One guest bill.</strong> Room nights, restaurant, laundry, spa, transport and other services post to one guest folio and settle in one checkout.</li>
+  <li><strong>Operational flow without hand-offs.</strong> Checkout automatically revokes the key card, flags the villa dirty, creates the housekeeping task, and returns the villa to sale once inspected.</li>
+  <li><strong>Direct revenue.</strong> A premium, fast, mobile-first website with secure payment and social/WhatsApp reach reduces OTA commission dependency.</li>
+  <li><strong>Management visibility.</strong> Real-time dashboards for occupancy, revenue, receivables, POS, inventory, staff attendance and access activity.</li>
+</ul>
+
+<h4>Platform surfaces</h4>
+<div class="tw"><table>
+<tr><th>Surface</th><th>Users</th><th>Form factor</th></tr>
+<tr><td>Public website</td><td>Guests, prospects</td><td>Responsive web, SEO-rendered</td></tr>
+<tr><td>Back office (PMS)</td><td>Owner, Admin, Manager, Receptionist, Accountant</td><td>Desktop-first responsive web app</td></tr>
+<tr><td>Tour operator portal</td><td>Tour operator users</td><td>Responsive web app, separate auth realm</td></tr>
+<tr><td>POS terminal</td><td>Cashier, Waiter, POS Manager</td><td>Touch-optimised PWA (tablet / all-in-one terminal)</td></tr>
+<tr><td>Kitchen Display (KDS)</td><td>Kitchen staff</td><td>Wall-mounted screen PWA, real-time</td></tr>
+<tr><td>Housekeeping app</td><td>Housekeepers, supervisors, maintenance</td><td>Phone PWA, offline-tolerant</td></tr>
+<tr><td>Staff time clock</td><td>All employees</td><td>Kiosk PWA; later RFID / QR / biometric devices</td></tr>
+<tr><td>Lock Bridge</td><td>(system)</td><td>On-premise service connecting the cloud to RFID encoders and lock servers</td></tr>
+</table></div>
+
+<h4>Architectural stance: modular monolith on one database</h4>
+<p>The system is built as a <strong>modular monolith</strong>: one deployable backend with strictly bounded internal modules (Booking, Villa, Folio, POS, Housekeeping, Access, Staff, Operator, Channel, CMS, Reporting, Identity). Each module owns its tables, exposes a service interface and publishes domain events; no module writes another module's tables directly. All surfaces talk to the backend over a versioned REST API plus WebSocket channels for real-time screens.</p>
+<div class="why"><b>Why not microservices?</b> The dominant correctness problems here (availability, folio balance, card validity) are transactional and cross-module: a checkout must close a folio, revoke a card and dirty a villa atomically. One ACID database makes those guarantees cheap. Traffic at villa scale is modest, and a small team pays heavily for distributed operations. Module boundaries plus an internal event bus keep the option open to extract a module (e.g. Channel sync, Reporting) into its own service later, without a rewrite.</div>
+</section>
+
+<!-- 02 -->
+<section class="s" id="functional">
+<h2><span class="n">02</span>Functional requirements</h2>
+<p class="sub">Each module lists purpose, features, workflow and business rules. Requirement IDs (e.g. <code>BK-04</code>) are stable references for estimation and test cases.</p>
+
+<!-- Website -->
+<h3 id="m-web"><span class="id">WEB</span>Customer-facing website</h3>
+<p>Marketing and direct-booking site. Content is managed from the back-office CMS; availability and prices are read live from the booking engine.</p>
+<h4>Pages</h4>
+<div class="tw"><table>
+<tr><th>ID</th><th>Page</th><th>Content &amp; behaviour</th></tr>
+<tr><td>WEB-01</td><td>Home</td><td>Hero image/video background, availability search bar, featured villas, current offers, animated counters (villas, guests hosted, rating), testimonials, Instagram feed strip, weather widget, CTA to WhatsApp.</td></tr>
+<tr><td>WEB-02</td><td>About</td><td>Story, team, location map, sustainability/amenities narrative. CMS-driven.</td></tr>
+<tr><td>WEB-03</td><td>Villas / Rooms</td><td>Filterable grid (type, guests, price, facilities). Detail page per villa: gallery + lightbox, video, description, capacity, bed configuration, facilities, price from/night, seasonal rates, active offers, availability calendar, “Book now”.</td></tr>
+<tr><td>WEB-04</td><td>Services</td><td>Restaurant, spa, laundry, transport, airport pickup, excursions; each with description, pricing, enquiry or add-on-to-booking CTA.</td></tr>
+<tr><td>WEB-05</td><td>Gallery</td><td>Categorised masonry gallery (villas, dining, grounds, events), lightbox, video items, lazy loading.</td></tr>
+<tr><td>WEB-06</td><td>Offers</td><td>Promotions with validity, conditions and deep link into booking with offer pre-applied.</td></tr>
+<tr><td>WEB-07</td><td>Contact</td><td>Enquiry form (CAPTCHA-protected, rate-limited), map, phone, email, WhatsApp click-to-chat, social links.</td></tr>
+<tr><td>WEB-08</td><td>Booking flow</td><td>Search → results → villa selection → extras → guest details → payment → confirmation (detailed below).</td></tr>
+<tr><td>WEB-09</td><td>Manage booking</td><td>Guest looks up a booking by reference + email (magic link), views voucher, downloads receipt, requests changes.</td></tr>
+</table></div>
+
+<h4>Booking flow</h4>
+<div class="flow">Search (check-in, check-out, adults, children, promo code)
+  → Availability + price quote per villa (rate plan, taxes, offers applied)
+  → Select villa(s) + optional extras (airport pickup, breakfast, spa)
+  → Guest details (name, email, phone, country, arrival time, special requests)
+  → Create HOLD on inventory (TTL 15 min) → Payment (deposit or full, per rate plan)
+  → Payment webhook confirmed → Booking CONFIRMED → email confirmation + voucher + receipt
+  → Hold expires without payment → inventory released, booking marked EXPIRED</div>
+<ul>
+  <li><strong>WEB-10</strong> Real-time availability: results reflect the central inventory ledger at query time; a quote is re-validated when the hold is created.</li>
+  <li><strong>WEB-11</strong> Price transparency: nightly breakdown, taxes, service charge, discounts and total shown before payment.</li>
+  <li><strong>WEB-12</strong> Payment modes per rate plan: full prepayment, deposit (percentage or first night), or pay-at-property with card guarantee (tokenised).</li>
+  <li><strong>WEB-13</strong> Email delivery of confirmation, payment receipt and PDF voucher; optional WhatsApp confirmation message with opt-in.</li>
+  <li><strong>WEB-14</strong> Multi-currency <em>display</em> with a single settlement currency; exchange rates refreshed daily.</li>
+  <li><strong>WEB-15</strong> Social: share buttons, Open Graph/Twitter cards per villa and offer, embedded Instagram/TikTok/YouTube content blocks, floating WhatsApp button.</li>
+  <li><strong>WEB-16</strong> SEO: server-rendered pages, schema.org <code>Hotel</code>/<code>LodgingBusiness</code>/<code>Offer</code> markup, sitemap, canonical URLs, per-page meta managed in CMS.</li>
+  <li><strong>WEB-17</strong> Language readiness: all strings externalised; English at launch, additional locales addable without code change.</li>
+  <li><strong>WEB-18</strong> Website animation &amp; logo creation: a purpose-made logo (mark + wordmark, full-colour, reverse and mono variants, SVG master files) and a defined motion system for the customer-facing site. Animation principles, the website animation catalogue, logo usage rules and integration requirements are specified in <a href="#uiux-motion">§9 Animation guidelines</a> and <a href="#uiux-logo">§9 Logo usage</a>.</li>
+</ul>
+
+<!-- Booking -->
+<h3 id="m-booking"><span class="id">BK</span>Booking system &amp; channel management</h3>
+<p>The heart of the platform. Every reservation, regardless of source, is a <code>booking</code> record that consumes inventory from the same ledger.</p>
+<h4>Booking sources</h4>
+<div class="tw"><table>
+<tr><th>Source</th><th>Created by</th><th>Notes</th></tr>
+<tr><td><code>website</code></td><td>Guest</td><td>Paid or guaranteed online.</td></tr>
+<tr><td><code>admin</code></td><td>Manager / Receptionist</td><td>Manual booking; can override rate with reason and permission.</td></tr>
+<tr><td><code>walk_in</code></td><td>Receptionist</td><td>Same-day arrival; flows straight into check-in.</td></tr>
+<tr><td><code>phone</code> / <code>email</code></td><td>Receptionist</td><td>Optional payment link sent by email/WhatsApp.</td></tr>
+<tr><td><code>ota</code></td><td>Channel manager webhook</td><td>Booking.com, Agoda, Airbnb, Expedia, others; OTA reference and commission stored.</td></tr>
+<tr><td><code>tour_operator</code></td><td>Operator portal or staff on operator’s behalf</td><td>Contract rates, allotments, commission, rooming list.</td></tr>
+</table></div>
+
+<h4>Booking lifecycle</h4>
+<div class="states"><span class="st">Enquiry</span><span class="arr">→</span><span class="st">Hold</span><span class="arr">→</span><span class="st">Tentative</span><span class="arr">→</span><span class="st k">Confirmed</span><span class="arr">→</span><span class="st k">Checked-in</span><span class="arr">→</span><span class="st k">Checked-out</span><span class="arr">·</span><span class="st">Cancelled</span><span class="st">No-show</span><span class="st">Expired</span></div>
+<ul>
+  <li><strong>BK-01</strong> Central availability calendar: grid of villas × dates, colour-coded by status and source; drag to move/extend with conflict checks; blocks for maintenance and owner use.</li>
+  <li><strong>BK-02</strong> Double-booking prevention: inventory is a per-villa, per-night ledger with a uniqueness constraint (<code>villa_id, stay_date</code>). Holds, bookings and blocks all write to it inside one transaction; a conflicting write fails, never overwrites.</li>
+  <li><strong>BK-03</strong> Holds with TTL for in-progress web/portal checkouts; expired holds are released by a scheduled job and on read.</li>
+  <li><strong>BK-04</strong> Rate management: rate plans (e.g. Room Only, B&amp;B, Non-refundable), base rates, seasonal rates, day-of-week modifiers, length-of-stay rules, min/max stay, closed-to-arrival/departure, extra-guest charges, child policy.</li>
+  <li><strong>BK-05</strong> Cancellation policies attached to rate plans; automatic penalty calculation and refund proposal on cancel.</li>
+  <li><strong>BK-06</strong> Modifications: date change, villa change, guest count change, with re-pricing and audit trail of before/after.</li>
+  <li><strong>BK-07</strong> Group bookings: parent booking with multiple villa lines, shared or split folios.</li>
+  <li><strong>BK-08</strong> Guest profiles: deduplicated by email/phone, stay history, preferences, VIP/blacklist flags, marketing consent.</li>
+  <li><strong>BK-09</strong> Channel sync (see <a href="#i-ota">Integration §10</a>): availability, rates and restrictions pushed to the channel manager on every inventory change; OTA bookings, modifications and cancellations pulled in via webhook, idempotent on OTA reference.</li>
+  <li><strong>BK-10</strong> Overbooking guard for OTA race conditions: if an inbound OTA booking conflicts, it is accepted into a <em>conflict queue</em>, the manager is alerted immediately, and relocation workflow is offered. The system never silently drops an OTA booking.</li>
+  <li><strong>BK-11</strong> Payment links: generate a hosted payment link for a booking balance; delivered by email/WhatsApp.</li>
+  <li><strong>BK-12</strong> Notifications on new booking, modification, cancellation, payment received, arrival tomorrow.</li>
+</ul>
+
+<!-- Tour operator -->
+<h3 id="m-operator"><span class="id">TO</span>Tour operator management</h3>
+<div class="term"><b>Tour operator</b>A travel company that books villas on behalf of its clients, usually at negotiated contract rates, often in groups, and often on credit terms with a commission or net-rate arrangement.</div>
+<ul>
+  <li><strong>TO-01</strong> Company registration (self-service application with admin approval, or created by admin): legal name, registration no., tax ID, address, contacts, bank details, logo, documents.</li>
+  <li><strong>TO-02</strong> Operator users: multiple logins per company with roles (Operator Admin, Operator Agent). Separate login realm from staff.</li>
+  <li><strong>TO-03</strong> Dashboard: upcoming arrivals, open bookings, outstanding balance, credit limit usage, recent invoices, allotment availability.</li>
+  <li><strong>TO-04</strong> Contracts: contract period, special (net or discounted) rates per villa type and season, commission %, deposit rules, payment terms (e.g. 30 days), credit limit, release days for allotments.</li>
+  <li><strong>TO-05</strong> Group booking creation: select dates and villas, attach group name, create one parent booking with multiple villa lines.</li>
+  <li><strong>TO-06</strong> Guest lists &amp; rooming lists: upload (CSV/XLSX template) or enter guests per villa, with names, nationality, passport no., arrival flight, dietary notes. Rooming list locks at a configurable cut-off before arrival.</li>
+  <li><strong>TO-07</strong> Deposits &amp; payments: deposit schedule per booking, payment recording (bank transfer with proof upload, card link), allocation of a single payment across multiple invoices.</li>
+  <li><strong>TO-08</strong> Commission: calculated per booking line (percentage of gross or net-rate difference), accrued at checkout, settled via statement.</li>
+  <li><strong>TO-09</strong> Outstanding balance reporting and ageing (0–30, 31–60, 61–90, 90+ days); automated reminders.</li>
+  <li><strong>TO-10</strong> Documents: booking confirmation, guest vouchers, pro-forma and final invoices, statements of account, booking history export.</li>
+</ul>
+
+<!-- Villa -->
+<h3 id="m-villa"><span class="id">VL</span>Villa management</h3>
+<ul>
+  <li><strong>VL-01</strong> Villa CRUD with soft delete (a villa with history is archived, never hard-deleted).</li>
+  <li><strong>VL-02</strong> Villa types (e.g. Garden Villa, Pool Villa, Family Villa) carrying default capacity, bed configuration, base rate and facility set; individual villas inherit and may override.</li>
+  <li><strong>VL-03</strong> Facilities catalogue (private pool, AC, kitchenette, sea view…) with icons, filterable on the website.</li>
+  <li><strong>VL-04</strong> Pricing: base, seasonal, rate-plan-specific; managed jointly with BK-04.</li>
+  <li><strong>VL-05</strong> Media: ordered photos (auto-generated WebP/AVIF variants and responsive sizes), videos (hosted on a video service, embedded), cover image, alt text required.</li>
+  <li><strong>VL-06</strong> Status dimensions kept separate, because they answer different questions:
+    <ul>
+      <li><em>Occupancy</em>: Vacant, Occupied, Due out, Due in.</li>
+      <li><em>Housekeeping</em>: Dirty, Cleaning, Inspection, Clean, Ready.</li>
+      <li><em>Maintenance</em>: OK, Issue reported, Out of order (removed from inventory), Out of service (sellable with warning).</li>
+      <li><em>Booking</em>: derived from the calendar for any date.</li>
+    </ul></li>
+  <li><strong>VL-07</strong> Occupancy tracking per villa and date range; feeds reporting.</li>
+  <li><strong>VL-08</strong> Lock mapping: each villa records its door lock ID(s) in the lock vendor’s system (used by the Key Card module).</li>
+</ul>
+
+<!-- Key card -->
+<h3 id="m-keycard"><span class="id">KC</span>Key card control</h3>
+<div class="term"><b>RFID key card</b>A contactless card (commonly MIFARE Classic/DESFire) that the vendor’s encoder writes with an access grant for specific locks and a validity window. The <b>card UID</b> is its factory serial number, used by the platform to track physical cards.</div>
+<ul>
+  <li><strong>KC-01</strong> Card inventory: register cards by UID (manual entry or read on encoder), card type, status (Available, Issued, Lost, Blocked, Damaged, Retired).</li>
+  <li><strong>KC-02</strong> Assignment: card ↔ guest ↔ booking ↔ villa, with validity from check-in time to scheduled checkout time (+ configurable grace).</li>
+  <li><strong>KC-03</strong> Issue / duplicate: encode first card (new key, invalidates previous) or duplicate (additional card, same grant) through the vendor encoder.</li>
+  <li><strong>KC-04</strong> Extend: late checkout or stay extension re-encodes or updates the grant online (for networked locks).</li>
+  <li><strong>KC-05</strong> Lost card: mark lost → issue new card as “new key” so the old card is rejected at the lock; online locks are updated immediately, offline locks on next new-key card use.</li>
+  <li><strong>KC-06</strong> Revoke / block: at checkout or on demand; card returns to inventory or is blocked.</li>
+  <li><strong>KC-07</strong> Access permissions for staff cards: master (all villas), zone (a block of villas), housekeeping (time-windowed), maintenance, emergency; linked to staff profile.</li>
+  <li><strong>KC-08</strong> Access history: import lock audit trails (online locks in near real time; offline locks when read by the vendor’s audit device) into <code>access_events</code>.</li>
+  <li><strong>KC-09</strong> Audit log of every platform action on cards: who issued, when, for which booking, from which encoder.</li>
+  <li><strong>KC-10</strong> Hardware abstraction: a <code>LockProvider</code> interface with one adapter per vendor. See <a href="#i-rfid">Integration §10</a>.</li>
+</ul>
+<div class="why"><b>Constraint to plan around:</b> Most lock vendors require their own lock-server software and a licensed PMS interface on the property LAN. Card encoding cannot be done purely from the cloud; the on-premise <strong>Lock Bridge</strong> service is mandatory. The specific vendor must be chosen (or the installed one identified) before Phase 5 estimation is final.</div>
+
+<!-- Check in/out -->
+<h3 id="m-frontdesk"><span class="id">FD</span>Check-in &amp; check-out</h3>
+<h4>Check-in workflow</h4>
+<div class="flow">Search booking (ref, name, phone, OTA ref, arrivals list)
+  → Verify guest identity → capture ID/passport (scan/photo upload, number, nationality, expiry)
+  → Register all adult guests (local guest-registration requirements)
+  → Assign / confirm villa (must be Ready; system warns otherwise)
+  → Collect deposit / balance / security deposit (cash, card, pre-authorisation)
+  → Issue key card(s) via encoder → sign registration card (on-screen signature)
+  → Status: booking CHECKED-IN, villa OCCUPIED, folio OPEN, POS can charge to villa</div>
+<h4>During stay</h4>
+<ul>
+  <li><strong>FD-01</strong> Post additional charges (minibar, laundry, spa, transport, damages) to the folio; see <a href="#m-charges">Guest service charges</a>.</li>
+  <li><strong>FD-02</strong> Room move with folio carry-over and key re-issue.</li>
+  <li><strong>FD-03</strong> Stay extension / early departure with re-pricing and inventory update.</li>
+</ul>
+<h4>Check-out workflow</h4>
+<div class="flow">Open folio → verify all POS checks closed / posted, minibar checked
+  → Review charges, apply adjustments (with permission + reason)
+  → Calculate balance (charges − payments − deposits) → take payment / refund / transfer to city ledger (operator or company account)
+  → Generate final invoice + receipt (print / PDF / email)
+  → Revoke key cards → folio CLOSED → booking CHECKED-OUT
+  → Villa: OCCUPIED → VACANT + DIRTY → housekeeping task auto-created</div>
+<ul>
+  <li><strong>FD-04</strong> Checkout cannot complete with a non-zero balance unless transferred to an approved city-ledger account.</li>
+  <li><strong>FD-05</strong> Express checkout: pre-authorised card, invoice emailed.</li>
+  <li><strong>FD-06</strong> Arrivals, in-house and departures lists with filters and printable versions.</li>
+  <li><strong>FD-07</strong> Night audit: a daily close that posts room charges for each occupied night, flags no-shows, rolls the business date and snapshots KPIs.</li>
+</ul>
+<div class="term"><b>Folio</b>The running account of a guest stay: every charge and every payment, in date order. A booking may have several folios (e.g. room charges billed to a tour operator, extras paid by the guest). <b>City ledger</b>: receivable accounts for parties billed after departure, such as tour operators or companies.</div>
+
+<!-- Housekeeping -->
+<h3 id="m-hk"><span class="id">HK</span>Housekeeping</h3>
+<div class="states"><span class="st">Dirty</span><span class="arr">→</span><span class="st">Cleaning</span><span class="arr">→</span><span class="st">Inspection</span><span class="arr">→</span><span class="st">Clean</span><span class="arr">→</span><span class="st k">Ready</span><span class="arr">(inspection fail →</span><span class="st">Cleaning</span><span class="arr">)</span></div>
+<ul>
+  <li><strong>HK-01</strong> Status board: all villas with occupancy + housekeeping + maintenance status, priority (due-in today first), assigned staff.</li>
+  <li><strong>HK-02</strong> Task generation: automatic on checkout (departure clean), daily for occupied villas (stay-over service, configurable), manual ad-hoc tasks.</li>
+  <li><strong>HK-03</strong> Assignment by supervisor (drag-and-drop) or auto-distribution by workload/zone.</li>
+  <li><strong>HK-04</strong> Start/end timestamps captured from the phone app; duration tracked vs. standard time per villa type.</li>
+  <li><strong>HK-05</strong> Checklists: templates per task type and villa type; each item tick-able, photo evidence optional/required per item.</li>
+  <li><strong>HK-06</strong> Linen &amp; towel requirements: par levels per villa type; quantities issued/returned per task; aggregated for laundry.</li>
+  <li><strong>HK-07</strong> Lost &amp; found: item, where found, photo, finder, storage location, guest match, return/dispose record.</li>
+  <li><strong>HK-08</strong> Maintenance reporting: issue category, severity, photos; creates a maintenance ticket; severity “blocking” sets villa Out of Order automatically.</li>
+  <li><strong>HK-09</strong> Inspection: cleaner requests inspection; supervisor approves (→ Clean/Ready) or rejects with notes (→ Cleaning).</li>
+  <li><strong>HK-10</strong> Auto-availability: when a villa reaches Ready and has no maintenance block, it is flagged sellable for same-day arrivals and the front desk is notified.</li>
+  <li><strong>HK-11</strong> Offline tolerance: the app queues status changes when Wi-Fi drops and syncs on reconnect, with server-side conflict resolution by timestamp.</li>
+</ul>
+
+<!-- Staff -->
+<h3 id="m-staff"><span class="id">ST</span>Staff management &amp; time card</h3>
+<ul>
+  <li><strong>ST-01</strong> Employee profile: personal details, photo, emergency contact, ID documents, employment type, start date, pay basis, department, job role, linked user account (optional: not every employee needs system access).</li>
+  <li><strong>ST-02</strong> Departments (Front Office, Housekeeping, F&amp;B Service, Kitchen, Maintenance, Admin) and job roles; job role suggests a default system role.</li>
+  <li><strong>ST-03</strong> Credentials: login provisioning, password reset by admin, deactivation on termination (revokes sessions and staff key cards).</li>
+  <li><strong>ST-04</strong> Shifts &amp; rosters: shift templates (e.g. 06:00–14:00), weekly roster per department.</li>
+  <li><strong>ST-05</strong> Attendance: clock-in/out from kiosk or app (PIN + photo capture); computes worked hours, overtime (beyond shift or daily threshold), late arrival and early departure against rostered shift, with grace minutes.</li>
+  <li><strong>ST-06</strong> Corrections: supervisor adjusts punches with mandatory reason; original values preserved.</li>
+  <li><strong>ST-07</strong> Leave: leave types, balances and accrual, request → approve/reject workflow, calendar view, roster conflict warning.</li>
+  <li><strong>ST-08</strong> Attendance history and timesheet exports for payroll.</li>
+  <li><strong>ST-09</strong> Device-ready design: punches arrive through a <code>PunchSource</code> abstraction (<code>kiosk</code>, <code>mobile</code>, <code>rfid</code>, <code>qr</code>, <code>biometric</code>) so hardware terminals plug in later via a device API without changing attendance logic.</li>
+</ul>
+
+<!-- POS -->
+<h3 id="m-pos"><span class="id">POS</span>Restaurant POS</h3>
+<div class="term"><b>KOT</b>Kitchen Order Ticket: the instruction sent to the kitchen (or bar) when a waiter fires an order, listing items, quantities, modifiers, table and time. <b>KDS</b>: Kitchen Display System, a screen that replaces printed KOTs and lets cooks bump items through preparation states.</div>
+<h4>Roles &amp; dashboards</h4>
+<p>POS Admin/Manager (menu, pricing, reports, overrides), Cashier (billing, payments, drawer), Waiter (tables, orders), Kitchen Staff (KDS), Inventory Staff (stock). Each lands on a role-specific dashboard. Fast user switching via PIN on shared terminals.</p>
+<h4>Features</h4>
+<ul>
+  <li><strong>POS-01</strong> Outlets: restaurant, bar, pool bar, in-villa dining, each with its own menu, tax profile, printers and reports.</li>
+  <li><strong>POS-02</strong> Table management: floor plan editor, table status (Free, Seated, Ordered, Bill requested, Paid), covers, timer.</li>
+  <li><strong>POS-03</strong> Menu: categories, items, variants (size), modifiers/add-ons with price deltas and min/max selections, availability by time of day, 86’d (sold-out) toggle, allergens, images, kitchen station routing.</li>
+  <li><strong>POS-04</strong> Orders: create, add rounds, edit before firing, void after firing (permission + reason), course firing, notes per item.</li>
+  <li><strong>POS-05</strong> Table transfer, split (by item, by seat, equal parts) and merge.</li>
+  <li><strong>POS-06</strong> KOT generation per station (kitchen, bar) to printer and/or KDS.</li>
+  <li><strong>POS-07</strong> KDS: tickets in columns (New, Preparing, Ready), per-item bump, colour-coded age timers, recall, sound alerts; waiter notified when Ready.</li>
+  <li><strong>POS-08</strong> Order status: Open → Fired → Preparing → Ready → Served → Billed → Paid / Charged to villa / Void.</li>
+  <li><strong>POS-09</strong> Billing: itemised bill, discounts (item or bill, % or amount, with permission thresholds), taxes (inclusive/exclusive, multiple), service charge, rounding, tips.</li>
+  <li><strong>POS-10</strong> Payments: cash (with change), card (integrated terminal or manual reference), online (QR/payment link), split tender, <strong>charge to villa</strong>.</li>
+  <li><strong>POS-11</strong> Refunds and credit notes with manager approval; original invoice preserved.</li>
+  <li><strong>POS-12</strong> Shift open/close: opening float, cash in/out (paid-outs), blind close, expected vs. counted variance, X-report (mid-shift) and Z-report (end of shift).</li>
+  <li><strong>POS-13</strong> Receipts and tax invoices with sequential, gap-free numbering per outlet; thermal printer (ESC/POS) and PDF/email.</li>
+  <li><strong>POS-14</strong> Reports: daily, monthly, by item, by category, by waiter, by payment type, voids/discounts, hourly sales.</li>
+  <li><strong>POS-15</strong> Inventory: ingredients and stock items, units and conversions, recipes (item → ingredient quantities) for automatic depletion on sale, stock-in via goods received notes, stock-out, transfers between stores, suppliers, purchase orders, low-stock alerts at reorder level, wastage with reason, periodic stock counts with variance.</li>
+  <li><strong>POS-16</strong> User activity log: logins, voids, discounts, drawer opens, price overrides.</li>
+  <li><strong>POS-17</strong> Offline resilience: the POS terminal keeps taking orders and cash payments during an internet outage (local queue, printed KOTs), and syncs when back. “Charge to villa” and card payments require connectivity or are queued with a warning.</li>
+</ul>
+<h4>Guest folio integration</h4>
+<div class="flow">Waiter selects “Charge to villa” → searches in-house villa / guest
+  → POS validates: booking CHECKED-IN, folio OPEN, guest allowed to charge, credit limit not exceeded
+  → Guest signs (on-screen) → POS invoice status CHARGED_TO_ROOM
+  → Folio module posts line: dept=Restaurant, ref=POS invoice no., net, tax, service
+  → Visible immediately at front desk; settled at checkout with room charges</div>
+<p>The same posting interface (<code>FolioService.post()</code>) is used by every department (restaurant, bar, laundry, spa, transport, minibar), so the final invoice combines all services into one folio.</p>
+
+<!-- Charges -->
+<h3 id="m-charges"><span class="id">SC</span>Guest service charge management</h3>
+<ul>
+  <li><strong>SC-01</strong> Charge catalogue: service items grouped by department (Laundry, Spa, Transport, Minibar, Excursions, Damages, Misc.), price, tax profile, revenue account code.</li>
+  <li><strong>SC-02</strong> Post charges against a booking, a villa (resolves to the in-house booking) or a guest account; quantity, date, notes, posted-by.</li>
+  <li><strong>SC-03</strong> Routing rules: e.g. room + breakfast to tour operator folio, extras to guest folio.</li>
+  <li><strong>SC-04</strong> Adjustments and voids via reversing entries only; folio lines are immutable once the business day closes.</li>
+  <li><strong>SC-05</strong> Pre-arrival packages (e.g. airport transfer bought on the website) post automatically at check-in.</li>
+</ul>
+
+<!-- RBAC short -->
+<h3 id="m-rbac"><span class="id">AC</span>Role-based access control</h3>
+<p>Permissions are granular (<code>module.action</code>, e.g. <code>folio.adjust</code>, <code>pos.void</code>); roles are named bundles of permissions; users may hold multiple roles, scoped to a property. The full matrix is in <a href="#rbac">§06</a>.</p>
+
+<!-- Notifications -->
+<h3 id="m-notify"><span class="id">NT</span>Notifications &amp; alerts</h3>
+<p>In-app (bell + real-time toast), email and WhatsApp/SMS channels, each user choosing per-event preferences within limits set by admin.</p>
+<div class="tw"><table>
+<tr><th>Event</th><th>Default recipients</th></tr>
+<tr><td>New / modified / cancelled booking</td><td>Reservations, Manager</td></tr>
+<tr><td>Payment received / failed</td><td>Reservations, Accountant</td></tr>
+<tr><td>Arrival / departure today, late checkout</td><td>Front desk, Housekeeping supervisor</td></tr>
+<tr><td>OTA conflict (overbooking)</td><td>Manager, Owner (urgent)</td></tr>
+<tr><td>Villa ready / inspection requested</td><td>Front desk / HK supervisor</td></tr>
+<tr><td>Maintenance issue reported (by severity)</td><td>Maintenance, Manager</td></tr>
+<tr><td>Low stock / expiring stock</td><td>Inventory staff, POS Manager</td></tr>
+<tr><td>Operator payment overdue / credit limit reached</td><td>Accountant, Manager</td></tr>
+<tr><td>Lost card, card encode failure</td><td>Front desk, Manager</td></tr>
+<tr><td>Staff late / absent against roster</td><td>Department head</td></tr>
+</table></div>
+
+<!-- Docs -->
+<h3 id="m-docs"><span class="id">DOC</span>Document generation</h3>
+<ul>
+  <li><strong>DOC-01</strong> Templates (HTML + CSS, rendered to PDF server-side) for: booking confirmation, guest voucher, pro-forma invoice, final invoice, receipt, payment record, credit note, customer statement, operator statement, operator voucher, rooming list, registration card, POS receipt, KOT, operational reports.</li>
+  <li><strong>DOC-02</strong> Branding (logo, colours, address, tax IDs, bank details, footer terms) managed in settings; per-property branding for multi-property.</li>
+  <li><strong>DOC-03</strong> Every issued financial document is stored as an immutable PDF with its number and hash; re-prints are marked “Copy”.</li>
+  <li><strong>DOC-04</strong> Output: screen preview, browser print (A4 / 80 mm thermal layouts), PDF download, email attachment, WhatsApp document message.</li>
+  <li><strong>DOC-05</strong> Sequential numbering series per document type, per property, per fiscal year, e.g. <code>INV-VV-2026-000123</code>.</li>
+</ul>
+</section>
+
+<!-- 03 -->
+<section class="s" id="nfr">
+<h2><span class="n">03</span>Non-functional requirements</h2>
+<p class="sub">Targets are measurable so they can be tested in QA and monitored in production.</p>
+<div class="tw"><table>
+<tr><th>Area</th><th>Requirement</th><th>Target</th></tr>
+<tr><td>Web performance</td><td>Public pages Core Web Vitals on 4G mobile</td><td>LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1</td></tr>
+<tr><td>API latency</td><td>Back-office reads / writes (p95)</td><td>≤ 300 ms / ≤ 500 ms</td></tr>
+<tr><td>Availability search</td><td>Search for 30-night window across all villas (p95)</td><td>≤ 400 ms</td></tr>
+<tr><td>Real-time</td><td>POS order fired → visible on KDS</td><td>≤ 2 s</td></tr>
+<tr><td>Channel sync</td><td>Inventory change → pushed to channel manager</td><td>≤ 60 s</td></tr>
+<tr><td>Uptime</td><td>Cloud platform monthly availability</td><td>99.9 %</td></tr>
+<tr><td>Offline</td><td>POS &amp; housekeeping continue on local queue</td><td>≥ 4 h outage</td></tr>
+<tr><td>Data durability</td><td>Backups: point-in-time recovery</td><td>RPO ≤ 15 min, RTO ≤ 4 h</td></tr>
+<tr><td>Scalability</td><td>Single property launch; architecture supports</td><td>50 properties, 2,000 units, 200 concurrent staff users without redesign</td></tr>
+<tr><td>Accessibility</td><td>Public site and back office</td><td>WCAG 2.2 AA</td></tr>
+<tr><td>Responsiveness</td><td>Breakpoints tested</td><td>360, 768, 1024, 1280, 1920 px</td></tr>
+<tr><td>Browser support</td><td>Evergreen browsers</td><td>Last 2 versions of Chrome, Edge, Safari (incl. iOS), Firefox</td></tr>
+<tr><td>Auditability</td><td>Financial and access actions</td><td>100 % logged, immutable, retained ≥ 7 years (configurable)</td></tr>
+<tr><td>Observability</td><td>Structured logs, metrics, traces, error tracking</td><td>Alert on error-rate, queue lag, failed payment/channel/lock calls</td></tr>
+<tr><td>Maintainability</td><td>Automated tests</td><td>≥ 80 % coverage on domain services (booking, folio, inventory, access)</td></tr>
+<tr><td>Localisation</td><td>Timezone, currency, date formats</td><td>Per property; all timestamps stored UTC</td></tr>
+</table></div>
+</section>
+
+<!-- 04 -->
+<section class="s" id="data">
+<h2><span class="n">04</span>Data model &amp; database schema</h2>
+<p class="sub">One relational database (MySQL 8 / MariaDB 10.11+ or PostgreSQL 16) with module-owned table prefixes. Every business table carries <code>property_id</code> from day one to make multi-property a configuration, not a migration.</p>
+
+<h4>Conventions</h4>
+<ul>
+  <li>Primary keys: <code>BIGINT UNSIGNED</code> auto-increment internally; public references use ULIDs or human codes (<code>VV-26-0412</code>) so IDs are not enumerable.</li>
+  <li>Money: <code>DECIMAL(14,2)</code> plus <code>currency CHAR(3)</code>. Never floats. Exchange rate captured on the transaction.</li>
+  <li>Time: <code>DATETIME</code> in UTC; stay dates are <code>DATE</code> in the property’s local calendar.</li>
+  <li>Standard columns: <code>created_at</code>, <code>updated_at</code>, <code>created_by</code>, <code>updated_by</code>; soft delete (<code>deleted_at</code>) for master data only. Financial rows are never deleted or updated in place; corrections are reversing entries.</li>
+  <li>Enums as lookup tables or constrained <code>VARCHAR</code> with application-level validation, so new statuses do not need schema changes.</li>
+  <li>Optimistic locking (<code>version INT</code>) on bookings, folios and orders edited concurrently.</li>
+</ul>
+
+<h4>Core entity relationships</h4>
+<pre class="mermaid">
+erDiagram
+  PROPERTY ||--o{ VILLA : has
+  VILLA_TYPE ||--o{ VILLA : classifies
+  VILLA ||--o{ INVENTORY_NIGHT : "one row per date"
+  BOOKING ||--o{ BOOKING_VILLA : contains
+  BOOKING_VILLA }o--|| VILLA : assigns
+  BOOKING_VILLA ||--o{ INVENTORY_NIGHT : consumes
+  GUEST ||--o{ BOOKING : "books as primary"
+  BOOKING_VILLA ||--o{ STAY_GUEST : registers
+  BOOKING ||--o{ FOLIO : bills
+  FOLIO ||--o{ FOLIO_LINE : "charges & payments"
+  POS_ORDER }o--o| FOLIO : "charged to villa"
+  TOUR_OPERATOR ||--o{ BOOKING : sources
+  TOUR_OPERATOR ||--o{ OPERATOR_CONTRACT : negotiates
+  BOOKING_VILLA ||--o{ KEY_CARD_ISSUE : grants
+  KEY_CARD ||--o{ KEY_CARD_ISSUE : "used in"
+  VILLA ||--o{ HK_TASK : cleaned_by
+  EMPLOYEE ||--o{ HK_TASK : performs
+  EMPLOYEE ||--o{ ATTENDANCE_PUNCH : records
+</pre>
+
+<h4>Key tables by module</h4>
+<div class="tw"><table>
+<tr><th>Module</th><th>Table</th><th>Key columns &amp; constraints</th></tr>
+<tr><td rowspan="3">Core</td><td><code>properties</code></td><td>code UNIQUE, name, timezone, currency, tax_profile_id, address, geo lat/lng, settings JSON</td></tr>
+<tr><td><code>users</code></td><td>email UNIQUE, password_hash, status, mfa_secret (encrypted), last_login_at, failed_attempts, locked_until, theme_pref, locale</td></tr>
+<tr><td><code>roles</code>, <code>permissions</code>, <code>role_permission</code>, <code>user_role</code></td><td>user_role has property_id scope; UNIQUE(user_id, role_id, property_id)</td></tr>
+<tr><td rowspan="5">Villa</td><td><code>villa_types</code></td><td>property_id, name, max_adults, max_children, base_rate, bed_config JSON</td></tr>
+<tr><td><code>villas</code></td><td>property_id, villa_type_id FK, code UNIQUE per property, name, slug, size_sqm, hk_status, maint_status, occupancy_status, is_sellable, lock_ref</td></tr>
+<tr><td><code>facilities</code>, <code>villa_facility</code></td><td>many-to-many</td></tr>
+<tr><td><code>media</code></td><td>polymorphic owner (villa, gallery, offer), type image|video, path, variants JSON, alt, sort_order</td></tr>
+<tr><td><code>maintenance_tickets</code></td><td>villa_id, reported_by, category, severity, status, blocks_inventory BOOL, resolved_at</td></tr>
+<tr><td rowspan="5">Rates</td><td><code>rate_plans</code></td><td>property_id, code, meal_plan, cancellation_policy_id, payment_rule, is_public</td></tr>
+<tr><td><code>seasons</code></td><td>property_id, name, start_date, end_date (no overlap per property)</td></tr>
+<tr><td><code>rates</code></td><td>rate_plan_id, villa_type_id, season_id or date, amount, extra_adult, extra_child, min_stay, max_stay, cta, ctd</td></tr>
+<tr><td><code>offers</code>, <code>promo_codes</code></td><td>discount type/value, stay window, booking window, min nights, usage limits</td></tr>
+<tr><td><code>cancellation_policies</code></td><td>rules JSON: [{days_before, penalty_type, value}]</td></tr>
+<tr><td rowspan="6">Booking</td><td><code>bookings</code></td><td>ref UNIQUE, property_id, source, channel_id, external_ref (UNIQUE with channel_id), primary_guest_id, tour_operator_id NULL, status, arrival, departure, adults, children, total, paid, balance (derived), special_requests, version</td></tr>
+<tr><td><code>booking_villas</code></td><td>booking_id, villa_id NULL (unassigned) / villa_type_id, rate_plan_id, arrival, departure, price_breakdown JSON</td></tr>
+<tr><td><code>inventory_nights</code></td><td>villa_id, stay_date, booking_villa_id NULL, hold_id NULL, block_id NULL; <strong>UNIQUE(villa_id, stay_date)</strong>: the double-booking guard</td></tr>
+<tr><td><code>holds</code></td><td>token, expires_at, session ref</td></tr>
+<tr><td><code>guests</code>, <code>stay_guests</code></td><td>name, email, phone, nationality, doc_type, doc_number (encrypted), doc_expiry, doc_image_path (private storage), consent flags</td></tr>
+<tr><td><code>booking_events</code></td><td>append-only history: booking_id, event, before JSON, after JSON, actor</td></tr>
+<tr><td rowspan="4">Folio</td><td><code>folios</code></td><td>booking_id, payer_type (guest|operator|company), payer_id, status OPEN|CLOSED, currency</td></tr>
+<tr><td><code>folio_lines</code></td><td>folio_id, business_date, department, charge_item_id, description, qty, unit_price, net, tax, service, total, source_type/source_id (e.g. pos_invoice), reverses_line_id NULL. Insert-only.</td></tr>
+<tr><td><code>payments</code></td><td>folio_id / operator_invoice_id, method, amount, currency, gateway, gateway_ref UNIQUE, status, received_by</td></tr>
+<tr><td><code>invoices</code>, <code>invoice_lines</code></td><td>number UNIQUE per series, type (invoice|receipt|credit_note|proforma), pdf_path, pdf_sha256, issued_at</td></tr>
+<tr><td rowspan="4">Operator</td><td><code>tour_operators</code></td><td>legal_name, reg_no, tax_id, status, credit_limit, payment_terms_days</td></tr>
+<tr><td><code>operator_users</code></td><td>tour_operator_id, email UNIQUE, role</td></tr>
+<tr><td><code>operator_contracts</code>, <code>contract_rates</code>, <code>allotments</code></td><td>valid_from/to, commission_pct, deposit rule; allotment per villa type per date with release_days</td></tr>
+<tr><td><code>commissions</code></td><td>booking_id, basis, amount, status accrued|statemented|settled</td></tr>
+<tr><td rowspan="3">Access</td><td><code>key_cards</code></td><td>uid UNIQUE, type, status, property_id</td></tr>
+<tr><td><code>key_card_issues</code></td><td>key_card_id, booking_villa_id or employee_id, lock_refs JSON, valid_from, valid_to, issue_type new|duplicate, encoder_id, status, revoked_at</td></tr>
+<tr><td><code>access_events</code></td><td>lock_ref, card_uid, event_type (open, denied, low_battery), occurred_at, source (online|audit_import)</td></tr>
+<tr><td rowspan="4">Housekeeping</td><td><code>hk_tasks</code></td><td>villa_id, type (departure|stayover|adhoc|inspection), priority, assigned_to, status, started_at, finished_at, inspected_by, result</td></tr>
+<tr><td><code>checklist_templates</code>, <code>hk_task_items</code></td><td>item text, required_photo, checked, photo_path</td></tr>
+<tr><td><code>linen_movements</code></td><td>hk_task_id, linen_item_id, qty_out, qty_in</td></tr>
+<tr><td><code>lost_found_items</code></td><td>villa_id, description, photo, found_by, storage_loc, status, guest_id, resolved_at</td></tr>
+<tr><td rowspan="4">Staff</td><td><code>employees</code></td><td>emp_no UNIQUE, user_id NULL, department_id, job_role_id, employment details, status</td></tr>
+<tr><td><code>shifts</code>, <code>roster_entries</code></td><td>employee_id, date, shift_id</td></tr>
+<tr><td><code>attendance_punches</code></td><td>employee_id, type in|out, occurred_at, source, device_id, photo_path, corrected_from_id</td></tr>
+<tr><td><code>leave_types</code>, <code>leave_requests</code>, <code>leave_balances</code></td><td>status workflow, approver</td></tr>
+<tr><td rowspan="7">POS</td><td><code>outlets</code>, <code>tables</code></td><td>outlet printers, tax profile; table layout coords</td></tr>
+<tr><td><code>menu_categories</code>, <code>menu_items</code>, <code>modifier_groups</code>, <code>modifiers</code></td><td>price, tax_profile, station, is_available, schedule</td></tr>
+<tr><td><code>pos_orders</code>, <code>pos_order_items</code>, <code>pos_order_item_modifiers</code></td><td>outlet_id, table_id, waiter_id, status, covers; item status, fired_at, voided_by, void_reason</td></tr>
+<tr><td><code>kots</code></td><td>order_id, station, number, printed_at, status</td></tr>
+<tr><td><code>pos_invoices</code>, <code>pos_payments</code></td><td>number series per outlet, totals; method incl. <code>room_charge</code> with folio_line_id</td></tr>
+<tr><td><code>cash_shifts</code>, <code>cash_movements</code></td><td>opening_float, expected, counted, variance</td></tr>
+<tr><td><code>stock_items</code>, <code>recipes</code>, <code>stock_movements</code>, <code>suppliers</code>, <code>purchase_orders</code>, <code>grn</code></td><td>movement type in|out|sale|waste|transfer|adjust, qty, unit_cost, store_id; reorder_level</td></tr>
+<tr><td rowspan="3">Platform</td><td><code>audit_logs</code></td><td>actor, action, entity, entity_id, diff JSON, ip, user_agent, occurred_at; append-only</td></tr>
+<tr><td><code>login_logs</code></td><td>user or operator_user, success, ip, reason</td></tr>
+<tr><td><code>outbox_events</code>, <code>webhook_inbox</code></td><td>transactional outbox for integrations; inbound webhook dedupe by provider + event id</td></tr>
+<tr><td>CMS</td><td><code>pages</code>, <code>blocks</code>, <code>galleries</code>, <code>testimonials</code>, <code>seo_meta</code></td><td>locale, published_at</td></tr>
+</table></div>
+<div class="why"><b>Why a per-night inventory row?</b> A date-range overlap check (<code>arrival &lt; x AND departure &gt; y</code>) is correct but races under concurrent writes unless the whole villa row is locked. One row per villa per night lets the database’s unique index reject a conflicting insert atomically, which is the simplest guarantee that works identically for web, OTA and staff bookings.</div>
+</section>
+
+<!-- 05 -->
+<section class="s" id="api">
+<h2><span class="n">05</span>API architecture</h2>
+<p class="sub">One versioned REST API (<code>/api/v1</code>) serves every first-party client. JSON, resource-oriented, OpenAPI 3.1 documented, contract-tested.</p>
+
+<h4>Conventions</h4>
+<ul>
+  <li>Auth: session cookie (HttpOnly, SameSite=Lax) + CSRF token for browser apps; short-lived bearer tokens (OAuth2 client credentials) for devices, Lock Bridge and partner integrations.</li>
+  <li>Idempotency: <code>Idempotency-Key</code> header required on payment, booking creation, POS order submission and folio posting.</li>
+  <li>Pagination (<code>cursor</code>), filtering (<code>filter[status]=confirmed</code>), sorting, sparse fields.</li>
+  <li>Errors: RFC 9457 problem+json with machine-readable <code>code</code> (e.g. <code>INVENTORY_CONFLICT</code>, <code>FOLIO_CLOSED</code>).</li>
+  <li>Concurrency: <code>ETag</code>/<code>If-Match</code> on mutable aggregates.</li>
+  <li>Rate limits per client and per IP; stricter on public and auth endpoints.</li>
+  <li>Real-time: WebSocket channels per property (<code>property.{id}.kds.{station}</code>, <code>.hk</code>, <code>.frontdesk</code>, <code>.notifications.{user}</code>).</li>
+</ul>
+
+<h4>Representative endpoints</h4>
+<div class="tw"><table>
+<tr><th>Module</th><th>Endpoint</th><th>Purpose</th></tr>
+<tr><td>Public</td><td><code>GET /public/availability?arrival&amp;departure&amp;adults&amp;children</code></td><td>Available villas with quotes</td></tr>
+<tr><td></td><td><code>POST /public/holds</code> · <code>POST /public/bookings</code></td><td>Hold inventory; confirm with guest + payment intent</td></tr>
+<tr><td></td><td><code>GET /public/villas/{slug}</code> · <code>/offers</code> · <code>/pages/{slug}</code></td><td>CMS content</td></tr>
+<tr><td>Auth</td><td><code>POST /auth/login</code> · <code>/logout</code> · <code>/password/forgot</code> · <code>/password/reset</code> · <code>/password/change</code> · <code>/mfa/verify</code></td><td>Identity</td></tr>
+<tr><td>Booking</td><td><code>GET|POST /bookings</code> · <code>PATCH /bookings/{id}</code> · <code>POST /bookings/{id}/cancel</code></td><td>Reservation CRUD</td></tr>
+<tr><td></td><td><code>GET /calendar?from&amp;to</code> · <code>POST /blocks</code></td><td>Availability grid, blocks</td></tr>
+<tr><td>Front desk</td><td><code>POST /bookings/{id}/check-in</code> · <code>/check-out</code> · <code>/room-move</code></td><td>Stay transitions (transactional)</td></tr>
+<tr><td>Folio</td><td><code>GET /folios/{id}</code> · <code>POST /folios/{id}/lines</code> · <code>POST /folios/{id}/payments</code> · <code>POST /folio-lines/{id}/reverse</code></td><td>Charges &amp; payments</td></tr>
+<tr><td>Villa</td><td><code>GET|POST|PATCH /villas</code> · <code>PATCH /villas/{id}/status</code></td><td>Master data, status</td></tr>
+<tr><td>Housekeeping</td><td><code>GET /hk/board</code> · <code>POST /hk/tasks/{id}/start|finish|request-inspection|approve|reject</code></td><td>Task workflow</td></tr>
+<tr><td>Access</td><td><code>POST /keycards/issue</code> · <code>/duplicate</code> · <code>/{uid}/revoke</code> · <code>/{uid}/lost</code> · <code>GET /access-events</code></td><td>Card lifecycle</td></tr>
+<tr><td>POS</td><td><code>POST /pos/orders</code> · <code>POST /pos/orders/{id}/fire</code> · <code>/split</code> · <code>/merge</code> · <code>/transfer</code> · <code>POST /pos/orders/{id}/pay</code></td><td>Ordering &amp; billing</td></tr>
+<tr><td></td><td><code>POST /pos/shifts/open|close</code> · <code>GET /pos/reports/z/{shift}</code></td><td>Cash control</td></tr>
+<tr><td>Inventory</td><td><code>POST /stock/grn</code> · <code>/stock/movements</code> · <code>GET /stock/low</code></td><td>Stock</td></tr>
+<tr><td>Staff</td><td><code>POST /attendance/punch</code> · <code>GET /attendance/timesheet</code> · <code>POST /leave-requests</code></td><td>Time &amp; leave</td></tr>
+<tr><td>Operator portal</td><td><code>/operator/bookings</code> · <code>/operator/rooming-lists</code> · <code>/operator/invoices</code> · <code>/operator/statement</code></td><td>Scoped to operator company</td></tr>
+<tr><td>Webhooks in</td><td><code>POST /webhooks/payments/{provider}</code> · <code>/webhooks/channel/{provider}</code> · <code>/webhooks/whatsapp</code></td><td>Signature-verified, deduped</td></tr>
+<tr><td>Devices</td><td><code>POST /devices/lock-bridge/events</code> · <code>GET /devices/lock-bridge/jobs</code></td><td>On-prem bridge long-poll/WebSocket</td></tr>
+</table></div>
+
+<h4>Inter-module data flow</h4>
+<p>Modules call each other through service interfaces inside one transaction when consistency is required, and communicate side effects through domain events dispatched after commit (transactional outbox) when it is not.</p>
+<div class="flow">booking.confirmed    → Channel (push availability) · Notify (email/WhatsApp) · Reporting
+booking.checked_in   → Access (activate card) · Folio (open) · POS (villa chargeable)
+pos.invoice.charged  → Folio (post line) · Inventory (deplete recipe)
+booking.checked_out  → Access (revoke) · Villa (vacant+dirty) · Housekeeping (create task) · Channel
+hk.task.approved     → Villa (ready) · Front desk (notify) · Channel (if newly sellable)
+maintenance.blocking → Villa (out of order) · Inventory (block) · Channel
+stock.below_reorder  → Notify (inventory staff)</div>
+</section>
+
+<!-- 06 -->
+<section class="s" id="rbac">
+<h2><span class="n">06</span>User roles &amp; permissions matrix</h2>
+<p class="sub">Default role bundles. Admins can clone and edit roles; permissions are evaluated per property.</p>
+<p style="font-size:13.5px">
+<span class="c cF">F</span> full control &nbsp; <span class="c cM">M</span> manage (create/edit, no delete/config) &nbsp; <span class="c cO">O</span> own records only &nbsp; <span class="c cV">V</span> view &nbsp; <span class="c cX">–</span> none</p>
+<div class="tw"><table class="rbac">
+<tr><th>Module</th><th>Owner</th><th>Admin</th><th>Manager</th><th>Recept.</th><th>Account.</th><th>POS Mgr</th><th>Cashier</th><th>Waiter</th><th>Kitchen</th><th>Inventory</th><th>HK Sup.</th><th>HK Staff</th><th>Maint.</th><th>Tour Op.</th></tr>
+<tr><td>System settings, roles, users</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Website CMS</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Villas &amp; rates</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cV">V</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Bookings &amp; calendar</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cO">O</span></td></tr>
+<tr><td>Check-in / check-out</td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Folio: post charges</td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cM">M</span></td><td><span class="c cM">M</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Folio: adjust / refund</td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cF">F</span></td><td><span class="c cX">–</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Tour operators &amp; contracts</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cV">V</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cO">O</span></td></tr>
+<tr><td>Operator invoices &amp; payments</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cO">O</span></td></tr>
+<tr><td>Key cards: guest issue/revoke</td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Key cards: staff/master cards</td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Access history</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Housekeeping board &amp; assign</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cO">O</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Inspection approval</td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Maintenance tickets</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cM">M</span></td><td><span class="c cO">O</span></td><td><span class="c cF">F</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Lost &amp; found</td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cM">M</span></td><td><span class="c cO">O</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>POS menu, outlets, pricing</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>POS orders &amp; tables</td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cO">O</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>POS void / discount override</td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>POS billing, payments, drawer</td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Kitchen display</td><td><span class="c cX">–</span></td><td><span class="c cF">F</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cV">V</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Stock, suppliers, purchasing</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cV">V</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Staff profiles &amp; rosters</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cM">M</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Own attendance &amp; leave</td><td><span class="c cX">–</span></td><td><span class="c cO">O</span></td><td><span class="c cO">O</span></td><td><span class="c cO">O</span></td><td><span class="c cO">O</span></td><td><span class="c cO">O</span></td><td><span class="c cO">O</span></td><td><span class="c cO">O</span></td><td><span class="c cO">O</span></td><td><span class="c cO">O</span></td><td><span class="c cO">O</span></td><td><span class="c cO">O</span></td><td><span class="c cO">O</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Reports: financial</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cV">V</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cO">O</span></td></tr>
+<tr><td>Reports: operational</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cV">V</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cV">V</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td><td><span class="c cV">V</span></td><td><span class="c cX">–</span></td></tr>
+<tr><td>Audit &amp; login logs</td><td><span class="c cV">V</span></td><td><span class="c cF">F</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td><td><span class="c cX">–</span></td></tr>
+</table></div>
+<ul>
+  <li><strong>Owner</strong> is read-mostly by design: full visibility of revenue and operations without operational write access, which keeps the audit trail clean. Owner can be granted Admin additionally.</li>
+  <li><strong>Tour operator</strong> permissions are always row-scoped to their own company (<span class="c cO">O</span>).</li>
+  <li><strong>Guest accounts</strong> (future phase) see only their own bookings, invoices and wishlist.</li>
+  <li><strong>Thresholds:</strong> discounts, rate overrides and refunds above a configured amount require a manager PIN approval, logged with both identities.</li>
+  <li><strong>Segregation of duties:</strong> the user who records a cash-shift count cannot approve its variance.</li>
+</ul>
+</section>
+
+<!-- 07 -->
+<section class="s" id="stack">
+<h2><span class="n">07</span>Technology stack recommendations</h2>
+<p class="sub">Chosen for a small-to-mid team, PHP/MySQL familiarity, long-term maintainability and low hosting cost. Alternatives are listed where the choice is close.</p>
+<div class="tw"><table>
+<tr><th>Layer</th><th>Recommendation</th><th>Rationale / alternative</th></tr>
+<tr><td>Backend framework</td><td><strong>Laravel 12 (PHP 8.3+)</strong>, modular structure (<code>app/Modules/{Booking,Folio,POS,…}</code>)</td><td>Mature auth, queues, events, scheduler, broadcasting, policies, migrations. Alt: NestJS (TypeScript) if the team is JS-first.</td></tr>
+<tr><td>Database</td><td><strong>MySQL 8.0</strong> (InnoDB) or PostgreSQL 16</td><td>Transactions, row locks, JSON columns, managed offerings everywhere.</td></tr>
+<tr><td>Cache / queues / locks</td><td><strong>Redis 7</strong> + Laravel Horizon</td><td>Queues for email, PDFs, channel sync, image processing; distributed locks.</td></tr>
+<tr><td>Real-time</td><td><strong>Laravel Reverb</strong> (WebSockets)</td><td>KDS, housekeeping board, notifications. Alt: Pusher / Ably managed.</td></tr>
+<tr><td>Public website</td><td>Server-rendered <strong>Blade + Alpine.js</strong>, Tailwind CSS, GSAP (scroll/hover animation), Swiper, PhotoSwipe (lightbox)</td><td>Best SEO and first-paint; animation budget controlled. Alt: Next.js if a separate frontend team.</td></tr>
+<tr><td>Back office, portal, POS, KDS, HK</td><td><strong>Vue 3 + Inertia.js</strong> (back office/portal) and a Vue 3 <strong>PWA</strong> (POS, KDS, housekeeping, time clock) with IndexedDB offline queue</td><td>One component library, shared design tokens, installable on tablets without app stores.</td></tr>
+<tr><td>PDF</td><td>Headless Chromium (Browsershot/Gotenberg)</td><td>HTML/CSS templates render pixel-accurate A4 and thermal documents.</td></tr>
+<tr><td>Printing (POS)</td><td>ESC/POS over network printers via print service on the POS PWA host or Lock Bridge</td><td>Browsers cannot talk raw to thermal printers reliably.</td></tr>
+<tr><td>Lock Bridge</td><td>Small on-prem service (.NET 8 or Node.js) as Windows service</td><td>Most lock SDKs are Windows/.NET; talks outbound-only to the cloud over TLS.</td></tr>
+<tr><td>Media</td><td>Object storage (S3-compatible) + CDN (Cloudflare); image pipeline to WebP/AVIF; video on YouTube/Vimeo or Cloudflare Stream</td><td>Fast global delivery, offloads bandwidth.</td></tr>
+<tr><td>Hosting</td><td>Managed VPS or cloud (e.g. AWS/DigitalOcean) with Laravel Forge/Ploi, or containers (Docker) on a managed platform; managed DB with PITR</td><td>Staging + production; separate environments per <code>.env</code>.</td></tr>
+<tr><td>Search (later)</td><td>Meilisearch</td><td>Guest/booking global search at scale.</td></tr>
+<tr><td>Observability</td><td>Sentry (errors), Laravel Pulse/Telescope (staging), uptime monitor, centralised logs</td><td>Alerting on payment, channel and lock failures.</td></tr>
+<tr><td>CI/CD</td><td>GitHub Actions: lint, static analysis (PHPStan level 8), tests, build, zero-downtime deploy</td><td>Migrations run in deploy step with backup snapshot.</td></tr>
+<tr><td>Testing</td><td>Pest/PHPUnit, Vitest, Playwright end-to-end</td><td>E2E covers booking, check-in/out, POS charge-to-villa.</td></tr>
+</table></div>
+</section>
+
+<!-- 08 -->
+<section class="s" id="security">
+<h2><span class="n">08</span>Security specifications</h2>
+<div class="grid2">
+<div>
+<h4>Authentication</h4>
+<ul>
+  <li>Email + password; passwords hashed with Argon2id (bcrypt cost ≥ 12 fallback); minimum 10 characters, checked against breached-password list.</li>
+  <li>Optional TOTP MFA; mandatory for Owner, Admin, Manager, Accountant.</li>
+  <li>Forgot password: single-use, 60-minute, hashed token; response identical whether the email exists or not.</li>
+  <li>Change password requires current password; all other sessions revoked on change.</li>
+  <li>POS quick-switch: 4–6 digit PIN, only on registered devices, only after device-level login.</li>
+</ul>
+<h4>Sessions</h4>
+<ul>
+  <li>Server-side sessions, HttpOnly + Secure + SameSite cookies; ID regenerated on login.</li>
+  <li>Idle timeout: 30 min back office, 15 min for finance roles; absolute 12 h. POS devices lock to PIN screen after 2 min idle.</li>
+  <li>Explicit logout invalidates the server session; admins can kill sessions per user.</li>
+</ul>
+<h4>Failed-login protection</h4>
+<ul>
+  <li>Progressive delay after 3 failures; account lock 15 min after 5; IP rate limit; CAPTCHA on public forms and after repeated failures.</li>
+  <li>All attempts written to <code>login_logs</code> with IP and user agent; alert on anomalous patterns.</li>
+</ul>
+</div>
+<div>
+<h4>Authorisation</h4>
+<ul>
+  <li>Deny-by-default policy checks on every endpoint, enforced server-side; UI hiding is cosmetic only.</li>
+  <li>Row-level scoping by <code>property_id</code> and, for operators, <code>tour_operator_id</code> via global query scopes.</li>
+</ul>
+<h4>Application security</h4>
+<ul>
+  <li>CSRF tokens on all state-changing browser requests.</li>
+  <li>Input validation with form-request classes; output encoding by default; parameterised queries only.</li>
+  <li>Content Security Policy, HSTS, X-Frame-Options, Referrer-Policy, Permissions-Policy headers.</li>
+  <li>File uploads: MIME + magic-byte validation, size limits, re-encoding of images, randomised names, stored outside web root; ID/passport scans in a private bucket with signed short-lived URLs; malware scan (ClamAV).</li>
+  <li>Dependency and container scanning in CI.</li>
+</ul>
+<h4>Data protection</h4>
+<ul>
+  <li>TLS 1.2+ everywhere; encryption at rest for DB and storage; field-level encryption for document numbers and MFA secrets.</li>
+  <li><strong>No card data stored</strong>: hosted payment fields / redirect and tokenisation keep the platform in PCI DSS SAQ-A scope.</li>
+  <li>Personal data retention policy (e.g. ID scans purged N days after checkout unless legally required); guest data export and erasure on request (GDPR / applicable local data-protection law).</li>
+  <li>Secrets in environment config / secret manager, never in the repository; per-environment API keys; key rotation procedure.</li>
+  <li>Third-party calls: timeouts, retries with backoff, circuit breakers, verified webhook signatures, and errors surfaced to staff without leaking internals.</li>
+</ul>
+<h4>Audit</h4>
+<ul>
+  <li>Append-only audit log for financial, access-card, permission and data-export actions; periodic hash-chaining to detect tampering.</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- 09 -->
+<section class="s" id="uiux">
+<h2><span class="n">09</span>UI/UX requirements</h2>
+<h4>Design principles</h4>
+<ul>
+  <li><strong>Public site: premium and calm.</strong> Photography leads; generous whitespace; restrained palette derived from the property’s landscape; serif display with a clean sans body.</li>
+  <li><strong>Operational apps: fast and unambiguous.</strong> Dense but legible; status by colour <em>and</em> label/icon; primary action always in the same place; large touch targets (≥ 44 px, ≥ 56 px on POS).</li>
+  <li><strong>One design system</strong> of tokens (colour, type, spacing, radius, elevation, motion) shared across all surfaces.</li>
+</ul>
+<h4>Light and dark mode</h4>
+<ul>
+  <li>Both themes designed intentionally (not inverted), each meeting AA contrast.</li>
+  <li>Default follows OS <code>prefers-color-scheme</code>; user toggle overrides; preference saved to the user profile (signed-in) or local storage (public site).</li>
+  <li>Theme applied before first paint (inline script) to avoid flash; transition of 200 ms on colour properties only.</li>
+  <li>KDS offers a high-contrast dark theme by default for kitchen conditions.</li>
+</ul>
+<h4>Responsive behaviour</h4>
+<ul>
+  <li>Mobile-first; breakpoints at 640 / 768 / 1024 / 1280 px.</li>
+  <li>Back-office tables collapse to cards on narrow screens; calendar switches to agenda view on phones.</li>
+  <li>Mobile navigation: bottom bar for housekeeping app; off-canvas menu with focus trap on website.</li>
+</ul>
+<h4>Media guidelines</h4>
+<ul>
+  <li>Hero image/video backgrounds: video muted, &lt; 3 MB, poster frame, disabled on save-data and small screens.</li>
+  <li>Images: responsive <code>srcset</code>, AVIF/WebP with JPEG fallback, lazy loading below the fold, blurred placeholders, explicit dimensions to prevent layout shift.</li>
+  <li>Galleries, sliders and lightbox with keyboard and swipe support.</li>
+  <li>Performance budget: ≤ 170 KB JS (gzipped) on public pages; animation libraries loaded only where used.</li>
+</ul>
+
+<h4 id="uiux-motion">Animation guidelines (WEB-18)</h4>
+<p>Motion follows the place: calm water and slow light. It should feel unhurried, purposeful and quiet. The eight principles below apply to every public page.</p>
+<ol>
+  <li><strong>Purpose first.</strong> Motion must explain something: a change of state, where content came from, or what is loading. Otherwise it is removed.</li>
+  <li><strong>Durations.</strong> 150–250 ms for feedback (hover, press, toggle); 300–400 ms for panels and modals; 600–900 ms for scroll reveal. Only ambient hero motion may run longer.</li>
+  <li><strong>Easing.</strong> <code>ease-out</code> / <code>cubic-bezier(.2,.8,.2,1)</code> when entering and <code>ease-in</code> when leaving. No bounce or overshoot.</li>
+  <li><strong>Cheap properties only.</strong> Animate only <code>transform</code>, <code>opacity</code> and SVG <code>stroke-dashoffset</code>. Never animate layout properties.</li>
+  <li><strong>Visible at rest.</strong> Content must never depend on JavaScript to appear. Reveal effects hide content only after the script confirms it can reveal it, and counters render their final value in the HTML.</li>
+  <li><strong>Reduced motion.</strong> Under <code>prefers-reduced-motion: reduce</code>, all animation and transitions are disabled, sliders stop auto-advancing and reveals show immediately.</li>
+  <li><strong>One thing at a time.</strong> Stagger siblings by at most 100 ms, with at most one ambient animation in view.</li>
+  <li><strong>Back office stays still.</strong> Staff, POS and KDS screens use feedback transitions only (&lt; 250 ms).</li>
+</ol>
+<h4>Website animations</h4>
+<div class="tw"><table>
+<thead><tr><th>Animation</th><th>Where</th><th>Specification</th></tr></thead>
+<tbody>
+<tr><td>Logo intro</td><td>Header &amp; footer logo</td><td>The threshold line sweeps in (0.6 s), the arch is drawn (0.9 s), the sun rises (0.7 s) and the sea settles (0.6 s). About 1.4 s in total, once per page load. On hover the sun lifts 1.5 px.</td></tr>
+<tr><td>Page loading bar</td><td>Top of every page</td><td>3 px brass bar, 0 → 100 % over 1 s, then fades out</td></tr>
+<tr><td>Hero Ken Burns crossfade</td><td>Home hero</td><td>1.4 s crossfade; each slide scales 1.08 → 1 over 9 s; advances every 7 s</td></tr>
+<tr><td>Header state</td><td>All pages</td><td>Transparent over the hero, then solid after 40 px of scroll</td></tr>
+<tr><td>Scroll reveal</td><td>Section blocks</td><td>Fade in and rise 26 px over 0.8 s, staggered 0.1–0.3 s, triggered at 12 % visibility</td></tr>
+<tr><td>Animated counters</td><td>“At a glance” stats</td><td>Count up with ease-out over about 1.6 s once 60 % visible</td></tr>
+<tr><td>Card hover</td><td>Villa &amp; offer cards</td><td>Image scales 1.06 over 0.8 s and the card lifts 6 px</td></tr>
+<tr><td>Lightbox</td><td>Gallery, villa photos, video</td><td>200 ms fade; ← → Esc keys; focus returns to the trigger</td></tr>
+<tr><td>Testimonials</td><td>Home</td><td>Crossfade every 8 s</td></tr>
+<tr><td>Video facade</td><td>Video blocks</td><td>A thumbnail and play button; the player loads only on click</td></tr>
+<tr><td>Theme switch</td><td>Header toggle</td><td>200 ms colour transition on surfaces</td></tr>
+</tbody></table></div>
+
+<h4 id="uiux-logo">Logo usage (WEB-18)</h4>
+<div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin:10px 0 14px">
+  <svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Vaasal Villa mark"><rect width="64" height="64" rx="15" fill="#0E6B63"/><path d="M21 49V29a11 11 0 0 1 22 0v20" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><circle cx="32" cy="31" r="4.2" fill="#E9C98A"/><path d="M24.5 41.5q1.9-1.7 3.8 0t3.8 0 3.8 0 3.8 0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M14 50h36" stroke="#E9C98A" stroke-width="3.6" stroke-linecap="round"/></svg>
+  <svg width="40" height="40" viewBox="0 0 64 64" role="img" aria-label="Mono mark" style="color:var(--ink)"><g fill="none" stroke="currentColor" stroke-linecap="round"><path d="M21 49V29a11 11 0 0 1 22 0v20" stroke-width="3.6"/><path d="M24.5 41.5q1.9-1.7 3.8 0t3.8 0 3.8 0 3.8 0" stroke-width="2.4"/><path d="M14 50h36" stroke-width="3.6"/></g><circle cx="32" cy="31" r="4.2" fill="currentColor"/></svg>
+  <div><div style="font:600 26px var(--serif);color:var(--ink)">Vaasal Villa</div><div style="font:500 11px var(--sans);letter-spacing:.18em;color:var(--brass)">GALLE · SRI LANKA</div></div>
+</div>
+<ul>
+  <li><strong>Concept.</strong> <em>Vaasal</em> means doorway or threshold. The mark is an arched doorway framing a rising sun over the sea, standing on a brass threshold line.</li>
+  <li><strong>Mark colours.</strong> Lagoon tile <code>#0E6B63</code>; arch and waves in white; sun and threshold in sand-brass <code>#E9C98A</code>.</li>
+  <li><strong>Wordmark.</strong> “Vaasal Villa” in Source Serif 4 Semibold.</li>
+  <li><strong>Descriptor.</strong> IBM Plex Sans Medium, uppercase, letter-spacing 0.18 em, in brass.</li>
+  <li><strong>Variants.</strong>
+    <ul>
+      <li>Full-colour mark: favicon, app icon, avatar.</li>
+      <li>Horizontal lockup: light grounds.</li>
+      <li>Reverse lockup: dark grounds, or photos with at least a 45 % scrim.</li>
+      <li>Mono mark in <code>currentColor</code>: embossing, key-card print, thermal print.</li>
+    </ul>
+  </li>
+  <li><strong>Clear space.</strong> Keep a margin equal to ¼ of the mark height on every side.</li>
+  <li><strong>Minimum size.</strong> 16 px or 6 mm for the mark; 120 px or 35 mm for the lockup. Below 24 px, drop the descriptor.</li>
+  <li><strong>Misuse.</strong>
+    <ul>
+      <li>No stretching, rotating, redrawing or recolouring the tile.</li>
+      <li>No effects (shadows, glows, gradients).</li>
+      <li>No placement on busy photos without a scrim.</li>
+      <li>No other typeface for the wordmark.</li>
+      <li>No animation outside the approved header and footer intro.</li>
+    </ul>
+  </li>
+</ul>
+<h4>Integration requirements</h4>
+<ul>
+  <li>Master SVGs live in one brand folder. Templates reference a single logo component and never paste the SVG inline, so a logo change applies everywhere.</li>
+  <li>The logo appears in these places:
+    <ul>
+      <li>website header and footer (animated);</li>
+      <li>back-office, partner and POS navigation (static);</li>
+      <li>sign-in page;</li>
+      <li>the letterhead of every printed or PDF document;</li>
+      <li>error pages;</li>
+      <li>favicon and <code>theme-color</code>;</li>
+      <li>emails, using a hosted PNG because many mail clients block SVG.</li>
+    </ul>
+  </li>
+  <li>New public pages inherit the loader, reveal, theme and reduced-motion handling from the site layout. Sections opt in to reveal with a class and do not add their own observers.</li>
+  <li>Third-party embeds (maps, video, widgets) are lazy-loaded or placed behind a facade and must not bring their own entrance animations.</li>
+  <li>OTA and social profiles use a 1024 px PNG of the mark as the avatar and the horizontal lockup for banners.</li>
+  <li>Every new animation is added to the catalogue with its duration and reduced-motion behaviour before release.</li>
+</ul>
+<h4>Accessibility</h4>
+<ul>
+  <li>WCAG 2.2 AA: semantic HTML, landmarks, labelled form fields, visible focus, skip links, ARIA only where needed, error messages linked to fields, date pickers usable by keyboard and screen reader.</li>
+</ul>
+</section>
+
+<!-- 10 -->
+<section class="s" id="integrations">
+<h2><span class="n">10</span>Integration points</h2>
+<p class="sub">Every external dependency sits behind an internal interface with a provider adapter, so vendors can be swapped by configuration.</p>
+
+<h3 id="i-ota">OTA &amp; channel management</h3>
+<div class="term"><b>Channel manager</b>A certified intermediary (e.g. SiteMinder, Channex, Cloudbeds, RateGain) that keeps availability and rates in sync across many OTAs through one API. <b>OTA</b>: Online Travel Agency such as Booking.com, Agoda, Expedia or Airbnb.</div>
+<ul>
+  <li><strong>Recommended:</strong> integrate one channel manager API rather than each OTA directly. Direct connectivity to Booking.com, Agoda, Expedia and Airbnb requires connectivity-partner certification for each, which is slow and not guaranteed for a single property.</li>
+  <li>Outbound (ARI): availability, rates, restrictions per villa type/rate plan per date, pushed via outbox on change, plus a nightly full resync.</li>
+  <li>Inbound: new/modified/cancelled reservations via webhook; acknowledged only after the booking is committed; idempotent on (channel, external_ref).</li>
+  <li>Mapping UI: platform villa types and rate plans ↔ channel room/rate codes.</li>
+  <li>Fallback: iCal import/export for channels without API access (e.g. some Airbnb listings), with clearly-labelled lower sync guarantees.</li>
+</ul>
+
+<h3>Payment gateways</h3>
+<ul>
+  <li><code>PaymentGateway</code> interface: <code>createIntent</code>, <code>capture</code>, <code>refund</code>, <code>createPaymentLink</code>, <code>verifyWebhook</code>.</li>
+  <li>Primary international gateway (e.g. Stripe) plus a regional gateway for local cards/currency where the property operates (e.g. PayHere, Razorpay or the local bank’s IPG); selection per currency.</li>
+  <li>3-D Secure, pre-authorisation for security deposits, tokenised card-on-file for guarantees.</li>
+  <li>Card-present POS: integrated terminal SDK where available; otherwise manual reference entry with daily reconciliation report.</li>
+</ul>
+
+<h3 id="i-rfid">RFID locks &amp; encoders</h3>
+<ul>
+  <li><code>LockProvider</code> interface: <code>encodeNew</code>, <code>encodeDuplicate</code>, <code>readCard</code>, <code>revoke</code>, <code>extend</code>, <code>fetchAuditTrail</code>.</li>
+  <li>Candidate adapters: ASSA ABLOY VingCard (Visionline / Vostio), dormakaba (Ambiance), Salto (Space / KS), Onity, and budget OEM systems exposing a DLL SDK.</li>
+  <li>Topology: cloud → job queue → <strong>Lock Bridge</strong> (property LAN) → vendor lock server / USB encoder. Bridge authenticates with client credentials, connects outbound only, and reports each job’s result. Receptionist sees “Place card on encoder” and a live result.</li>
+  <li>Failure handling: encoder timeout or error returns a clear message and leaves the card unassigned; no silent partial states.</li>
+</ul>
+
+<h3>Messaging &amp; social</h3>
+<ul>
+  <li><strong>WhatsApp Business Platform (Cloud API)</strong>: template messages for confirmations, pre-arrival, payment links and checkout invoices (opt-in required); inbound messages to a shared inbox with booking linking. Click-to-chat link on website.</li>
+  <li><strong>Facebook &amp; Instagram (Meta Graph API)</strong>: display feed on website, Messenger/Instagram DM link, Meta Pixel / Conversions API for booking attribution (consent-gated).</li>
+  <li><strong>TikTok</strong>: embed videos, TikTok Pixel (consent-gated).</li>
+  <li><strong>YouTube</strong>: video hosting and embedding for villa tours (privacy-enhanced mode).</li>
+  <li>Email: transactional provider (Amazon SES, Postmark or Mailgun) with SPF, DKIM, DMARC; bounce webhooks.</li>
+  <li>SMS fallback provider for OTP and critical alerts.</li>
+</ul>
+
+<h3>Location, weather, media, analytics</h3>
+<ul>
+  <li>Maps: Google Maps Platform or Mapbox for location map and directions; static map image on documents.</li>
+  <li>Weather: OpenWeather or similar, cached server-side (15 min) and shown on website and front-desk dashboard.</li>
+  <li>Image/video optimisation: Cloudflare Images/Stream or equivalent, or self-hosted pipeline.</li>
+  <li>Web analytics: GA4 or privacy-friendly alternative; cookie consent manager governs all tags.</li>
+  <li>Accounting (future): export journals to Xero / QuickBooks / local accounting software via revenue account mapping.</li>
+</ul>
+</section>
+
+<!-- 11 -->
+<section class="s" id="reporting">
+<h2><span class="n">11</span>Reporting &amp; analytics framework</h2>
+<div class="term"><b>Occupancy</b> = nights sold ÷ nights available. <b>ADR</b> (Average Daily Rate) = room revenue ÷ nights sold. <b>RevPAR</b> (Revenue per Available Room/villa) = room revenue ÷ nights available = ADR × occupancy.</div>
+<h4>KPIs</h4>
+<div class="tw"><table>
+<tr><th>Domain</th><th>KPIs</th></tr>
+<tr><td>Rooms</td><td>Occupancy %, ADR, RevPAR, average length of stay, lead time, cancellation rate, no-show rate, villa availability today/next 30 days</td></tr>
+<tr><td>Revenue &amp; payments</td><td>Revenue by department (rooms, F&amp;B, spa, laundry, transport, other), payments by method, deposits held, outstanding balances, refunds</td></tr>
+<tr><td>Channels</td><td>Bookings and revenue by source, OTA commission cost, direct share %, conversion rate of website search → booking</td></tr>
+<tr><td>Tour operators</td><td>Bookings, room nights, revenue, commission accrued/settled, receivables ageing, allotment utilisation</td></tr>
+<tr><td>Guests</td><td>New vs. returning, nationality mix, average party size, top guests by spend</td></tr>
+<tr><td>POS / restaurant</td><td>Sales by outlet/hour/item/category, covers, average check, voids &amp; discounts %, charge-to-villa share, kitchen ticket time</td></tr>
+<tr><td>Inventory</td><td>Stock value, low-stock items, wastage value, food cost % (theoretical vs. actual), supplier spend</td></tr>
+<tr><td>Housekeeping &amp; maintenance</td><td>Villas cleaned per staff, average clean time vs. standard, inspection pass rate, open tickets by severity, mean time to repair, out-of-order nights</td></tr>
+<tr><td>Staff</td><td>Attendance rate, late arrivals, overtime hours, leave taken, headcount by department</td></tr>
+<tr><td>Access</td><td>Cards issued, lost cards, denied-access events, staff master-card usage</td></tr>
+</table></div>
+<h4>Dashboards</h4>
+<ul>
+  <li><strong>Owner / Manager:</strong> today strip (arrivals, departures, in-house, villas ready), occupancy &amp; revenue trends vs. last year, channel mix, receivables, alerts panel.</li>
+  <li><strong>Front desk:</strong> arrivals/departures lists, villa status grid, pending payments, messages.</li>
+  <li><strong>POS Manager:</strong> live sales, open tables, top items, drawer status, low stock.</li>
+  <li><strong>Housekeeping supervisor:</strong> board by status, staff workload, inspections waiting, open maintenance.</li>
+  <li><strong>Accountant:</strong> daily revenue, payments reconciliation, city ledger ageing, operator statements.</li>
+  <li><strong>Tour operator:</strong> their bookings, balance, invoices, upcoming arrivals.</li>
+</ul>
+<h4>Report catalogue</h4>
+<p>Daily manager’s report (night audit snapshot), revenue report, occupancy forecast, booking pace, arrivals/departures/in-house, guest ledger, city ledger ageing, payment reconciliation, cancellation &amp; no-show, source/channel production, operator statement &amp; commission, POS Z/X, sales mix, void/discount audit, stock valuation, wastage, purchase history, housekeeping productivity, lost &amp; found, maintenance log, attendance &amp; timesheet, leave, key-card activity, audit log extract.</p>
+<p>All reports: date range and property filters, on-screen table + chart, CSV/XLSX export, PDF, and scheduled email delivery. Heavy reports read from nightly snapshot tables (and later a read replica) so they never slow down operations.</p>
+</section>
+
+<!-- 12 -->
+<section class="s" id="roadmap">
+<h2><span class="n">12</span>Scalability &amp; future roadmap</h2>
+<h4>Built in from day one</h4>
+<ul>
+  <li><code>property_id</code> on every business table, property switcher in UI, per-property settings, numbering series, taxes, branding, timezone, currency.</li>
+  <li>Outlets as a first-class concept, so additional restaurants/bars are configuration.</li>
+  <li>Departments and charge catalogue generic enough for spa, laundry, transport and future services to post to folios through the same interface.</li>
+  <li>Provider interfaces for payments, channels, locks, messaging and punch devices.</li>
+  <li>Stateless app servers (sessions and cache in Redis) for horizontal scaling behind a load balancer; read replica for reporting; queue workers scaled independently.</li>
+</ul>
+<h4>Expansion modules</h4>
+<div class="tw"><table>
+<tr><th>Module</th><th>Scope</th></tr>
+<tr><td>Multi-property &amp; branches</td><td>Group dashboard, cross-property guest profile, central rate management, consolidated reports</td></tr>
+<tr><td>Spa</td><td>Therapists, treatment menu, appointment book, resource (room) scheduling, post to folio</td></tr>
+<tr><td>Laundry</td><td>Guest laundry orders with item price list; house linen tracking (extends HK-06)</td></tr>
+<tr><td>Room / in-villa service</td><td>Guest ordering via QR menu in villa, routed to POS &amp; KDS, charged to folio</td></tr>
+<tr><td>Transport, airport pickup/drop-off, vehicle booking</td><td>Vehicles, drivers, trip schedule, flight details, bookable from website and front desk</td></tr>
+<tr><td>Loyalty, promotions, coupons</td><td>Points earn/burn, tiers, member rates, coupon campaigns</td></tr>
+<tr><td>Reviews &amp; ratings</td><td>Post-stay review request, moderation, display on website, OTA review aggregation</td></tr>
+<tr><td>Customer accounts</td><td>Guest login, booking history, invoices, saved details, wishlist</td></tr>
+<tr><td>Maintenance management</td><td>Preventive schedules, asset register, work orders, spare parts</td></tr>
+<tr><td>Supplier &amp; advanced inventory</td><td>Supplier portal, price comparisons, multi-store, batch/expiry, par-level auto-POs</td></tr>
+<tr><td>Accounting integration</td><td>Chart-of-accounts mapping, daily journal export/API sync</td></tr>
+<tr><td>Other hospitality services</td><td>Excursions, events &amp; weddings, gift vouchers</td></tr>
+</table></div>
+</section>
+
+<!-- 13 -->
+<section class="s" id="phases">
+<h2><span class="n">13</span>Development phases</h2>
+<p class="sub">Sequenced by dependency, not by importance: every later module posts to the booking, villa and folio core, so that core ships first. Durations assume a team of about 4–5 developers, 1 designer and 1 QA, and are indicative until estimation.</p>
+
+<div class="phase"><div class="w"><b>P0</b>wk 1–4</div><div><h4>Foundations</h4>Repo, CI/CD, environments, design system and tokens (light/dark), identity (login, password flows, sessions, MFA, failed-login protection), RBAC engine, audit/login logs, property model, notifications framework, file storage, PDF service.</div></div>
+<div class="phase"><div class="w"><b>P1</b>wk 5–12</div><div><h4>Core PMS</h4>Villa management, rates &amp; seasons, inventory ledger, availability calendar, bookings (admin, walk-in, phone), guest profiles, folio &amp; payments, check-in/out, service charges, night audit, core documents (confirmation, invoice, receipt).</div></div>
+<div class="phase"><div class="w"><b>P2</b>wk 10–18</div><div><h4>Website &amp; online booking</h4>CMS, all public pages, booking engine with holds, payment gateway, emails/vouchers, WhatsApp click-to-chat and social embeds, SEO, performance and accessibility pass. Starts in parallel once P1 inventory and rates APIs are stable.</div></div>
+<div class="phase"><div class="w"><b>P3</b>wk 15–22</div><div><h4>Housekeeping &amp; staff</h4>Housekeeping PWA, checklists, inspection, linen, lost &amp; found, maintenance tickets; staff profiles, rosters, time clock, attendance calculations, leave.</div></div>
+<div class="phase"><div class="w"><b>P4</b>wk 19–30</div><div><h4>Restaurant POS</h4>Outlets, tables, menu &amp; modifiers, orders, KOT/KDS, billing, payments, shifts &amp; drawer, charge-to-villa folio integration, inventory &amp; recipes, suppliers, POS reports, offline mode.</div></div>
+<div class="phase"><div class="w"><b>P5</b>wk 26–32</div><div><h4>Key card control</h4>Vendor selection confirmed, Lock Bridge, encoder integration, card lifecycle, staff cards, access history import. Includes on-site testing with real locks.</div></div>
+<div class="phase"><div class="w"><b>P6</b>wk 28–34</div><div><h4>Tour operator module</h4>Registration, portal, contracts &amp; allotments, group bookings, rooming lists, deposits, commission, statements, operator documents.</div></div>
+<div class="phase"><div class="w"><b>P7</b>wk 32–38</div><div><h4>Channel management</h4>Channel manager integration, mapping UI, ARI push, reservation webhooks, conflict queue, iCal fallback, certification with provider.</div></div>
+<div class="phase"><div class="w"><b>P8</b>wk 36–42</div><div><h4>Analytics, WhatsApp API &amp; polish</h4>Dashboards and full report catalogue, scheduled reports, WhatsApp Business templates, weather/maps, social pixels with consent, animation polish.</div></div>
+<div class="phase"><div class="w"><b>P9</b>wk 42–46</div><div><h4>Hardening &amp; launch</h4>Security review and penetration test, load test, data migration from existing tools, staff training, parallel run, go-live, hypercare.</div></div>
+
+<div class="why"><b>Milestone gates:</b> end of P1, internal staff can run the property on the new PMS · end of P2, direct bookings go live · end of P4, restaurant runs on the POS with folio posting · end of P7, OTAs are synchronised and the old calendar is retired. After go-live, roadmap modules (§12) are scheduled by business value.</div>
+</section>
+
+<!-- Glossary -->
+<section class="s" id="glossary">
+<h2><span class="n">A</span>Glossary</h2>
+<div class="tw"><table>
+<tr><th>Term</th><th>Meaning</th></tr>
+<tr><td>ARI</td><td>Availability, Rates and Inventory: the data a PMS pushes to channels.</td></tr>
+<tr><td>Allotment</td><td>A block of inventory reserved for a tour operator until a release date.</td></tr>
+<tr><td>Business date</td><td>The hotel’s operating day, advanced by night audit rather than midnight.</td></tr>
+<tr><td>City ledger</td><td>Receivables owed by non-resident parties (operators, companies) after checkout.</td></tr>
+<tr><td>CTA / CTD</td><td>Closed to arrival / closed to departure: a date on which stays may not start / end.</td></tr>
+<tr><td>Folio</td><td>A guest account of charges and payments for a stay.</td></tr>
+<tr><td>KOT / KDS</td><td>Kitchen Order Ticket / Kitchen Display System.</td></tr>
+<tr><td>Night audit</td><td>Daily close: post room charges, flag no-shows, roll business date, snapshot KPIs.</td></tr>
+<tr><td>No-show</td><td>A confirmed guest who does not arrive and did not cancel.</td></tr>
+<tr><td>Out of order / out of service</td><td>Villa removed from inventory / sellable but with a minor defect.</td></tr>
+<tr><td>Rate plan</td><td>A priced product (meal plan + policies) sold for a villa type.</td></tr>
+<tr><td>Rooming list</td><td>Operator-supplied list of which guests stay in which villa.</td></tr>
+<tr><td>X / Z report</td><td>POS mid-shift snapshot / end-of-shift close that resets counters.</td></tr>
+<tr><td>86’d</td><td>Kitchen term for a menu item that is sold out.</td></tr>
+</table></div>
+</section>
+
+<div class="foot">Vaasal Villa Management System · Technical specification v1.1 · Prepared 28 September 2026 (v1.1 adds WEB-18 website animation &amp; logo). Vendor names are examples for evaluation, not commitments.</div>
+</main>
+</div>

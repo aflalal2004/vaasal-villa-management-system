@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Vaasal Villa" fill="none" stroke="currentColor" stroke-linecap="round">
+  <path d="M21 49V29a11 11 0 0 1 22 0v20" stroke-width="3.6"/>
+  <circle cx="32" cy="31" r="4.2" fill="currentColor" stroke="none"/>
+  <path d="M24.5 41.5q1.9-1.7 3.8 0t3.8 0 3.8 0 3.8 0" stroke-width="2.4"/>
+  <path d="M14 50h36" stroke-width="3.6"/>
+</svg>

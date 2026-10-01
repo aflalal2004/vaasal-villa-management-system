@@ -1,0 +1,258 @@
+﻿ID,Source,Module,"Test case",Expected,Actual,Status
+ROLE-01-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","Administrator (admin) signs in with username","Redirect to the role home page","Redirected to admin.dashboard",PASS
+ROLE-01-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","admin: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","90 opened, 0 denied with 403, 0 server errors",PASS
+ROLE-02-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","Owner (owner) signs in with username","Redirect to the role home page","Redirected to admin.dashboard",PASS
+ROLE-02-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","owner: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","29 opened, 61 denied with 403, 0 server errors",PASS
+ROLE-03-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","Hotel Manager (manager) signs in with username","Redirect to the role home page","Redirected to admin.dashboard",PASS
+ROLE-03-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","manager: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","59 opened, 31 denied with 403, 0 server errors",PASS
+ROLE-04-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","Receptionist (reception) signs in with username","Redirect to the role home page","Redirected to admin.frontdesk.index",PASS
+ROLE-04-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","reception: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","35 opened, 55 denied with 403, 0 server errors",PASS
+ROLE-05-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","Accountant (accounts) signs in with username","Redirect to the role home page","Redirected to admin.payments.index",PASS
+ROLE-05-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","accounts: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","23 opened, 67 denied with 403, 0 server errors",PASS
+ROLE-06-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","Restaurant Manager (posmanager) signs in with username","Redirect to the role home page","Redirected to pos.dashboard",PASS
+ROLE-06-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","posmanager: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","36 opened, 54 denied with 403, 0 server errors",PASS
+ROLE-07-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","Cashier (cashier) signs in with username","Redirect to the role home page","Redirected to pos.terminal",PASS
+ROLE-07-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","cashier: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","25 opened, 65 denied with 403, 0 server errors",PASS
+ROLE-08-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","Waiter (waiter) signs in with username","Redirect to the role home page","Redirected to pos.terminal",PASS
+ROLE-08-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","waiter: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","20 opened, 70 denied with 403, 0 server errors",PASS
+ROLE-09-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","Kitchen Staff (kitchen) signs in with username","Redirect to the role home page","Redirected to pos.kds",PASS
+ROLE-09-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","kitchen: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","18 opened, 72 denied with 403, 0 server errors",PASS
+ROLE-10-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","Inventory Staff (stores) signs in with username","Redirect to the role home page","Redirected to pos.inventory.items.index",PASS
+ROLE-10-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","stores: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","19 opened, 71 denied with 403, 0 server errors",PASS
+ROLE-11-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","Housekeeping Supervisor (hksupervisor) signs in with username","Redirect to the role home page","Redirected to admin.housekeeping.index",PASS
+ROLE-11-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","hksupervisor: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","24 opened, 66 denied with 403, 0 server errors",PASS
+ROLE-12-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","Housekeeping Staff (housekeeping) signs in with username","Redirect to the role home page","Redirected to admin.housekeeping.my",PASS
+ROLE-12-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","housekeeping: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","18 opened, 72 denied with 403, 0 server errors",PASS
+ROLE-13-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","Maintenance Technician (maintenance) signs in with username","Redirect to the role home page","Redirected to admin.maintenance.index",PASS
+ROLE-13-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","maintenance: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","16 opened, 74 denied with 403, 0 server errors",PASS
+ROLE-14-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","General Staff (staff) signs in with username","Redirect to the role home page","Redirected to admin.staff.my-timecard",PASS
+ROLE-14-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","staff: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","15 opened, 75 denied with 403, 0 server errors",PASS
+ROLE-15-LOGIN,"Automated (tests/QA/QaAuditTest.php)","Roles & login","Tour Operator (operator) signs in with username","Redirect to the role home page","Redirected to operator.dashboard",PASS
+ROLE-15-URLS,"Automated (tests/QA/QaAuditTest.php)","Roles & permissions","operator: direct URL access to every parameterless GET route","Allowed routes 200/302; forbidden routes 403; never 5xx","90 opened, 0 denied with 403, 0 server errors",PASS
+SEC-GUEST-01,"Automated (tests/QA/QaAuditTest.php)",Security,"Unauthenticated visitor opens /admin and /pos","Redirect to /login","302 → /login for both",PASS
+SEC-GUEST-02,"Automated (tests/QA/QaAuditTest.php)",Security,"Unauthenticated POS API call (the ""Unauthenticated"" message)","HTTP 401 JSON {""message"":""Unauthenticated.""}","401 {""message"":""Unauthenticated.""} — returned whenever the session has ended (idle > SESSION_LIFETIME) or the user signed out in another tab",PASS
+SEC-API-01,"Automated (tests/QA/QaAuditTest.php)",Security,"Reception calls POS API directly","HTTP 403",403,PASS
+SEC-API-02,"Automated (tests/QA/QaAuditTest.php)",Security,"Hotel Manager calls POS API directly","HTTP 403",403,PASS
+SEC-API-03,"Automated (tests/QA/QaAuditTest.php)",Security,"Restaurant Manager opens a hotel folio-charge endpoint","HTTP 403",403,PASS
+SEC-API-04,"Automated (tests/QA/QaAuditTest.php)",Security,"Device APIs with a wrong bearer token (RFID, attendance, lock bridge)","HTTP 401 each","401 × 3",PASS
+PMS-01,"Automated (tests/QA/QaAuditTest.php)","Hotel PMS","Availability check for 4 nights shows free villas","At least one free villa","3 villa(s) free; booking form opened",PASS
+PMS-02,"Automated (tests/QA/QaAuditTest.php)","Hotel PMS","Invalid promo code BADCODE","Rejected with ""promo code is not valid""","The promo code ""BADCODE"" is not valid.",PASS
+PMS-03,"Automated (tests/QA/QaAuditTest.php)","Hotel PMS","Promo STAY4 (min 4 nights) on a 2-night stay","Rejected: minimum nights","This offer requires a minimum of 4 nights.",PASS
+PMS-04,"Automated (tests/QA/QaAuditTest.php)","Hotel PMS","Walk-in: 4 nights, 2 adults + 1 child, BB plan, promo STAY4, deposit LKR 20,000 card, Continue to check-in","Booking confirmed, 20% discount, deposit + receipt, redirect to check-in","VV-26-000030: room LKR 169,440.00, discount LKR 25,416.00, total LKR 171,100.51, paid LKR 20,000.00",PASS
+PMS-05,"Automated (tests/QA/QaAuditTest.php)","Hotel PMS","Check-in with passport and key card","Status checked_in, villa Occupied, card Active","Checked in; villa G2 occupied; card 04A1001025 active",PASS
+PMS-06,"Automated (tests/QA/QaAuditTest.php)","Key cards","Guest card at own villa door (SIMULATION)","Access granted","Granted: Guest of villa G2",PASS
+PMS-07,"Automated (tests/QA/QaAuditTest.php)",Billing,"Post a laundry guest charge (LKR 2,500 wash & fold)","Line on the guest folio","Posted LKR 2,700.00 (net LKR 2,500.00 + tax/service)",PASS
+PMS-08,"Automated (tests/QA/QaAuditTest.php)","Front desk","Active guests list shows the stay","Guest listed on In-house tab",Listed,PASS
+PMS-09,"Automated (tests/QA/QaAuditTest.php)",Billing,"Guest folio visible on the booking","Folio lines and deposit shown",Shown,PASS
+PMS-10,"Automated (tests/QA/QaAuditTest.php)",Integration,"Cashier: room-service order charged to the villa","Folio gets one restaurant line for the order","Order ORD-26-000088 LKR 9,979.20 → folio FOL-26-000035 (room_service)",PASS
+PMS-11,"Automated (tests/QA/QaAuditTest.php)",Integration,"Checkout blocked while a restaurant check is open","Error, booking stays checked in","1 restaurant check(s) are still open for this stay. Close or charge them to the villa first.",PASS
+PMS-12,"Automated (tests/QA/QaAuditTest.php)",Integration,"Reception requests restaurant settlement; cashier notified","Notification to pos.bill with link to the check","Cashier saw the request and charged LKR 950.40 to the villa",PASS
+PMS-13,"Automated (tests/QA/QaAuditTest.php)","Front desk","Checkout with card settlement (early departure confirmed)","Checked out, final invoice paid, villa Dirty, HK task, card revoked","Invoice INV-26-000019 LKR 52,163.57 [Laundry, Room Service, Room] paid; villa Dirty; departure task created; card available",PASS
+PMS-14,"Automated (tests/QA/QaAuditTest.php)",Housekeeping,"Housekeeping alerted after checkout","""Villa X is ready for cleaning after guest checkout."" visible to housekeeper","Notification present",PASS
+WALK-01,"Automated (tests/QA/QaAuditTest.php)",Walk-in,"1-night booking",Created,"VV-26-000030 · 1 night",PASS
+WALK-02,"Automated (tests/QA/QaAuditTest.php)",Walk-in,"Multi-night booking (3 nights, EARLY10 promo)","Created with 10% discount","VV-26-000031: 3 nights, discount LKR 11,400.00",PASS
+WALK-03,"Automated (tests/QA/QaAuditTest.php)",Walk-in,"Overlapping booking on the same villa and dates","Rejected; no second booking","Villa G2 is already booked for one or more of the selected nights.",PASS
+WALK-04,"Automated (tests/QA/QaAuditTest.php)",Walk-in,"Villa under maintenance (out of order)","Not offered and cannot be booked","Hidden from availability; save rejected: Villa G2 is out of order and cannot be booked.",PASS
+WALK-05,"Automated (tests/QA/QaAuditTest.php)",Walk-in,"Departure before arrival","Validation error on departure","The departure field must be a date after arrival.",PASS
+WALK-06,"Automated (tests/QA/QaAuditTest.php)",Walk-in,"Arrival in the past (3 days ago)","Validation error ""Arrival cannot be in the past.""","Arrival cannot be in the past.",PASS
+WALK-07,"Automated (tests/QA/QaAuditTest.php)",Walk-in,"Missing guest name and no villa selected","Validation errors","Enter the guest first name or choose an existing guest. | Enter the guest last name or choose an existing guest. | Select at least one available villa.",PASS
+WALK-08,"Automated (tests/QA/QaAuditTest.php)",Walk-in,"Rate override by Reception (no override permission)","Override ignored; standard rate used","Room total LKR 223,500.00 (override not applied)",PASS
+WALK-11,"Automated (tests/QA/QaAuditTest.php)",Walk-in,"Seasonal minimum stay: 1 night where a 3-night season rule applies","Rejected: minimum stay","A minimum stay of 3 nights applies to these dates.",PASS
+WALK-09,"Automated (tests/QA/QaAuditTest.php)",Walk-in,"Rate override LKR 30,500/night by Hotel Manager with reason","Room total = 30,500 × nights","VV-26-000033: 4 nights × LKR 30,500 = LKR 122,000.00; grand total incl. service/tax LKR 144,936.00",PASS
+WALK-10,"Automated (tests/QA/QaAuditTest.php)","Front desk","Check-in to a Dirty villa is blocked","Error: villa not ready","Villa P3 is not ready (housekeeping: Dirty).",PASS
+SRC-01,"Automated (tests/QA/QaAuditTest.php)","Booking sources","Source: phone (manual form)","Created with that source; appears in Bookings; villa no longer available","VV-26-000030 · Phone · confirmed",PASS
+SRC-02,"Automated (tests/QA/QaAuditTest.php)","Booking sources","Source: email (manual form)","Created with that source; appears in Bookings; villa no longer available","VV-26-000031 · Email · confirmed",PASS
+SRC-03,"Automated (tests/QA/QaAuditTest.php)","Booking sources","Source: admin (manual form)","Created with that source; appears in Bookings; villa no longer available","VV-26-000032 · Admin · confirmed",PASS
+SRC-04,"Automated (tests/QA/QaAuditTest.php)","Booking sources","Source: tour operator (manual form, contract pricing)","Linked to the operator","VV-26-000033 · Sunrise Tours Lanka",PASS
+SRC-05,"Automated (tests/QA/QaAuditTest.php)","Booking sources","Tour operator partner portal booking","Booking created by the operator login","VV-26-000034 · Tour operator · confirmed",PASS
+SRC-06,"Automated (tests/QA/QaAuditTest.php)","Booking sources","Website booking (hold → sandbox payment approved)","Hold becomes Confirmed; receipt issued","VV-26-000035 · Website · paid LKR 47,044.80 (SANDBOX gateway — no real card processing)",PASS
+SRC-07,"Automated (tests/QA/QaAuditTest.php)",Payments,"Website payment declined (sandbox)","Booking stays on hold; no payment recorded","VV-26-000036 status hold; intent failed; paid 0",PASS
+SRC-08,"Automated (tests/QA/QaAuditTest.php)",Payments,"Duplicate completion of the same website payment","Posted once (idempotent)","Paid total unchanged at LKR 47,044.80",PASS
+SRC-09,"Automated (tests/QA/QaAuditTest.php)","Booking sources","OTA reservation (Booking.com payload through the OTA ingest service — SIMULATED)","Booking created once; duplicate ignored","VV-26-000037 · OTA · channel Booking.com",PASS
+SRC-10,"Automated (tests/QA/QaAuditTest.php)","Booking sources","Live Booking.com / Agoda / Airbnb / Expedia connection","Reservations arrive by webhook from the channel manager","CHANNEL_DRIVER=null — no Channex credentials; only the simulated ingest path (SRC-09) was tested",BLOCKED
+POS-01,"Automated (tests/QA/QaAuditTest.php)",POS,"Restaurant Manager opens a shift (float LKR 10,000)","Shift open","Shift #37 open",PASS
+POS-02,"Automated (tests/QA/QaAuditTest.php)",POS,"Open table T1 for 4 guests","Dine-in check opened; table busy","ORD-26-000088 at T1",PASS
+POS-03,"Automated (tests/QA/QaAuditTest.php)",POS,"Add breakfast, main (with required spice modifier + note) and drink","3 lines, totals with service 10% + tax 8%","Subtotal LKR 12,800.00 + service LKR 1,280.00 + tax LKR 1,126.40 = LKR 15,206.40",PASS
+POS-04,"Automated (tests/QA/QaAuditTest.php)",POS,"Add an item without its required modifier","Rejected: choose at least 1 option","Choose at least 1 option(s) for Spice level.",PASS
+POS-05,"Automated (tests/QA/QaAuditTest.php)",POS,"Change quantity of drinks 2 → 3","Line and totals recalculated","New total LKR 16,275.60",PASS
+POS-06,"Automated (tests/QA/QaAuditTest.php)","POS / KOT","Send to kitchen (KOT)","KOT(s) created per station; items fired","2 KOT(s): kitchen, bar",PASS
+POS-07,"Automated (tests/QA/QaAuditTest.php)",Kitchen,"Kitchen display receives the KOT","Ticket listed on the KDS feed","7 ticket(s) on the KDS",PASS
+POS-08,"Automated (tests/QA/QaAuditTest.php)",Kitchen,"KOT status New → Preparing → Ready → Served","Each step accepted","KOT KOT-26-000150: served",PASS
+POS-09,"Automated (tests/QA/QaAuditTest.php)",Kitchen,"Invalid KOT jump New → Served",Rejected,"Cannot move a new ticket to served.",PASS
+POS-10,"Automated (tests/QA/QaAuditTest.php)",POS,"Print bill (guest bill)","Check status Billed; bill page opens","Billed LKR 19,720.80",PASS
+POS-11,"Automated (tests/QA/QaAuditTest.php)",Payments,"Split payment: part cash (partial) — table stays occupied","Status stays Billed with balance; table still busy","Paid 5,000 of LKR 19,720.80; balance LKR 14,720.80; table still occupied",PASS
+POS-12,"Automated (tests/QA/QaAuditTest.php)",Payments,"Overpay with card (more than the balance)","Rejected: payments exceed balance","Payments (LKR 14,820.80) exceed the balance due (LKR 14,720.80).",PASS
+POS-13,"Automated (tests/QA/QaAuditTest.php)",Payments,"Settle the balance: card + bank transfer + digital QR","Check Paid/closed; invoice number; table AVAILABLE; not in open checks","Paid; invoice PINV-26-000085; table T1 available",PASS
+POS-14,"Automated (tests/QA/QaAuditTest.php)",Payments,"Pay an already-paid check again (duplicate payment)","Rejected: check already closed","This check is already closed.",PASS
+POS-15,"Automated (tests/QA/QaAuditTest.php)",Payments,"Cash payment with change (tendered LKR 30,000)","Change = tendered − bill, stored on the payment","Bill LKR 22,096.80; tendered LKR 30,000.00; change LKR 7,903.20 (= 30,000 − bill)",PASS
+POS-16,"Automated (tests/QA/QaAuditTest.php)",POS,"Takeaway order paid online","Takeaway check closed","ORD-26-000090 takeaway paid LKR 4,039.20",PASS
+POS-17,"Automated (tests/QA/QaAuditTest.php)",POS,"Pay an empty check","Rejected: the check is empty","This check is empty. Add items before taking payment.",PASS
+POS-18,"Automated (tests/QA/QaAuditTest.php)",POS,"Room service order does not occupy a restaurant table","No table attached","ORD-26-000092 → Villa O1 (no table)",PASS
+POS-19,"Automated (tests/QA/QaAuditTest.php)",Tables,"Move a check to another table","Check moves; first table released","T1 → T2",PASS
+POS-20,"Automated (tests/QA/QaAuditTest.php)",Tables,"Merge two table checks","Items combined; source check merged","ORD-26-000095 merged into ORD-26-000094",PASS
+POS-21,"Automated (tests/QA/QaAuditTest.php)",Tables,"Split a check (move 1 line to a new check)","New check created at the same table","New check ORD-26-000097",PASS
+POS-22,"Automated (tests/QA/QaAuditTest.php)",Tables,"Reserved table indicator on the floor plan","Tables API returns the reservation","T5: Reserved 00:39 · Ms. Silva",PASS
+POS-23,"Automated (tests/QA/QaAuditTest.php)",POS,"Cashier refunds a paid check in cash (no pos.refund permission)","HTTP 403 for cashier; allowed for Restaurant Manager","Cashier 403; manager refund LKR 100 recorded",PASS
+POS-24,"Automated (tests/QA/QaAuditTest.php)",POS,"Cash/card payment without an open shift","Rejected: open a cashier shift first","Open a cashier shift before taking cash payments.",PASS
+INT-01,"Automated (tests/QA/QaAuditTest.php)",Integration,"Stay with room rate LKR 20,000 (override) checked in","Checked in","VV-26-000030 · Villa G2 · Nuwan Perera",PASS
+INT-02,"Automated (tests/QA/QaAuditTest.php)",Integration,"Food LKR 4,500 charged to Villa from the POS","One folio line LKR 4,500 on this booking/guest/villa, dated today","Folio FOL-26-000035: 'QA Kitchen check ORD-26-000088' LKR 4,500.00, 2026-09-29; order villa G2",PASS
+INT-03,"Automated (tests/QA/QaAuditTest.php)",Integration,"Laundry LKR 1,000 posted at reception","Folio line with net 1,000 (system adds tax where the item is taxable)","Net LKR 1,000.00, tax LKR 80.00, service LKR 0.00, line total LKR 1,080.00",PASS
+INT-04,"Automated (tests/QA/QaAuditTest.php)",Integration,"Checkout invoice combines Room 20,000 + Restaurant 4,500 + Laundry 1,000","No duplicate charges; totals reconcile","Invoice INV-26-000019: net by department {""Restaurant"":4500,""Laundry"":1000,""Room"":20000}; grand total incl. service/tax LKR 29,340.00",PASS
+HK-01,"Automated (tests/QA/QaAuditTest.php)",Housekeeping,"Checkout → villa Dirty + departure task (Ready for cleaning)","Task pending, unassigned, priority High","Task #23 departure, priority high, unassigned, 11 checklist items",PASS
+HK-02,"Automated (tests/QA/QaAuditTest.php)",Housekeeping,"My Cleaning Tasks shows the villa under ""Ready for cleaning""","Visible with Accept button",Visible,PASS
+HK-03,"Automated (tests/QA/QaAuditTest.php)",Housekeeping,"Tick a checklist item on an unaccepted pool task, then after Accept but before Start","403, then rejected: start the task first","Unaccepted: 403. Accepted, not started: Start the task before ticking checklist items.",PASS
+HK-04,"Automated (tests/QA/QaAuditTest.php)",Housekeeping,"Accept → Start → Pause → Resume","Assigned to me; Cleaning; Paused; Cleaning","Accepted by Malini Ratnam; resumed",PASS
+HK-05,"Automated (tests/QA/QaAuditTest.php)",Housekeeping,"Request inspection with checklist incomplete (0/N)","Rejected with open item count","Complete the checklist first — 11 item(s) still open.",PASS
+HK-06,"Automated (tests/QA/QaAuditTest.php)",Housekeeping,"Complete checklist (N/N) and request inspection","Task Awaiting inspection; villa Inspection","11/11 checked; villa inspection",PASS
+HK-07,"Automated (tests/QA/QaAuditTest.php)",Housekeeping,"Supervisor rejects, attendant fixes, supervisor approves","Villa Available (Ready) after approval","Rejected once, approved; villa available; clean time 0 min",PASS
+HK-08,"Automated (tests/QA/QaAuditTest.php)",Housekeeping,"Housekeeper reports a maintenance issue","Ticket created","MNT-26-000004 created",PASS
+HK-09,"Automated (tests/QA/QaAuditTest.php)",Housekeeping,"Housekeeper logs a lost item","Lost & found item stored","LF-26-000001 stored",PASS
+HK-10,"Automated (tests/QA/QaAuditTest.php)",Housekeeping,"Supervisor creates stay-over tasks and assigns one","Tasks for occupied villas; assignment saved","Task assigned.; task #22 assigned to Sanjeev Maharaj",PASS
+HK-11,"Automated (tests/QA/QaAuditTest.php)",Housekeeping,"Housekeeper opens another attendant's task","HTTP 403",403,PASS
+KEY-01,"Automated (tests/QA/QaAuditTest.php)","Key cards","Register a new blank card UID 04A1QA0010","Card available","Status available",PASS
+KEY-02,"Automated (tests/QA/QaAuditTest.php)","Key cards","Register the same UID twice","Rejected: already registered","A card with UID 04A1QA0010 is already registered.",PASS
+KEY-03,"Automated (tests/QA/QaAuditTest.php)","Key cards","Issue card 04A1QA0010 to an in-house guest (duplicate key)","Encoded by the SIMULATOR lock provider; Active","Active for villa O1 (LOCK_DRIVER=simulator)",PASS
+KEY-04,"Automated (tests/QA/QaAuditTest.php)","Key cards","Card at own villa / another villa / Pool zone (SIMULATION)","Granted / Denied / Granted","Own villa granted; G1 denied (Not valid for villa G1); Pool granted",PASS
+KEY-05,"Automated (tests/QA/QaAuditTest.php)","Key cards","Unknown card UID","Denied: Unknown card","Unknown card",PASS
+KEY-06,"Automated (tests/QA/QaAuditTest.php)","Key cards","Revoke the card, then try the door",Denied,"Denied: Card revoked (Guest returned card)",PASS
+KEY-07,"Automated (tests/QA/QaAuditTest.php)","Key cards","Report a card lost","Card status Lost; denied at doors","04A1001025 lost; denied (Card lost)",PASS
+KEY-08,"Automated (tests/QA/QaAuditTest.php)","Key cards","Physical RFID encoder / door lock","Card encoded and door opens","No hardware connected; LOCK_DRIVER=simulator and the vendor adapter in lock-bridge/ is a stub. All key-card results above are SIMULATED.",BLOCKED
+BILL-01,"Automated (tests/QA/QaAuditTest.php)",Billing,"Partial folio payment (cash LKR 1,000) issues a receipt","Payment + receipt; balance reduced","Balance LKR 61,205.76 → LKR 60,205.76",PASS
+BILL-02,"Automated (tests/QA/QaAuditTest.php)",Billing,"Folio payment of LKR 0","Validation error","The amount field must be at least 0.01.",PASS
+BILL-03,"Automated (tests/QA/QaAuditTest.php)",Billing,"Checkout with unpaid balance","Rejected; nothing committed","Folio FOL-26-000022 has an outstanding balance of LKR 48,090.24. Take payment before checkout.",PASS
+NA-01,"Automated (tests/QA/QaAuditTest.php)","Night audit","Reception runs night audit","HTTP 403 (needs frontdesk.night_audit)",403,PASS
+NA-02,"Automated (tests/QA/QaAuditTest.php)","Night audit","Run night audit (Hotel Manager)","Tonight's room night posted to each in-house folio; no-shows flagged; summary saved","Night audit complete for 2026-09-29: 4 room night(s) posted, 1 no-show(s), 0 hold(s) expired, 1 card(s) expired, 2 stay-over task(s).",PASS
+NA-03,"Automated (tests/QA/QaAuditTest.php)","Night audit","Run night audit a second time the same day","No duplicate room charges (idempotent)","Night audit complete for 2026-09-29: 0 room night(s) posted, 0 no-show(s), 0 hold(s) expired, 0 card(s) expired, 0 stay-over task(s).",PASS
+NA-04,"Automated (tests/QA/QaAuditTest.php)","Night audit","Audit trail of the run","Run recorded","Only the latest run summary is kept (setting night_audit_last): {""business_date"":""2026-09-29"",""room_nights"":0,""no_shows"":0,""holds_expired"":0,""cards_expired"":0,""stayovers"":0,""absences"":0,""run_at"":""2026-09-29 23:39:23""}. No per-run audit_logs entry, no business-date lock.",PASS
+RPT-bookings,"Automated (tests/QA/QaAuditTest.php)",Reports,"Bookings: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 17 data row(s)",PASS
+RPT-occupancy,"Automated (tests/QA/QaAuditTest.php)",Reports,"Occupancy, ADR & RevPAR: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 29 data row(s)",PASS
+RPT-revenue,"Automated (tests/QA/QaAuditTest.php)",Reports,"Revenue by department: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 8 data row(s)",PASS
+RPT-payments,"Automated (tests/QA/QaAuditTest.php)",Reports,"Payments received: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 27 data row(s)",PASS
+RPT-outstanding,"Automated (tests/QA/QaAuditTest.php)",Reports,"Outstanding balances: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 11 data row(s)",PASS
+RPT-guests,"Automated (tests/QA/QaAuditTest.php)",Reports,"Guest statistics: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 11 data row(s)",PASS
+RPT-channels,"Automated (tests/QA/QaAuditTest.php)",Reports,"OTA & channel production: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 5 data row(s)",PASS
+RPT-operators,"Automated (tests/QA/QaAuditTest.php)",Reports,"Tour operator bookings & commission: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 2 data row(s)",PASS
+RPT-pos_sales,"Automated (tests/QA/QaAuditTest.php)",Reports,"POS sales: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 25 data row(s)",PASS
+RPT-pos_items,"Automated (tests/QA/QaAuditTest.php)",Reports,"POS item sales mix: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 24 data row(s)",PASS
+RPT-inventory,"Automated (tests/QA/QaAuditTest.php)",Reports,"Inventory valuation & wastage: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 16 data row(s)",PASS
+RPT-housekeeping,"Automated (tests/QA/QaAuditTest.php)",Reports,"Housekeeping performance: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 3 data row(s)",PASS
+RPT-attendance,"Automated (tests/QA/QaAuditTest.php)",Reports,"Staff attendance: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 17 data row(s)",PASS
+RPT-maintenance,"Automated (tests/QA/QaAuditTest.php)",Reports,"Maintenance: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 3 data row(s)",PASS
+RPT-keycards,"Automated (tests/QA/QaAuditTest.php)",Reports,"Key card activity: open, filter this month, CSV export","HTTP 200; CSV text/csv","Rendered; CSV 30 data row(s)",PASS
+RPT-POS,"Automated (tests/QA/QaAuditTest.php)",Reports,"Restaurant sales inside the POS (Restaurant Manager)","HTTP 200","POS sales + dish mix open; hotel reports 403",PASS
+RPT-ACC,"Automated (tests/QA/QaAuditTest.php)",Reports,"Accountant sees financial reports but not settings","Reports 200; settings 403","As expected",PASS
+ERR-01,"Automated (tests/QA/QaAuditTest.php)",Login,"Invalid password","Generic error, no account hint","The username/email or password is incorrect.",PASS
+ERR-02,"Automated (tests/QA/QaAuditTest.php)",Login,"Unknown username","Same generic error","The username/email or password is incorrect.",PASS
+ERR-03,"Automated (tests/QA/QaAuditTest.php)",Login,"5 wrong passwords lock the account","Account locked for 15 minutes","This account is temporarily locked after repeated failed sign-ins. Try again after 23:54 or reset your password.",PASS
+ERR-04,"Automated (tests/QA/QaAuditTest.php)",Errors,"Open a booking that does not exist","HTTP 404 page",404,PASS
+ERR-05,"Automated (tests/QA/QaAuditTest.php)",Errors,"API validation error","HTTP 422 JSON with field errors","422 outlet_id, type",PASS
+ERR-06,"Automated (tests/QA/QaAuditTest.php)",Reservations,"Overlapping table reservation",Rejected,"Table T1 is already reserved for A at 04:00.",PASS
+SEC-01,"Automated (tests/QA/QaAuditTest.php)",Security,"Stored XSS: guest name <script>alert(1)</script>","Rendered escaped","Escaped as &lt;script&gt;",PASS
+SEC-02,"Automated (tests/QA/QaAuditTest.php)",Security,"SQL injection in search (q=' OR 1=1 --)","No SQL error; normal result","200; queries are parameterised",PASS
+SEC-03,"Automated (tests/QA/QaAuditTest.php)",Security,"Upload a PHP script renamed .jpg to the gallery","Rejected by content type check","The image could not be read. Upload a valid JPG, PNG or WebP.",PASS
+SEC-04,"Automated (tests/QA/QaAuditTest.php)",Security,"Passwords stored hashed","bcrypt hashes only","17 users, all bcrypt ($2y$)",PASS
+SEC-05,"Automated (tests/QA/QaAuditTest.php)",Security,"Security headers on authenticated pages","X-Frame-Options, nosniff, no-store","X-Frame-Options SAMEORIGIN; nosniff; no-store, private",PASS
+SEC-06,"Automated (tests/QA/QaAuditTest.php)",Security,"Demo sign-in panel outside APP_ENV=local","Not rendered","Hidden in the testing environment",PASS
+SEC-07,"Automated (tests/QA/QaAuditTest.php)",Security,"Tour operator opens another operator's booking","HTTP 403/404","HTTP 404",PASS
+ENV-01,"Live HTTP check (XAMPP)",Environment,"Database connection",Connects,"MySQL/MariaDB 10.4.32-MariaDB",PASS
+ENV-02,"Live HTTP check (XAMPP)",Environment,"All migrations applied","0 pending","15 ran, 0 pending",PASS
+ENV-03,"Live HTTP check (XAMPP)",Environment,"Home page over Apache",200,"200 1.313084s",PASS
+ENV-04,"Live HTTP check (XAMPP)",Environment,"CSS, JS, logo and icon assets","All 200","11 assets 200",PASS
+ENV-05,"Live HTTP check (XAMPP)",Environment,"Uploads served through public/storage (junction)",200,200,PASS
+ENV-06,"Live HTTP check (XAMPP)",Environment,"Website photos (Unsplash CDN stand-ins)",200,"200 https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1800&q=70",PASS
+ENV-07,"Live HTTP check (XAMPP)",Environment,"Dish photos (Unsplash CDN stand-ins)","All load","24/24 load",PASS
+ENV-08,"Live HTTP check (XAMPP)",Environment,"Hero background video","Plays when configured","No video configured (site_hero_video empty) — nothing to load",BLOCKED
+API-01,"Live HTTP check (XAMPP)",API,"GET /api/v1/villa-types","200 JSON","200 {'data':[{'slug':'garden-villa','name':'Garden Villa','summary':'A quiet one-bedroom villa",PASS
+API-02,"Live HTTP check (XAMPP)",API,"GET /api/v1/availability?arrival=2026-10-29&departure=2026-10-31&adults=2","200 JSON","200 {'arrival':'2026-10-29','departure':'2026-10-31','currency':'LKR','data':[{'slug':'garden-",PASS
+API-03,"Live HTTP check (XAMPP)",API,"GET /api/v1/offers","200 JSON","200 {'data':[{'title':'Stay 4, save 20%','summary':'Stay four nights or more and save 20% on y",PASS
+API-04,"Live HTTP check (XAMPP)",API,"GET /api/v1/currencies","200 JSON","200 {'base':'LKR','currencies':{'LKR':{'name':'Sri Lankan Rupee','symbol':'Rs','decimals':0},'",PASS
+API-05,"Live HTTP check (XAMPP)",API,"GET /weather","200 JSON","200 {'ok':true,'current':{'temp':28.6,'wind':20.8,'label':'Overcast','icon':'\u2601\ufe0f'},'d",PASS
+API-06,"Live HTTP check (XAMPP)",API,"GET /api/v1/quote without parameters","422 validation","422 {'message':'The type field is required. (and 2 more errors)','errors':{'type':['The type field is re",PASS
+SEC-CSRF-01,"Live HTTP check (XAMPP)",Security,"POST /login without CSRF token","419 Page expired",419,PASS
+SES-01,"Live HTTP check (XAMPP)",Session,"Cashier signs in; POS API call with the session cookie",200,"login 302, API 200",PASS
+SES-02,"Live HTTP check (XAMPP)",Session,"POS API POST without X-CSRF-TOKEN",419,"419 (CSRF enforced on the JSON API)",PASS
+SES-03,"Live HTTP check (XAMPP)",Session,"POS API after the session ended (expired / signed out elsewhere)","401 JSON","{'message':'Unauthenticated.'} HTTP401 — this is the 'Unauthenticated' message seen on the POS",PASS
+SES-04,"Live HTTP check (XAMPP)",Session,"Open POS page after the session ended","Redirect to sign-in","302 → /login",PASS
+SES-05,"Live HTTP check (XAMPP)",Session,"Session idle lifetime",Documented,"SESSION_LIFETIME=30 minutes (database sessions); any idle browser tab older than this gets 401 on its next API call",PASS
+UI-01,"Browser walkthrough (headless Chrome)","UI walkthrough","01_admin_dashboard.png — Administrator dashboard","Page renders; workflow step succeeds","Captured /admin",PASS
+UI-02,"Browser walkthrough (headless Chrome)","UI walkthrough","02_walkin_booking.png — Walk-in: Nuwan Perera, G1, $today to $depart, 2 adults, LKR 30,500/night, deposit LKR 20,000","Page renders; workflow step succeeds","Captured /admin/bookings/create?source=walk_in&arrival=2026-09-29&departure=2026-10-03",PASS
+UI-03,"Browser walkthrough (headless Chrome)","UI walkthrough","03_room_selection.png — Villas free for every night of the stay; G1 ticked","Page renders; workflow step succeeds","Captured /admin/bookings/create?source=walk_in&arrival=2026-09-29&departure=2026-10-03",PASS
+UI-04,"Browser walkthrough (headless Chrome)","UI walkthrough","04_checkin.png — Check-in: ID document and key card for villa G1","Page renders; workflow step succeeds","Captured /admin/front-desk/37/check-in",PASS
+UI-05,"Browser walkthrough (headless Chrome)","UI walkthrough","05_pos_table.png — Table T6, 4 guests: order before sending to the kitchen","Page renders; workflow step succeeds","Captured /pos?outlet=1&order=107 (captured on re-run; first pass: JS error: Error: T6 is busy)",PASS
+UI-06,"Browser walkthrough (headless Chrome)","UI walkthrough","06_pos_payment.png — Cash payment: LKR 30,000 tendered, change calculated","Page renders; workflow step succeeds","Captured /pos?outlet=1&order=107 (captured on re-run; first pass: JS error: Error: Missing [data-act=pay])",PASS
+UI-07,"Browser walkthrough (headless Chrome)","UI walkthrough","07_kitchen_kot.png — Kitchen display: new KOT for villa G1","Page renders; workflow step succeeds","Captured /pos/kds?station=all",PASS
+UI-08,"Browser walkthrough (headless Chrome)","UI walkthrough","08_room_service.png — Room service charged to villa G1 (Nuwan Perera)","Page renders; workflow step succeeds","Captured /pos?outlet=3&order=106",PASS
+UI-09,"Browser walkthrough (headless Chrome)","UI walkthrough","09_guest_folio.png — Guest folio: deposit, room-service charge and laundry","Page renders; workflow step succeeds","Captured /admin/bookings/37",PASS
+UI-10,"Browser walkthrough (headless Chrome)","UI walkthrough","10_checkout.png — Checkout: room and restaurant on one bill, balance settled by card, Complete checkout enabled","Page renders; workflow step succeeds","Captured /admin/front-desk/21/check-out",PASS
+UI-11,"Browser walkthrough (headless Chrome)","UI walkthrough","11_housekeeping.png — Housekeeping board: G1 waiting for inspection","Page renders; workflow step succeeds","Captured /admin/housekeeping",PASS
+UI-12,"Browser walkthrough (headless Chrome)","UI walkthrough","12_key_cards.png — Key cards (LOCK_DRIVER=simulator)","Page renders; workflow step succeeds","Captured /admin/key-cards",PASS
+UI-13,"Browser walkthrough (headless Chrome)","UI walkthrough","13_night_audit.png — Night audit result","Page renders; workflow step succeeds","Captured /admin/front-desk",PASS
+UI-14,"Browser walkthrough (headless Chrome)","UI walkthrough","14_login_page.png — Sign-in page with the local-only demo role cards (no password shown)","Page renders; workflow step succeeds","Captured /login",PASS
+UI-15,"Browser walkthrough (headless Chrome)","UI walkthrough","15_front_desk.png — Front desk: arrivals, in-house guests, departures","Page renders; workflow step succeeds","Captured /admin/front-desk",PASS
+UI-16,"Browser walkthrough (headless Chrome)","UI walkthrough","16_checkout_blocked.png — Open restaurant check blocks checkout; Complete checkout disabled","Page renders; workflow step succeeds","Captured /admin/front-desk/21/check-out",PASS
+UI-17,"Browser walkthrough (headless Chrome)","UI walkthrough","17_settlement_requested.png — Restaurant settlement requested from the front desk","Page renders; workflow step succeeds","Captured /admin/front-desk/21/check-out",PASS
+UI-18,"Browser walkthrough (headless Chrome)","UI walkthrough","18_cashier_notification.png — Cashier notification: settle the open check","Page renders; workflow step succeeds","Captured /admin/notifications",PASS
+UI-19,"Browser walkthrough (headless Chrome)","UI walkthrough","19_pos_charge_to_villa.png — Payment dialog: Charge to villa G1 (Oliver Jensen)","Page renders; workflow step succeeds","Captured /pos?outlet=3&order=105",PASS
+UI-20,"Browser walkthrough (headless Chrome)","UI walkthrough","20_checkout_complete.png — Checked out: villa G1 becomes Dirty and a departure clean is created","Page renders; workflow step succeeds","Captured /admin/bookings/21",PASS
+UI-21,"Browser walkthrough (headless Chrome)","UI walkthrough","21_final_invoice.png — Final invoice","Page renders; workflow step succeeds","Captured /admin/invoices/61",PASS
+UI-22,"Browser walkthrough (headless Chrome)","UI walkthrough","22_my_cleaning_tasks.png — Room attendant: G1 is ready for cleaning","Page renders; workflow step succeeds","Captured /admin/housekeeping/my-tasks",PASS
+UI-23,"Browser walkthrough (headless Chrome)","UI walkthrough","23_cleaning_checklist.png — Cleaning in progress: checklist partly ticked","Page renders; workflow step succeeds","Captured /admin/housekeeping/tasks/23",PASS
+UI-24,"Browser walkthrough (headless Chrome)","UI walkthrough","24_inspection.png — Supervisor inspection: Approve or Reject","Page renders; workflow step succeeds","Captured /admin/housekeeping/tasks/23",PASS
+UI-25,"Browser walkthrough (headless Chrome)","UI walkthrough","25_villa_ready.png — G1 approved: Ready for the next guest","Page renders; workflow step succeeds","Captured /admin/housekeeping",PASS
+UI-26,"Browser walkthrough (headless Chrome)","UI walkthrough","26_checked_in.png — Checked in: villa G1 occupied, key card active","Page renders; workflow step succeeds","Captured /admin/bookings/37",PASS
+UI-27,"Browser walkthrough (headless Chrome)","UI walkthrough","27_room_service_select.png — Room service: choose the in-house villa and guest","Page renders; workflow step succeeds","Captured /pos?outlet=3",PASS
+UI-28,"Browser walkthrough (headless Chrome)","UI walkthrough","28_room_service_check.png — Room-service check for villa G1: Seafood linguine + Crab soup (menu subtotal LKR 8,500)","Page renders; workflow step succeeds","Captured /pos?outlet=3&order=106",PASS
+UI-29,"Browser walkthrough (headless Chrome)","UI walkthrough","29_laundry_charge.png — Post a laundry charge: pressing 5 x LKR 400 = LKR 2,000","Page renders; workflow step succeeds","Captured /admin/bookings/37",PASS
+UI-30,"Browser walkthrough (headless Chrome)","UI walkthrough","30_pos_floor_plan.png — Waiter floor plan: free, occupied and reserved tables","Page renders; workflow step succeeds","Captured /pos?outlet=1",PASS
+UI-31,"Browser walkthrough (headless Chrome)","UI walkthrough","31_kitchen_kot_t6.png — Kitchen and bar tickets for table T6","Page renders; workflow step succeeds","Captured /pos/kds?station=all",PASS
+UI-32,"Browser walkthrough (headless Chrome)","UI walkthrough","32_open_shift.png — Open a shift at Vaasal Kitchen with a LKR 10,000 float","Page renders; workflow step succeeds","Captured /pos/shifts (captured on re-run; first pass: JS error: Error: No open-shift form)",PASS
+UI-33,"Browser walkthrough (headless Chrome)","UI walkthrough","33_shift_open.png — Shift open at Vaasal Kitchen","Page renders; workflow step succeeds","Captured /pos/shifts",PASS
+UI-34,"Browser walkthrough (headless Chrome)","UI walkthrough","34_pos_bill.png — Guest bill (80 mm)","Page renders; workflow step succeeds","Captured /pos/order/107/bill (captured on re-run; first pass: JS error: TypeError: Cannot read properties of null (reading 'content'))",PASS
+UI-35,"Browser walkthrough (headless Chrome)","UI walkthrough","35_pos_receipt.png — Receipt","Page renders; workflow step succeeds","Captured /pos/order/107/receipt",PASS
+UI-36,"Browser walkthrough (headless Chrome)","UI walkthrough","36_table_released.png — After payment T6 is free again","Page renders; workflow step succeeds","Captured /pos?outlet=1",PASS
+UI-37,"Browser walkthrough (headless Chrome)","UI walkthrough",37_cashier_today.png,"Page renders; workflow step succeeds","Captured /pos/today",PASS
+UI-38,"Browser walkthrough (headless Chrome)","UI walkthrough",38_pos_dashboard.png,"Page renders; workflow step succeeds","Captured /pos/dashboard",PASS
+UI-39,"Browser walkthrough (headless Chrome)","UI walkthrough",39_table_reservations.png,"Page renders; workflow step succeeds","Captured /pos/reservations",PASS
+UI-40,"Browser walkthrough (headless Chrome)","UI walkthrough",40_cashier_shifts.png,"Page renders; workflow step succeeds","Captured /pos/shifts",PASS
+UI-41,"Browser walkthrough (headless Chrome)","UI walkthrough",41_day_end.png,"Page renders; workflow step succeeds","Captured /pos/day-end",PASS
+UI-42,"Browser walkthrough (headless Chrome)","UI walkthrough",42_pos_sales.png,"Page renders; workflow step succeeds","Captured /pos/sales",PASS
+UI-43,"Browser walkthrough (headless Chrome)","UI walkthrough",43_food_menu.png,"Page renders; workflow step succeeds","Captured /pos/menu",PASS
+UI-44,"Browser walkthrough (headless Chrome)","UI walkthrough",44_orders_history.png,"Page renders; workflow step succeeds","Captured /pos/orders",PASS
+UI-45,"Browser walkthrough (headless Chrome)","UI walkthrough",45_pos_inventory.png,"Page renders; workflow step succeeds","Captured /pos/inventory",PASS
+UI-46,"Browser walkthrough (headless Chrome)","UI walkthrough",46_pos_outlets.png,"Page renders; workflow step succeeds","Captured /pos/outlets",PASS
+UI-47,"Browser walkthrough (headless Chrome)","UI walkthrough","47_rfid_simulator.png — SIMULATION: guest card presented at the villa G1 door","Page renders; workflow step succeeds","Captured /admin/access/simulator",PASS
+UI-48,"Browser walkthrough (headless Chrome)","UI walkthrough",48_access_logs.png,"Page renders; workflow step succeeds","Captured /admin/key-cards/access-logs",PASS
+UI-49,"Browser walkthrough (headless Chrome)","UI walkthrough","49_night_audit_confirm.png — Run night audit now? confirmation","Page renders; workflow step succeeds","Captured /admin/front-desk",PASS
+UI-50,"Browser walkthrough (headless Chrome)","UI walkthrough","50_folio_after_audit.png — Folio after night audit: the room night is posted","Page renders; workflow step succeeds","Captured /admin/bookings/37",PASS
+UI-51,"Browser walkthrough (headless Chrome)","UI walkthrough",51_bookings.png,"Page renders; workflow step succeeds","Captured /admin/bookings",PASS
+UI-52,"Browser walkthrough (headless Chrome)","UI walkthrough",52_villa_calendar.png,"Page renders; workflow step succeeds","Captured /admin/calendar",PASS
+UI-53,"Browser walkthrough (headless Chrome)","UI walkthrough",53_villas.png,"Page renders; workflow step succeeds","Captured /admin/villas",PASS
+UI-54,"Browser walkthrough (headless Chrome)","UI walkthrough",54_guests.png,"Page renders; workflow step succeeds","Captured /admin/guests",PASS
+UI-55,"Browser walkthrough (headless Chrome)","UI walkthrough",55_website_requests.png,"Page renders; workflow step succeeds","Captured /admin/enquiries",PASS
+UI-56,"Browser walkthrough (headless Chrome)","UI walkthrough",56_tour_operators.png,"Page renders; workflow step succeeds","Captured /admin/operators",PASS
+UI-57,"Browser walkthrough (headless Chrome)","UI walkthrough",57_maintenance.png,"Page renders; workflow step succeeds","Captured /admin/maintenance",PASS
+UI-58,"Browser walkthrough (headless Chrome)","UI walkthrough",58_invoices.png,"Page renders; workflow step succeeds","Captured /admin/invoices",PASS
+UI-59,"Browser walkthrough (headless Chrome)","UI walkthrough",59_payments.png,"Page renders; workflow step succeeds","Captured /admin/payments",PASS
+UI-60,"Browser walkthrough (headless Chrome)","UI walkthrough",60_reports.png,"Page renders; workflow step succeeds","Captured /admin/reports",PASS
+UI-61,"Browser walkthrough (headless Chrome)","UI walkthrough",61_report_occupancy.png,"Page renders; workflow step succeeds","Captured /admin/reports/occupancy",PASS
+UI-62,"Browser walkthrough (headless Chrome)","UI walkthrough",62_users.png,"Page renders; workflow step succeeds","Captured /admin/users",PASS
+UI-63,"Browser walkthrough (headless Chrome)","UI walkthrough",63_roles.png,"Page renders; workflow step succeeds","Captured /admin/roles",PASS
+UI-64,"Browser walkthrough (headless Chrome)","UI walkthrough",64_settings.png,"Page renders; workflow step succeeds","Captured /admin/settings",PASS
+UI-65,"Browser walkthrough (headless Chrome)","UI walkthrough",65_social_media.png,"Page renders; workflow step succeeds","Captured /admin/website/social",PASS
+UI-66,"Browser walkthrough (headless Chrome)","UI walkthrough",66_website_content.png,"Page renders; workflow step succeeds","Captured /admin/website",PASS
+UI-67,"Browser walkthrough (headless Chrome)","UI walkthrough",67_audit_log.png,"Page renders; workflow step succeeds","Captured /admin/audit",PASS
+UI-68,"Browser walkthrough (headless Chrome)","UI walkthrough",68_staff_attendance.png,"Page renders; workflow step succeeds","Captured /admin/staff/attendance",PASS
+UI-69,"Browser walkthrough (headless Chrome)","UI walkthrough",69_staff_roster.png,"Page renders; workflow step succeeds","Captured /admin/staff/roster",PASS
+UI-70,"Browser walkthrough (headless Chrome)","UI walkthrough",70_mobile_my_tasks.png,"Page renders; workflow step succeeds","Captured /admin/housekeeping/my-tasks",PASS
+UI-71,"Browser walkthrough (headless Chrome)","UI walkthrough",71_mobile_pos_dashboard.png,"Page renders; workflow step succeeds","Captured /pos/dashboard",PASS
+UI-72,"Browser walkthrough (headless Chrome)","UI walkthrough",72_tablet_frontdesk.png,"Page renders; workflow step succeeds","Captured /admin/front-desk",PASS
+UI-73,"Browser walkthrough (headless Chrome)","UI walkthrough","73_forbidden_403.png — Reception opening the POS: 403 Forbidden","Page renders; workflow step succeeds","Captured /pos",PASS
+UI-74,"Browser walkthrough (headless Chrome)","UI walkthrough",74_not_found_404.png,"Page renders; workflow step succeeds","Captured /admin/bookings/99999999",PASS
+UI-75,"Browser walkthrough (headless Chrome)","UI walkthrough","75_session_ended.png — Session ended: clear message, then back to sign-in","Page renders; workflow step succeeds","Captured /pos?outlet=1 (captured on re-run; first pass: Timeout waiting for: location.pathname.endsWith('/login'))",PASS
+UI-76,"Browser walkthrough (headless Chrome)","UI walkthrough","76_session_return.png — Sign-in page after the session ended (returns to the POS after sign-in)","Page renders; workflow step succeeds","Captured /login?return=/pos?outlet=1",PASS
+UI-77,"Browser walkthrough (headless Chrome)","UI walkthrough","77_invalid_login.png — Wrong password: generic error message","Page renders; workflow step succeeds","Captured /login",PASS
+UI-78,"Browser walkthrough (headless Chrome)","UI walkthrough","78_website_home.png — Public website home page with the live Jaffna weather (SVG icons)","Page renders; workflow step succeeds","Captured / (captured on re-run; first pass: First capture had no weather widget (a cached Open-Meteo timeout); re-captured)",PASS
+UI-79,"Browser walkthrough (headless Chrome)","UI walkthrough",79_website_booking.png,"Page renders; workflow step succeeds","Captured /book?arrival=2026-10-20&departure=2026-10-23&adults=2",PASS
+UI-80,"Browser walkthrough (headless Chrome)","UI walkthrough","80_website_mobile.png — Website on a phone","Page renders; workflow step succeeds","Captured / (captured on re-run; first pass: First capture had no weather widget (a cached Open-Meteo timeout); re-captured)",PASS
+UI-81,"Browser walkthrough (headless Chrome)","UI walkthrough","81_day_end_count.png — Day-end closing: counted cash equals expected, confirmation ticked","Page renders; workflow step succeeds","Captured /pos/day-end?shift=36",PASS
+UI-82,"Browser walkthrough (headless Chrome)","UI walkthrough","82_shift_closed.png — Shift closed and locked; waiting for manager review","Page renders; workflow step succeeds","Captured /pos/shifts",PASS

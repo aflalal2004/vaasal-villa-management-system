@@ -1,0 +1,21 @@
+{
+    "PHP (app)": 207,
+    "Blade views": 178,
+    "Controllers": 65,
+    "Models": 84,
+    "Services": 35,
+    "Middleware": 3,
+    "Migrations": 15,
+    "Seeders": 11,
+    "Tests": 7,
+    "JavaScript": 3,
+    "CSS": 2,
+    "Config": 11,
+    "Docs": 7,
+    "Routes": 382,
+    "API routes (\/api)": 12,
+    "DB tables": 94,
+    "Roles": 15,
+    "Permissions": 62,
+    "Users": 17
+}
